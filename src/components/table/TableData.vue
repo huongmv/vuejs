@@ -1,9 +1,9 @@
 <template>
     <div class="app-list-data">
-        <!--<el-row>-->
-            <!--<el-col :span="6" v-show="hasTitle">{{ title }}</el-col>-->
-            <!--<slot name="button"></slot>-->
-        <!--</el-row>-->
+        <el-row>
+            <el-col :span="6" v-show="hasTitle">{{ title }}</el-col>
+            <slot name="button"></slot>
+        </el-row>
         <div class="app-list-table">
             <el-table :data="showTable"
                       border

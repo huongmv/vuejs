@@ -3,7 +3,12 @@
     <table-data
         :table-data="tableData"
         :has-pagination="true"
-        empty-text="Data not found">
+        :has-title="true"
+        empty-text="Data not found"
+        title="Product list">
+        <el-col :span="17" slot="button" align="right">
+            <el-button type="primary" @click="dialogUploadVisible = true">Add item</el-button>
+        </el-col>
         <el-table-column prop="id" label="STT"></el-table-column>
         <el-table-column prop="name" label="Name"></el-table-column>
         <el-table-column prop="startDate" label="Start Date"></el-table-column>
@@ -14,14 +19,30 @@
             <el-button type="danger">Delete</el-button>
         </el-table-column>
     </table-data>
+    <search-form :model="ruleForm" title="Add item" >
+        <el-form-item label="Product Name" prop="name">
+            <el-col :span="8">
+                <el-input v-model="ruleForm.name"></el-input>
+            </el-col>
+        </el-form-item>
+        <el-form-item label="" prop="content">
+            <el-input type="textarea" v-model="ruleForm.content"></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
+            <el-button @click="resetForm('ruleForm')">Reset</el-button>
+        </el-form-item>
+    </search-form>
     </div>
 </template>
 <script>
 import TableData from '@/components/table/TableData'
+import FormSearch from '@/components/form/FormData'
 import moment from 'moment'
 export default {
     components: {
-        TableData
+        TableData,
+        'search-form': FormSearch
     },
     data () {
         return {
@@ -47,7 +68,11 @@ export default {
                     endDate: '2022-02-02',
                     status: 1
                 }
-            ]
+            ],
+            ruleForm: {
+                name: '',
+                content: ''
+            }
         }
     },
     created () {
@@ -62,6 +87,21 @@ export default {
         console.log(moment().format('LLL'))
         console.log(moment().format('LT'))
         console.log(moment().format('LTS'))
+    },
+    methods: {
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    alert('submit!');
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+        }
     }
 }
 </script>

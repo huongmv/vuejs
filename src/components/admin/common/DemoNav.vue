@@ -9,7 +9,7 @@
             <button id="blue" class="btn"></button>
             <button id="green" class="btn"></button>
             <button id="yellow" class="btn"></button>
-            <button id="orange" class="btn"></button>  
+            <button id="orange" class="btn"></button>
         </div>
         <div id="font-colors">
             Font
@@ -72,7 +72,7 @@
     </div>
 </template>
 <style>
-@import "../../../assets/scss/nav.scss";
+/*@import "../../../assets/scss/nav.scss";*/
 </style>
 <script>
 export default {
