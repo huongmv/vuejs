@@ -4,104 +4,471 @@
         :table-data="tableData"
         :has-pagination="true"
         :has-title="true"
+        :is-sortable="true"
         empty-text="Data not found"
-        title="Product list">
-        <el-col :span="17" slot="button" align="right">
-            <el-button type="primary" @click="dialogUploadVisible = true">Add item</el-button>
+        title="Product list"
+        @selectedRow="handleSelectedRow"
+        @on-sort="handleSort">
+        <el-col :span="23" class="el-col-btn" slot="button" align="right">
+            <down-load-excel :data-export="tableData" :file-name="fileName"></down-load-excel>
+            <el-button type="primary" @click="handleImport">Import <i class="el-icon-upload el-icon-right"></i></el-button>
+            <el-button type="primary" icon="el-icon-plus" @click="handleCallFormCreate">Add item</el-button>
+            <el-button type="danger" v-show="deleteAllItem" icon="el-icon-delete"  @click="deleteAllItems">Delete All</el-button>
         </el-col>
-        <el-table-column prop="id" label="STT"></el-table-column>
-        <el-table-column prop="name" label="Name"></el-table-column>
+        <el-table-column type="selection" width="55"></el-table-column>
+        <el-table-column prop="id" label="STT" width="80"></el-table-column>
+        <el-table-column prop="name" label="Name" class="el-table-text"></el-table-column>
         <el-table-column prop="startDate" label="Start Date"></el-table-column>
         <el-table-column prop="endDate" label="End Date"></el-table-column>
         <el-table-column prop="status" label="Status"></el-table-column>
         <el-table-column>
-            <el-button type="warning">Edit</el-button>
-            <el-button type="danger">Delete</el-button>
+            <template slot-scope="{row}">
+                <el-button type="warning" class="edit-item" @click="editItem(row)"><i class="el-icon-edit"></i><i class="icon-row-responsive">Edit</i></el-button>
+                <el-button slot="reference" type="danger" v-bind:disabled="deleteDisabled" @click="deleteItem([row])"><i class="el-icon-delete"></i><i class="icon-row-responsive">Delete</i></el-button>
+            </template>
         </el-table-column>
     </table-data>
-    <search-form :model="ruleForm" title="Add item" >
-        <el-form-item label="Product Name" prop="name">
-            <el-col :span="8">
-                <el-input v-model="ruleForm.name"></el-input>
-            </el-col>
-        </el-form-item>
-        <el-form-item label="" prop="content">
-            <el-input type="textarea" v-model="ruleForm.content"></el-input>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
-            <el-button @click="resetForm('ruleForm')">Reset</el-button>
-        </el-form-item>
-    </search-form>
+
+    <pop-up :dialog-visible="dialogVisible"
+            @closePopup="handleClosePopup" class="popup-add-edit">
+        <create-form :model="ruleForm" :rules="rules" :title="title" v-show="createFormProduct">
+            <el-form-item label="Product Name" prop="name">
+                <el-col :span="8">
+                    <el-input ref="txtName" v-model="ruleForm.name" tabindex="1"></el-input>
+                </el-col>
+            </el-form-item>
+            <el-form-item label="" prop="content">
+                <el-input type="textarea" v-model="ruleForm.content" tabindex="2"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button tabindex="3" type="primary" :loading="loading" @click="submitForm('ruleForm')" v-show="updateEdit"><i class="el-icon-plus" v-show="iconPlus"></i> Create</el-button>
+                <el-button type="warning" class="edit-item" @click="editsubmitForm"  v-show="editUpdate"><i class="el-icon-edit"></i><i class="icon-row-responsive"> Edit</i></el-button>
+                <el-button tabindex="4" @click="resetForm('ruleForm')">Reset</el-button>
+            </el-form-item>
+        </create-form>
+    </pop-up>
+    <import-excel ref="importExcel" @dataFileSelected="handleDataFileSelected"></import-excel>
+    <!--<pop-up :dialog-visible="dialogImportVisible"-->
+            <!--@closePopup="handleClosePopupImport"  class="popup-import">-->
+        <!--<create-form :model="ruleForm" :rules="rules" :title="title" v-show="createFormProduct"-->
+                     <!--:width="300">-->
+            <!--<el-row class="row-import">-->
+                <!--<el-upload-->
+                        <!--class="import-data"-->
+                        <!--id="upload"-->
+                        <!--action=""-->
+                        <!--:on-change="handleChange"-->
+                        <!--:file-list="fileList"-->
+                        <!--:limit="1"-->
+                        <!--:on-remove="handleRemoveFile"-->
+                        <!--:before-remove="beforeRemoveFile"-->
+                        <!--:show-file-list="true"-->
+                        <!--:auto-upload="false">-->
+                    <!--<el-button type="primary" :disabled="isDisabled">Select file <i class="el-icon-upload el-icon-right"></i></el-button>-->
+                <!--</el-upload>-->
+                <!--<el-button type="success" class="btn-submit" :loading="loading" @click="submitImport">Import to server <i class="el-icon-upload2"></i></el-button>-->
+            <!--</el-row>-->
+            <!--<el-row>-->
+                <!--<div>Files upload with a size less than 500kb</div>-->
+            <!--</el-row>-->
+        <!--</create-form>-->
+    <!--</pop-up>-->
     </div>
 </template>
 <script>
 import TableData from '@/components/table/TableData'
-import FormSearch from '@/components/form/FormData'
+import FormData from '@/components/form/FormData'
+import Popup from '@/components/popup/Popup'
+import product from '@/api/product/index'
+import DownLoadExcel from '@/components/excel/ExportExcel'
+import ImportExcel from '@/components/excel/ImportExcel'
+import XLSX from 'xlsx'
 import moment from 'moment'
 export default {
     components: {
         TableData,
-        'search-form': FormSearch
+        'create-form': FormData,
+        'pop-up': Popup,
+        'down-load-excel': DownLoadExcel,
+        'import-excel': ImportExcel
     },
     data () {
         return {
-            tableData: [
-                {
-                    id: '1',
-                    name: 'Product 01',
-                    startDate: '2020-02-02',
-                    endDate: '2022-02-02',
-                    status: 1
-                },
-                {
-                    id: '2',
-                    name: 'Product 02',
-                    startDate: '2020-02-02',
-                    endDate: '2022-02-02',
-                    status: 1
-                },
-                {
-                    id: '3',
-                    name: 'Product 03',
-                    startDate: '2020-02-02',
-                    endDate: '2022-02-02',
-                    status: 1
-                }
-            ],
+            tableData: [],
             ruleForm: {
                 name: '',
                 content: ''
-            }
+            },
+            rules: {
+                name: [
+                    { required: true, message: 'Please input name.', trigger: 'blur' },
+                    { min: 3, max: 50, message: 'Length should be 3 to 50.', trigger: 'blur' }
+                ],
+                content: [
+                    { required: true, message: 'Please input content.', trigger: 'blur' }
+                ]
+            },
+            multipleSelection: [],
+            deleteAllItem: false,
+            deleteDisabled: false,
+            dialogVisible: false,
+            deleteConfirm: false,
+            createFormProduct: true,
+            loading: false,
+            iconPlus: true,
+            updateEdit: true,
+            editUpdate: false,
+            dataUpdate: [],
+            title: '',
+            dialogImportVisible: false,
+            strBase64: '',
+            fileList: [],
+            isDisabled: false,
+            fileName: 'file-name.xlsx'
         }
     },
     created () {
-        let Utils = this.Utils
-        let datea = new Date()
-        // let date = Utils.convertDate(datea, 'YYYY-MM-DD')
-        // let datel = Utils.convertDate(datea, 'YYYY-MM-DD ddd', 'ja')
-        moment.locale('');
-        console.log(moment().format('LLLL'))
-        console.log(moment().format('L'))
-        console.log(moment().format('LL'))
-        console.log(moment().format('LLL'))
-        console.log(moment().format('LT'))
-        console.log(moment().format('LTS'))
+       this.loadDataProduct()
     },
     methods: {
         submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    alert('submit!');
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
-            });
+            if (this.ruleForm.name.length > 3 && this.ruleForm.content.length > 1){
+                let utils = this.Utils
+                let dateNow = utils.getDateYYYYMMDDHHmmss()
+                let dataRequest = { 'name': this.ruleForm.name, 'content': this.ruleForm.content, 'startDate': dateNow, 'endDate': dateNow  }
+                this.createDataProduct(dataRequest)
+            } else if (this.ruleForm.name.length < 3) {
+                this.$message.error('Please input name.');
+            }else if (this.ruleForm.content.length < 1) {
+                this.$message.error('Please input content.');
+            }
+        },
+        editsubmitForm () {
+            let utils = this.Utils
+            let dateNow = utils.getDateYYYYMMDDHHmmss()
+            let dataRequest = { 'id': this.dataUpdate.id,  'name': this.ruleForm.name, 'content': this.ruleForm.content, 'startDate': dateNow, 'endDate': dateNow   }
+            this.updateDataProduct(dataRequest)
         },
         resetForm(formName) {
-            this.$refs[formName].resetFields();
+            this.ruleForm.name = ''
+            this.ruleForm.content = ''
+        },
+        loadDataProduct () {
+            this.tableData = []
+            let Utils = this.Utils
+            let _this = this
+            product.getProductList().then(response => {
+                response.data.forEach(function (item, index) {
+                    let startDate = Utils.parseDateYYYYMMDD(item.startDate)
+                    let endDate = Utils.parseDateYYYYMMDD(item.endDate)
+                    _this.tableData.push({
+                        'id': item.id,
+                        'name': item.name,
+                        'content': item.content,
+                        'startDate': startDate,
+                        'endDate': endDate,
+                        'status': item.status,
+                        'displayOrder': item.displayOrder
+                    })
+                })
+            })
+        },
+        handleSelectedRow (val) {
+            if (val.length > 1){
+                this.deleteAllItem = true
+                this.deleteDisabled = true
+                this.multipleSelection = val
+            } else {
+                this.deleteAllItem = false
+                this.deleteDisabled = false
+            }
+        },
+        handleSort (data) {
+            console.log(data)
+            product.changeDisplayOrder({ data: data }).then(response => {
+                this.showMsgDialog(response.data, 'Change row')
+            })
+        },
+        editItem (val) {
+            this.updateEdit = false
+            this.editUpdate = true
+            this.dialogVisible = !this.dialogVisible
+            this.ruleForm.name = val.name
+            this.ruleForm.content = val.content
+            this.dataUpdate = val
+            this.title = 'Edit item'
+        },
+        createDataProduct (data) {
+            product.createProductItem(data).then(response => {
+                this.showMsgDialog(response.data, 'Create')
+            })
+        },
+        deleteItem (val) {
+            let dataRequest = { data: val }
+            product.deleteProductItem(dataRequest).then(response => {
+                this.showMsgDialog(response.data, 'Delete')
+            })
+        },
+        updateDataProduct (data) {
+            product.updateProductItem(data).then(response => {
+                this.showMsgDialog(response.data, 'Update')
+            })
+        },
+        deleteAllItems () {
+            this.deleteItem(this.multipleSelection)
+        },
+        showMsgDialog (data, name) {
+            if (data > 0) {
+                this.$message({
+                    message: name + ',' + name + ' is success.',
+                    type: 'success'
+                });
+                this.loadDataProduct()
+                this.handleClosePopup(false)
+            } else {
+                this.$message.error( name + ', ' + name +' is success error.')
+            }
+        },
+        confirmDelete () {
+            this.deleteConfirm = true
+            console.log('vvvvvvvvvvvvvvvvvvvvv')
+        },
+        handleImport () {
+            this.$refs.importExcel.togglePopup()
+            this.title = 'Import'
+        },
+        handleDataFileSelected (val) {
+            // console.log(val)
+            let Utils = this.Utils
+            let product = val.Sheets['product']
+            // console.log(product)
+            let outdataSheetProduct = XLSX.utils.sheet_to_json(product)
+            let dataErrorRequest = []
+            let dataSuccessfulRequest = []
+            let arrSheetProduct = []
+            let arrSheetProductError = []
+            outdataSheetProduct.forEach(function (v, index) {
+                // let obj = {}
+                // obj.STT = w['STT']
+                // obj.Name = w['Name']
+                // obj.startDate = Utils.parseDateYYYYMMDD(w['Start Date'])
+                // obj.endDate = Utils.parseDateYYYYMMDD(w['End Date'])
+                // // obj.startDate = w['Start Date']
+                // // obj.endDate = w['End Date']
+                // obj.status = w['Status']
+                // arrSheetProduct.push(obj)
+                let countCell = index + 2
+                let obj = {}
+                let stt = v['STT']
+                let name = v['Name']
+                let startDate = Utils.parseDateYYYYMMDD(v['Start Date'])
+                let endDate = Utils.parseDateYYYYMMDD(v['End Date'])
+                let status = v['Status']
+                if (Utils.isNumber(stt)) {
+                    obj.STT = stt
+                } else {
+                    arrSheetProductError.push({ 'key': 'A' + countCell, 'title': 'STT', 'value': stt, 'message': 'is not number' })
+                }
+                if (name === null) {
+                    name = ''
+                }
+                obj.Name = name.toString()
+                if (Utils.isDate(startDate)) {
+                    obj.startDate = startDate
+                } else {
+                    arrSheetProductError.push({ 'key': 'C' + countCell, 'title': 'Start Date', 'value': startDate, 'message': 'is not format date' })
+                }
+                if (Utils.isDate(endDate)) {
+                    obj.endDate = endDate
+                } else {
+                    arrSheetProductError.push({ 'key': 'D' + countCell, 'title': 'End Date', 'value': endDate, 'message': 'is not format date' })
+                }
+                if (Utils.isNumber(status)) {
+                    obj.status = status
+                } else {
+                    arrSheetProductError.push({ 'key': 'E' + countCell, 'title': 'Status', 'value': status, 'message': 'is not number' })
+                }
+                arrSheetProduct.push(obj)
+            })
+            if (arrSheetProductError.length > 0) {
+                dataErrorRequest.push({ 'sheetName': 'product', 'error': arrSheetProductError})
+            } else {
+                dataSuccessfulRequest.push({ 'sheetName': 'product', 'error': arrSheetProduct})
+            }
+            let product01 = val.Sheets['product01']
+            let outdataSheetProduct01 = XLSX.utils.sheet_to_json(product01)
+            let arrSheetProduct01 = []
+            let arrSheetProduct01Error = []
+            // console.log(outdataSheetProduct01)
+            outdataSheetProduct01.forEach(function (v, index) {
+                // console.log(v)
+                let countCell = index + 2
+                let obj = {}
+                let stt = v['STT']
+                let name = v['Name']
+                let startDate = Utils.parseDateYYYYMMDD(v['Start Date'])
+                let endDate = Utils.parseDateYYYYMMDD(v['End Date'])
+                let status = v['Status']
+                if (Utils.isNumber(stt)) {
+                    obj.STT = stt
+                } else {
+                    arrSheetProduct01Error.push({ 'key': 'A' + countCell, 'title': 'STT', 'value': stt, 'message': 'is not number' })
+                }
+                if (name === null) {
+                    name = ''
+                }
+                obj.Name = name.toString()
+                if (Utils.isDate(startDate)) {
+                    obj.startDate = startDate
+                } else {
+                    arrSheetProduct01Error.push({ 'key': 'C' + countCell, 'title': 'Start Date', 'value': startDate, 'message': 'is not format date' })
+                }
+                if (Utils.isDate(endDate)) {
+                    obj.endDate = endDate
+                } else {
+                    arrSheetProduct01Error.push({ 'key': 'D' + countCell, 'title': 'End Date', 'value': endDate, 'message': 'is not format date' })
+                }
+                if (Utils.isNumber(status)) {
+                    obj.status = status
+                } else {
+                    arrSheetProduct01Error.push({ 'key': 'E' + countCell, 'title': 'Status', 'value': status, 'message': 'is not number' })
+                }
+                arrSheetProduct01.push(obj)
+            })
+            if (arrSheetProduct01Error.length > 0) {
+                dataErrorRequest.push({ 'sheetName': 'product01', 'error': arrSheetProduct01Error})
+            } else {
+                dataSuccessfulRequest.push({ 'sheetName': 'product', 'error': arrSheetProduct01})
+            }
+            // If is data error format
+            if (dataErrorRequest.length > 0) {
+                this.$refs.importExcel.dataImportError(dataErrorRequest)
+            } else {
+                this.$refs.importExcel.dataSuccessful(dataSuccessfulRequest)
+            }
+        },
+        handleClosePopup (val) {
+            this.dialogVisible = val
+            this.ruleForm.name = ''
+            this.ruleForm.content = ''
+        },
+        handleCallFormCreate () {
+            this.dialogVisible = !this.dialogVisible
+            this.updateEdit = true
+            this.editUpdate = false
+            this.title = 'Add item'
+        },
+        async handleChange (file, fileList) {
+            this.fileList = fileList.slice(-3)
+            if (this.fileList.length > 0) {
+                this.isDisabled = true
+            }
+            // this.filename = file.name
+            // if (this.filename.length > 0) {
+            //     this.ruleForm.inputName = this.filename
+            // }
+            let fileInout = document.querySelector('input[type=file]').files[0]
+            // var file = document.querySelector('#files > input[type="file"]').files[0];
+            let base64 = await this.getBase64(fileInout)
+            console.log(base64)
+        },
+        getBase64(file) {
+            let reader = new FileReader()
+            let a = reader.readAsDataURL(file)
+            // reader.onload = function () {
+            //     a = reader.result
+            // }
+            // reader.onerror = function (error) {
+            //     return error
+            // }
+            return a
+        },
+        importfxx(obj) {
+            console.log(obj)
+            let _this = this
+            let inputDOM = this.$refs.inputer
+            // Retrieving file data through DOM
+
+            this.file = event.currentTarget.files[0]
+
+            let rABS = false //Read the file as a binary string
+            let f = this.file
+
+            let reader = new FileReader()
+            //if (!FileReader.prototype.readAsBinaryString) {
+            FileReader.prototype.readAsBinaryString = function(f) {
+                let binary = ''
+                let rABS = false //Read the file as a binary string
+                let pt = this
+                let wb //Read completed data
+                let outdata
+                let reader = new FileReader()
+                reader.onload = function(e) {
+                    let bytes = new Uint8Array(reader.result)
+                    let length = bytes.byteLength
+                    for (let i = 0; i < length; i++) {
+                        binary += String.fromCharCode(bytes[i])
+                    }
+                    //If not introduced in main.js, you need to introduce it here to parse excel
+                    // let XLSX = require('xlsx')
+                    if (rABS) {
+                        wb = XLSX.read(btoa(fixdata(binary)), {
+                            //Manual conversion
+                            type: 'base64'
+                        })
+                    } else {
+                        wb = XLSX.read(binary, {
+                            type: 'binary'
+                        })
+                    }
+                    outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])
+                    console.log(outdata)
+                    //outdata is read data (without header rows or headers, the header will be the subscript of the object)
+                    //Data can be processed here.
+                    // let arr = []
+                    outdata.map(v => {
+                        let obj = {}
+                        obj.STT = v['STT']
+                        obj.Name = v['Name']
+                        obj.startDate = v['Start Date']
+                        obj.endDate = v['End Date']
+                        obj.status = v['Status']
+                        // arr.push(obj)
+                        console.log(obj)
+                    })
+                    // _this.da=arr
+                    // _this.dalen=arr.length
+                    // return arr
+                }
+                reader.readAsArrayBuffer(f)
+            }
+            if (rABS) {
+                reader.readAsArrayBuffer(f)
+            } else {
+                reader.readAsBinaryString(f)
+            }
         }
     }
 }
 </script>
+<style>
+.product-list .popup-add-edit .el-dialog{
+    width: 80%;
+}
+.popup-import .el-dialog{
+    width: 40%;
+}
+.app-list-data .el-table .el-table__body tbody tr td.el-table_1_column_3 {
+    text-align: left;
+}
+.product-list .popup-import .form-data .row-import{
+    position: relative;
+}
+.product-list .popup-import .form-data .row-import .import-data .el-upload button{
+    margin-right: 150px;
+}
+.product-list .popup-import .form-data .btn-submit {
+    position: absolute;
+    top: 0;
+}
+</style>

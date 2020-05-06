@@ -44,3 +44,66 @@
 .app-list-data .el-table td{
   text-align: center;
 }
+.icon-row-responsive {
+    padding-left: 5px;
+}
+.form-data .el-row i{
+    cursor: pointer;
+}
+/*@media screen*/
+@media screen and (max-width:1500px){
+    .el-button {
+        padding: 10px 15px !important;
+    }
+}
+@media screen and (max-width:1450px){
+    .el-button {
+        padding: 6px 10px !important;
+    }
+}
+
+@media screen and (max-width:1450px){
+    .icon-row-responsive {
+        display: none;
+    }
+}
+@media screen and (max-width:930px){
+    .icon-row-responsive {
+        display: none;
+    }
+    .el-button {
+        font-size: 12px !important;
+        padding: 4px 6px !important;
+    }
+}
+
+@media screen and (max-width:840px){
+    .icon-row-responsive {
+        display: none;
+    }
+    .el-button {
+        font-size: 10px !important;
+        padding: 4px 6px !important;
+    }
+}
+@media screen and (max-width:630px){
+    .icon-row-responsive {
+        display: none;
+    }
+    .el-button {
+        font-size: 8px !important;
+        padding: 2px 3px !important;
+    }
+}
+.upload-excel {
+    max-width: 500px;
+}
+/*.el-col-btn .el-button,*/
+/*.el-col-btn .upload-excel .el-upload,*/
+/*.el-col-btn .upload-excel .el-upload__tipf,*/
+/*.el-col-btn .upload-excel .el-upload-list{*/
+    /*float: right;*/
+/*}*/
+.el-col-btn {
+    white-space: nowrap;
+}

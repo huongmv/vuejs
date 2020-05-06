@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="width: 20%; padding-left: 4px;">
         <el-row>
             <el-col :span="10">{{ title }}</el-col>
             <el-col :span="14" align="right">
@@ -8,7 +8,7 @@
             </el-col>
         </el-row>
         <div class="app-search-form" v-show="isHiddenSearchPanel == false">
-            <el-form label-width="130px" :model="model" :rules="rules" ref="searchForm" style="width: 80%; padding-left: 4px;">
+            <el-form label-width="130px" :model="model" :rules="rules" ref="searchForm">
                 <slot></slot>
                 <el-form-item align="center">
                     <el-button type="primary" icon="el-icon-search" @click="handleSearch">検索</el-button>
@@ -24,7 +24,8 @@
         props: {
             title: String,
             model: Object,
-            rules: Object
+            rules: Object,
+            width: 'style="width: 20%; padding-left: 4px;"'
         },
         data () {
             return {

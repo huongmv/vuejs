@@ -14,6 +14,19 @@ const Utils =  {
         /**https://momentjs.com/docs/*/
         moment.locale(local);
         return moment().format(styleDate)
+    },
+    getDateYYYYMMDDHHmmss () {
+        let startDate = new Date()
+        return moment.parseZone(startDate).format('YYYY-MM-DD HH:mm:ss')
+    },
+    parseDateYYYYMMDD (date) {
+    return moment.parseZone(date).format('YYYY-MM-DD')
+    },
+    isNumber (number) {
+        return /^-?[\d.]+(?:e-?\d+)?$/.test(number)
+    },
+    isDate (date) {
+        return moment(date).isValid()
     }
 }
 export default Utils
