@@ -47,32 +47,7 @@
             </el-form-item>
         </create-form>
     </pop-up>
-    <import-excel ref="importExcel" @dataFileSelected="handleDataFileSelected"></import-excel>
-    <!--<pop-up :dialog-visible="dialogImportVisible"-->
-            <!--@closePopup="handleClosePopupImport"  class="popup-import">-->
-        <!--<create-form :model="ruleForm" :rules="rules" :title="title" v-show="createFormProduct"-->
-                     <!--:width="300">-->
-            <!--<el-row class="row-import">-->
-                <!--<el-upload-->
-                        <!--class="import-data"-->
-                        <!--id="upload"-->
-                        <!--action=""-->
-                        <!--:on-change="handleChange"-->
-                        <!--:file-list="fileList"-->
-                        <!--:limit="1"-->
-                        <!--:on-remove="handleRemoveFile"-->
-                        <!--:before-remove="beforeRemoveFile"-->
-                        <!--:show-file-list="true"-->
-                        <!--:auto-upload="false">-->
-                    <!--<el-button type="primary" :disabled="isDisabled">Select file <i class="el-icon-upload el-icon-right"></i></el-button>-->
-                <!--</el-upload>-->
-                <!--<el-button type="success" class="btn-submit" :loading="loading" @click="submitImport">Import to server <i class="el-icon-upload2"></i></el-button>-->
-            <!--</el-row>-->
-            <!--<el-row>-->
-                <!--<div>Files upload with a size less than 500kb</div>-->
-            <!--</el-row>-->
-        <!--</create-form>-->
-    <!--</pop-up>-->
+    <import-excel ref="importExcel" @dataFileSelected="handleDataFileSelected" @importData="handleImportData"></import-excel>
     </div>
 </template>
 <script>
@@ -248,15 +223,6 @@ export default {
             let arrSheetProduct = []
             let arrSheetProductError = []
             outdataSheetProduct.forEach(function (v, index) {
-                // let obj = {}
-                // obj.STT = w['STT']
-                // obj.Name = w['Name']
-                // obj.startDate = Utils.parseDateYYYYMMDD(w['Start Date'])
-                // obj.endDate = Utils.parseDateYYYYMMDD(w['End Date'])
-                // // obj.startDate = w['Start Date']
-                // // obj.endDate = w['End Date']
-                // obj.status = w['Status']
-                // arrSheetProduct.push(obj)
                 let countCell = index + 2
                 let obj = {}
                 let stt = v['STT']
@@ -293,21 +259,18 @@ export default {
             if (arrSheetProductError.length > 0) {
                 dataErrorRequest.push({ 'sheetName': 'product', 'error': arrSheetProductError})
             } else {
-                dataSuccessfulRequest.push({ 'sheetName': 'product', 'error': arrSheetProduct})
+                dataSuccessfulRequest.push({ 'sheetName': 'product', 'dataList': arrSheetProduct})
             }
             let product01 = val.Sheets['product01']
             let outdataSheetProduct01 = XLSX.utils.sheet_to_json(product01)
             let arrSheetProduct01 = []
             let arrSheetProduct01Error = []
-            // console.log(outdataSheetProduct01)
             outdataSheetProduct01.forEach(function (v, index) {
                 // console.log(v)
                 let countCell = index + 2
                 let obj = {}
                 let stt = v['STT']
                 let name = v['Name']
-                let startDate = Utils.parseDateYYYYMMDD(v['Start Date'])
-                let endDate = Utils.parseDateYYYYMMDD(v['End Date'])
                 let status = v['Status']
                 if (Utils.isNumber(stt)) {
                     obj.STT = stt
@@ -318,16 +281,6 @@ export default {
                     name = ''
                 }
                 obj.Name = name.toString()
-                if (Utils.isDate(startDate)) {
-                    obj.startDate = startDate
-                } else {
-                    arrSheetProduct01Error.push({ 'key': 'C' + countCell, 'title': 'Start Date', 'value': startDate, 'message': 'is not format date' })
-                }
-                if (Utils.isDate(endDate)) {
-                    obj.endDate = endDate
-                } else {
-                    arrSheetProduct01Error.push({ 'key': 'D' + countCell, 'title': 'End Date', 'value': endDate, 'message': 'is not format date' })
-                }
                 if (Utils.isNumber(status)) {
                     obj.status = status
                 } else {
@@ -338,7 +291,7 @@ export default {
             if (arrSheetProduct01Error.length > 0) {
                 dataErrorRequest.push({ 'sheetName': 'product01', 'error': arrSheetProduct01Error})
             } else {
-                dataSuccessfulRequest.push({ 'sheetName': 'product', 'error': arrSheetProduct01})
+                dataSuccessfulRequest.push({ 'sheetName': 'product01', 'dataList': arrSheetProduct01})
             }
             // If is data error format
             if (dataErrorRequest.length > 0) {
@@ -346,6 +299,11 @@ export default {
             } else {
                 this.$refs.importExcel.dataSuccessful(dataSuccessfulRequest)
             }
+        },
+        handleImportData (val) {
+            product.importDataExcel({ data: val }).then(response => {
+                console.log(response)
+            })
         },
         handleClosePopup (val) {
             this.dialogVisible = val
@@ -382,71 +340,6 @@ export default {
             //     return error
             // }
             return a
-        },
-        importfxx(obj) {
-            console.log(obj)
-            let _this = this
-            let inputDOM = this.$refs.inputer
-            // Retrieving file data through DOM
-
-            this.file = event.currentTarget.files[0]
-
-            let rABS = false //Read the file as a binary string
-            let f = this.file
-
-            let reader = new FileReader()
-            //if (!FileReader.prototype.readAsBinaryString) {
-            FileReader.prototype.readAsBinaryString = function(f) {
-                let binary = ''
-                let rABS = false //Read the file as a binary string
-                let pt = this
-                let wb //Read completed data
-                let outdata
-                let reader = new FileReader()
-                reader.onload = function(e) {
-                    let bytes = new Uint8Array(reader.result)
-                    let length = bytes.byteLength
-                    for (let i = 0; i < length; i++) {
-                        binary += String.fromCharCode(bytes[i])
-                    }
-                    //If not introduced in main.js, you need to introduce it here to parse excel
-                    // let XLSX = require('xlsx')
-                    if (rABS) {
-                        wb = XLSX.read(btoa(fixdata(binary)), {
-                            //Manual conversion
-                            type: 'base64'
-                        })
-                    } else {
-                        wb = XLSX.read(binary, {
-                            type: 'binary'
-                        })
-                    }
-                    outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])
-                    console.log(outdata)
-                    //outdata is read data (without header rows or headers, the header will be the subscript of the object)
-                    //Data can be processed here.
-                    // let arr = []
-                    outdata.map(v => {
-                        let obj = {}
-                        obj.STT = v['STT']
-                        obj.Name = v['Name']
-                        obj.startDate = v['Start Date']
-                        obj.endDate = v['End Date']
-                        obj.status = v['Status']
-                        // arr.push(obj)
-                        console.log(obj)
-                    })
-                    // _this.da=arr
-                    // _this.dalen=arr.length
-                    // return arr
-                }
-                reader.readAsArrayBuffer(f)
-            }
-            if (rABS) {
-                reader.readAsArrayBuffer(f)
-            } else {
-                reader.readAsBinaryString(f)
-            }
         }
     }
 }
