@@ -24,8 +24,7 @@
         props: {
             title: String,
             model: Object,
-            rules: Object,
-            width: 'style="width: 20%; padding-left: 4px;"'
+            rules: Object
         },
         data () {
             return {

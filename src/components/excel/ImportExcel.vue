@@ -65,6 +65,8 @@ export default {
     methods: {
         togglePopup() {
           this.state = !this.state
+          this.loading = false
+          this.fileList = []
         },
         handleClosePopupImport () {
             this.state = false
@@ -86,7 +88,7 @@ export default {
             this.dataImportExcel = val
         },
         handleRemoveFile () {
-            this.filename = ''
+            this.fileList = []
         },
         validateDataFile (val) {
             this.$emit('dataFileSelected', val)
@@ -114,15 +116,6 @@ export default {
                 this.fileList = []
                 this.$message({ type:'warning', message:'Please upload the attachment!'})
             }
-        },
-        //Processing method when exceeding the maximum number of uploaded files
-        handleExceed(){
-            this.$message({ type:'warning', message:'Exceed the maximum number of uploaded files limit!' })
-            return
-        },
-        //How to remove files
-        handleRemove(file,fileList){
-            this.fileTemp = null
         }
     }
 }

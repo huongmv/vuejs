@@ -47,7 +47,6 @@ export default {
         })
     },
     importDataExcel (data) {
-        console.log(data)
         return new Promise((resolve, reject) => {
             ApiService.post('/admin/product/importExcel', data).then(response => {
                 resolve(response)

@@ -58,7 +58,6 @@ import product from '@/api/product/index'
 import DownLoadExcel from '@/components/excel/ExportExcel'
 import ImportExcel from '@/components/excel/ImportExcel'
 import XLSX from 'xlsx'
-import moment from 'moment'
 export default {
     components: {
         TableData,
@@ -159,7 +158,6 @@ export default {
             }
         },
         handleSort (data) {
-            console.log(data)
             product.changeDisplayOrder({ data: data }).then(response => {
                 this.showMsgDialog(response.data, 'Change row')
             })
@@ -204,19 +202,13 @@ export default {
                 this.$message.error( name + ', ' + name +' is success error.')
             }
         },
-        confirmDelete () {
-            this.deleteConfirm = true
-            console.log('vvvvvvvvvvvvvvvvvvvvv')
-        },
         handleImport () {
             this.$refs.importExcel.togglePopup()
             this.title = 'Import'
         },
         handleDataFileSelected (val) {
-            // console.log(val)
             let Utils = this.Utils
             let product = val.Sheets['product']
-            // console.log(product)
             let outdataSheetProduct = XLSX.utils.sheet_to_json(product)
             let dataErrorRequest = []
             let dataSuccessfulRequest = []
@@ -266,7 +258,6 @@ export default {
             let arrSheetProduct01 = []
             let arrSheetProduct01Error = []
             outdataSheetProduct01.forEach(function (v, index) {
-                // console.log(v)
                 let countCell = index + 2
                 let obj = {}
                 let stt = v['STT']
@@ -302,7 +293,8 @@ export default {
         },
         handleImportData (val) {
             product.importDataExcel({ data: val }).then(response => {
-                console.log(response)
+                this.$refs.importExcel.togglePopup()
+                this.showMsgDialog(response.data, 'Import')
             })
         },
         handleClosePopup (val) {
@@ -315,31 +307,6 @@ export default {
             this.updateEdit = true
             this.editUpdate = false
             this.title = 'Add item'
-        },
-        async handleChange (file, fileList) {
-            this.fileList = fileList.slice(-3)
-            if (this.fileList.length > 0) {
-                this.isDisabled = true
-            }
-            // this.filename = file.name
-            // if (this.filename.length > 0) {
-            //     this.ruleForm.inputName = this.filename
-            // }
-            let fileInout = document.querySelector('input[type=file]').files[0]
-            // var file = document.querySelector('#files > input[type="file"]').files[0];
-            let base64 = await this.getBase64(fileInout)
-            console.log(base64)
-        },
-        getBase64(file) {
-            let reader = new FileReader()
-            let a = reader.readAsDataURL(file)
-            // reader.onload = function () {
-            //     a = reader.result
-            // }
-            // reader.onerror = function (error) {
-            //     return error
-            // }
-            return a
         }
     }
 }
