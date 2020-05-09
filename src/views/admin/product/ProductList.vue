@@ -1,5 +1,6 @@
 <template>
     <div id="product-list" class="product-list">
+    <form-search></form-search>
     <table-data
         :table-data="tableData"
         :has-pagination="true"
@@ -53,6 +54,7 @@
 <script>
 import TableData from '@/components/table/TableData'
 import FormData from '@/components/form/FormData'
+import FormSearch from './ProductSearch'
 import Popup from '@/components/popup/Popup'
 import product from '@/api/product/index'
 import DownLoadExcel from '@/components/excel/ExportExcel'
@@ -64,7 +66,8 @@ export default {
         'create-form': FormData,
         'pop-up': Popup,
         'down-load-excel': DownLoadExcel,
-        'import-excel': ImportExcel
+        'import-excel': ImportExcel,
+        'form-search': FormSearch
     },
     data () {
         return {
