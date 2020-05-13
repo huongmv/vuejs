@@ -54,5 +54,15 @@ export default {
                 reject(error)
             })
         })
+    },
+    searchData () {
+        // admin/searchProduct
+        return new Promise((resolve, reject) => {
+            ApiService.get('/admin/searchProduct').then(response => {
+                resolve(response)
+            }).catch(error => {
+                reject(error)
+            })
+        })
     }
 }

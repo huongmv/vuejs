@@ -11,29 +11,30 @@
         <div class="navbar-collapse collapse" id="collapse-1">
             <!-- Nav Left -->
             <ul class="nav navbar-nav">
-                <!-- Products -->
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="fa fa-tags"></span><span class="link"> Products</span> <span class="fa fa-caret-down"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><span class="fa fa-tag"></span> Catalogue 1</a></li>
-                        <li><a href="#"><span class="fa fa-tag"></span> Catalogue 2</a></li>
-                    </ul>
-                </li>
-                <!-- Services -->
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="fa fa-gears"></span><span class="link"> Services</span> <span class="fa fa-caret-down"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><span class="fa fa-gear"></span> Service 1</a></li>
-                        <li><a href="#"><span class="fa fa-gear"></span> Service 2</a></li>
-                        <li><a href="#"><span class="fa fa-gear"></span> Service 3</a></li>
-                    </ul>
-                </li>
-                <!-- About -->
-                <li><a href="#"><span class="fa fa-info-circle"></span><span class="link"> About</span></a></li>
-                <!-- Contact -->
-                <li><a href="#"><span class="fa fa-phone"></span><span class="link"> Contact</span></a></li>
+                <!--&lt;!&ndash; Products &ndash;&gt;-->
+                <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">-->
+                        <!--<span class="fa fa-tags"></span><span class="link"> Products</span> <span class="fa fa-caret-down"></span></a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li><a href="#"><span class="fa fa-tag"></span> Catalogue 1</a></li>-->
+                        <!--<li><a href="#"><span class="fa fa-tag"></span> Catalogue 2</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--&lt;!&ndash; Services &ndash;&gt;-->
+                <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">-->
+                        <!--<span class="fa fa-gears"></span><span class="link"> Services</span> <span class="fa fa-caret-down"></span></a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li><a href="#"><span class="fa fa-gear"></span> Service 1</a></li>-->
+                        <!--<li><a href="#"><span class="fa fa-gear"></span> Service 2</a></li>-->
+                        <!--<li><a href="#"><span class="fa fa-gear"></span> Service 3</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--&lt;!&ndash; About &ndash;&gt;-->
+                <!--<li><a href="#"><span class="fa fa-info-circle"></span><span class="link"> About</span></a></li>-->
+                <!--&lt;!&ndash; Contact &ndash;&gt;-->
+                <!--<li><a href="#"><span class="fa fa-phone"></span><span class="link"> Contact</span></a></li>-->
+                <li><country-dropdown></country-dropdown></li>
             </ul>
         </div>
         <!--End menu-->
@@ -71,6 +72,10 @@
                     </form>
                 </div>
             </li>
+            <!-- Nav Item - country Dropdown (Visible Only XS) -->
+            <!--<li class="nav-item dropdown no-arrow d-sm-none">-->
+                <!--<country-dropdown></country-dropdown>-->
+            <!--</li>-->
 
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
@@ -212,3 +217,11 @@
     </nav>
     <!-- End of Topbar -->
 </template>
+<script>
+import Country from '../../localStorage/Country'
+export default {
+    components: {
+       'country-dropdown': Country
+    }
+}
+</script>

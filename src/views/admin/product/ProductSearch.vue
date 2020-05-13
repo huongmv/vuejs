@@ -37,6 +37,7 @@
     </div>
 </template>
 <script>
+import product from '@/api/product/index'
 export default {
     data () {
         return {
@@ -68,7 +69,7 @@ export default {
         submitForm(ruleSearch) {
             this.$refs[ruleSearch].validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    this.searchDataProduct()
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -77,7 +78,19 @@ export default {
         },
         resetForm(ruleSearch) {
             this.$refs[ruleSearch].resetFields();
+        },
+        searchDataProduct () {
+            let data = {}
+            product.searchData().then(response => {
+                console.log(response)
+            })
         }
+    },
+    mounted(){
+        console.log('App Mounted');
+        if (localStorage.getItem('country'))
+            // this.todo_items = JSON.parse(localStorage.getItem('todo_items'));
+            console.log(localStorage.getItem('country'))
     }
 }
 </script>
@@ -87,7 +100,6 @@ export default {
     padding-bottom: 20px;
 }
 .pr-search .el-form {
-    width: 50%;
     padding: 20px 10px;
     border: 1px solid #cccccc;
     border-radius: 10px;

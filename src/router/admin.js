@@ -18,14 +18,23 @@ const routesAdmin =
                     requiresAuth: false,
                     title: 'Table Data'
                 }
-            }
-            ,{
+            },
+            {
                 path: '/admin/productAdmin',
                 name: 'productAdmin',
                 component: () => import('../views/admin/product/ProductList'),
                 meta: {
                     requiresAuth: false,
                     title: 'Product Admin'
+                }
+            },
+            {
+                path: '/admin/demoLocalStorage',
+                name: 'demoLocalStorage',
+                component: () => import('../views/demo/LocalStorage'),
+                meta: {
+                    requiresAuth: false,
+                    title: 'DemoLocal Storage'
                 }
             }
         ]

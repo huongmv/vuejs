@@ -15,6 +15,29 @@ const routesClient =
                 path: '/',
                 name: 'Home',
                 component: () => import('../views/client/home/Home')
+            },
+            {
+                path: '/user',
+                name: 'user',
+                component: () => import('../views/login/User')
+            },
+            {
+                path: '/login',
+                name: 'login',
+                component: () => import('../views/login/Login')
+            },
+            {
+                path: '/register',
+                name: 'register',
+                component: () => import('../views/login/Register')
+            },
+            {
+                path: '/secure',
+                name: 'Secure',
+                component: () => import('../views/login/Secure'),
+                meta: {
+                    requiresAuth: true
+                }
             }
         ]
     }

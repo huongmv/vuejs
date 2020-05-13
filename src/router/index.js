@@ -2,7 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routesClient from './client'
 import routesAdmin from './admin'
+import store from '@/store/index'
 Vue.use(VueRouter)
+
 
   const routes = [
       routesClient,
@@ -10,9 +12,22 @@ Vue.use(VueRouter)
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
 })
 
+router.beforeEach((to, from, next) => {
+    if(to.matched.some(record => record.meta.requiresAuth)) {
+        if (store.getters.isLoggedIn) {
+            next()
+            return
+        }
+        console.log('requiresAuth')
+        next('/login')
+    } else {
+        console.log('Not requiresAuth')
+        next()
+    }
+})
 export default router
