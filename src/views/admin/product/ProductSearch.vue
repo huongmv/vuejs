@@ -69,7 +69,21 @@ export default {
         submitForm(ruleSearch) {
             this.$refs[ruleSearch].validate((valid) => {
                 if (valid) {
-                    this.searchDataProduct()
+                    let utils = this.Utils
+                    let startDate = utils.parseDateYYYYMMDDHHmmss(this.ruleForm.startDate)
+                    let endDate = utils.parseDateYYYYMMDDHHmmss(this.ruleForm.endDate)
+                    let delivery = 1
+                    if (this.ruleForm.delivery) {
+                        delivery = 2
+                    }
+                    let dataSearch = {
+                        'productName': this.ruleForm.productName,
+                        'startDate': startDate,
+                        'endDate': endDate,
+                        'delivery': delivery
+                    }
+                    console.log(dataSearch)
+                    this.searchDataProduct(dataSearch)
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -79,9 +93,8 @@ export default {
         resetForm(ruleSearch) {
             this.$refs[ruleSearch].resetFields();
         },
-        searchDataProduct () {
-            let data = {}
-            product.searchData().then(response => {
+        searchDataProduct (dataSearch) {
+            product.searchData(dataSearch).then(response => {
                 console.log(response)
             })
         }

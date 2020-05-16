@@ -55,10 +55,9 @@ export default {
             })
         })
     },
-    searchData () {
-        // admin/searchProduct
+    searchData (dataSearch) {
         return new Promise((resolve, reject) => {
-            ApiService.get('/admin/searchProduct').then(response => {
+            ApiService.post('/admin/searchProduct', dataSearch).then(response => {
                 resolve(response)
             }).catch(error => {
                 reject(error)

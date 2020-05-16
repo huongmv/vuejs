@@ -27,6 +27,13 @@ const Utils =  {
     },
     isDate (date) {
         return moment(date).isValid()
+    },
+    parseDateToTimeStamp (date) {
+        let localTime = moment(date).format('YYYY-MM-DD HH:mm:ss')
+        return moment(localTime).format("X")
+    },
+    parseDateYYYYMMDDHHmmss (date) {
+        return moment.parseZone(date).format('YYYY-MM-DD HH:mm:ss')
     }
 }
 export default Utils
