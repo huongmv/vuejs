@@ -55,6 +55,15 @@ export default {
             })
         })
     },
+    importDataExcelBase64 (data) {
+        return new Promise((resolve, reject) => {
+            ApiService.post('/admin/product/importExcelBase64', data).then(response => {
+                resolve(response)
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
     searchData (dataSearch) {
         return new Promise((resolve, reject) => {
             ApiService.post('/admin/searchProduct', dataSearch).then(response => {

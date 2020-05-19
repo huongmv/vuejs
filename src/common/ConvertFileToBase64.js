@@ -1,9 +1,18 @@
-const toBase64 = file => new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = error => reject(error)
-})
+
+const toBase64 = {
+    getBase64 (fileInput) {
+        console.log('vvvvvvvvvvvvvvvv')
+        // let fileInout = document.querySelector('input[type=file]').fileInput[0]
+        let reader = new FileReader()
+        reader.onload = function (e) {
+            console.log(e.target.result)
+            return e.target.result
+        }
+        if (fileInput) {
+            reader.readAsDataURL(fileInput)
+        }
+    }
+}
 
 export default toBase64
 

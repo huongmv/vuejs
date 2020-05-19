@@ -12,6 +12,7 @@
         @on-sort="handleSort">
         <el-col :span="23" class="el-col-btn" slot="button" align="right">
             <down-load-excel :data-export="tableData" :file-name="fileName"></down-load-excel>
+            <el-button type="primary" @click="handleImportBase64">Import base64 <i class="el-icon-upload el-icon-right"></i></el-button>
             <el-button type="primary" @click="handleImport">Import <i class="el-icon-upload el-icon-right"></i></el-button>
             <el-button type="primary" icon="el-icon-plus" @click="handleCallFormCreate">Add item</el-button>
             <el-button type="danger" v-show="deleteAllItem" icon="el-icon-delete"  @click="deleteAllItems">Delete All</el-button>
@@ -49,6 +50,7 @@
         </create-form>
     </pop-up>
     <import-excel ref="importExcel" @dataFileSelected="handleDataFileSelected" @importData="handleImportData"></import-excel>
+    <import-base64 ref="importBase64" @importDataBase64="handleImportDataBase64"></import-base64>
     </div>
 </template>
 <script>
@@ -59,6 +61,7 @@ import Popup from '@/components/popup/Popup'
 import product from '@/api/product/index'
 import DownLoadExcel from '@/components/excel/ExportExcel'
 import ImportExcel from '@/components/excel/ImportExcel'
+import ImportBase64 from '@/components/excel/ImportBase64'
 import XLSX from 'xlsx'
 export default {
     components: {
@@ -67,7 +70,8 @@ export default {
         'pop-up': Popup,
         'down-load-excel': DownLoadExcel,
         'import-excel': ImportExcel,
-        'form-search': FormSearch
+        'form-search': FormSearch,
+        'import-base64': ImportBase64
     },
     data () {
         return {
@@ -205,6 +209,9 @@ export default {
                 this.$message.error( name + ', ' + name +' is success error.')
             }
         },
+        handleImportBase64 () {
+            this.$refs.importBase64.togglePopup()
+        },
         handleImport () {
             this.$refs.importExcel.togglePopup()
             this.title = 'Import'
@@ -293,6 +300,13 @@ export default {
             } else {
                 this.$refs.importExcel.dataSuccessful(dataSuccessfulRequest)
             }
+        },
+        handleImportDataBase64 (val) {
+            console.log(val)
+            product.importDataExcelBase64(val).then(response => {
+                this.$refs.importExcelBase64.togglePopup()
+                this.showMsgDialog(response.data, 'Import')
+            })
         },
         handleImportData (val) {
             product.importDataExcel({ data: val }).then(response => {
