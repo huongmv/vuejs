@@ -9,13 +9,24 @@ import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 import JQuery from 'jquery'
 import Utils from './common/Utils'
-
+import i18n from './i18n'
 Vue.config.productionTip = false
 Vue.prototype._$ = JQuery
 Vue.prototype.Utils = Utils
+
+const EventBus = new Vue()
+Object.defineProperties(Vue.prototype, {
+    $bus: {
+        get: function () {
+            return EventBus
+        }
+    }
+})
 Vue.use(ElementUI)
 new Vue({
   router,
+  i18n,
+  EventBus,
   store,
   render: h => h(App)
 }).$mount('#app')

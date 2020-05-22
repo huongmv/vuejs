@@ -1,16 +1,17 @@
 <template>
 <div class="app-country">
-    <el-select v-model="value1" placeholder="Select">
+    <el-select v-model="value1" placeholder="Select" @change="handleChang">
         <el-option
             v-for="item in country"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            :key="item.id"
+            :label="item.countryName"
+            :value="item.countryCode">
         </el-option>
     </el-select>
 </div>
 </template>
 <script>
+import dataCountry from '@/api/cmn/index'
 export default {
     data () {
         return {
@@ -18,24 +19,28 @@ export default {
             value1: []
         }
     },
-    mounted() {
-        this.country =  [{
-            value: '1',
-            label: 'VN'
-        }, {
-            value: '2',
-            label: 'JA'
-        }, {
-            value: '3',
-            label: 'USA'
-        }]
+    async mounted() {
+        await dataCountry.dataCountry().then(res => {
+            let _this = this
+            this.country = []
+            res.data.forEach(function (item) {
+                _this.country.push({ 'id': item.id,'countryName': item.countryName,'countryCode': item.countryCode })
+            })
+        })
         localStorage.setItem('country', JSON.stringify(this.country))
-        // console.log(localStorage.getItem('country'))
+        console.log(localStorage.getItem('country'))
     },
-    watch: {
-        country(newCountry) {
-            localStorage.setItem('country', JSON.stringify(newCountry))
+    methods: {
+        handleChang () {
+            this.$bus.$emit('refreshCountry', this.value1)
+            console.log(this.value1)
         }
     }
+    // ,
+    // watch: {
+    //     country(newCountry) {
+    //         localStorage.setItem('country', JSON.stringify(newCountry))
+    //     }
+    // }
 }
 </script>

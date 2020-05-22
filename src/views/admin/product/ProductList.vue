@@ -1,5 +1,6 @@
 <template>
     <div id="product-list" class="product-list">
+    <p>{{ $t('message.hello') }}</p>
     <form-search></form-search>
     <table-data
         :table-data="tableData"
