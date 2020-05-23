@@ -1,11 +1,8 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-// import ja from '@/language/ja.json'
-// import vi from '@/language/vi.json'
-// import en from '@/language/en.json'
 
 Vue.use(VueI18n)
-
+Vue.prototype.$_lenguage = 'ja'
 function loadLocaleMessages () {
     const locales = require.context('./language', true, /[A-Za-z0-9-_,\s]+\.json$/i)
     const messages = {}
@@ -19,25 +16,11 @@ function loadLocaleMessages () {
     console.log(messages)
     return messages
 }
-const bus = new Vue();
-bus.$on('refreshCountry', (data) => {
-    console.log('=======================')
-   console.log(data)
-})
+
 const i18n = new VueI18n({
-    locale: process.env.VUE_APP_I18N_LOCALE || 'en',
-    fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
+    locale: Vue.prototype.$_lenguage || 'en',
+    fallbackLocale: Vue.prototype.$_lenguage || 'en',
     messages: loadLocaleMessages()
 })
-console.log(i18n)
+console.log(Vue.prototype.$_lenguage)
 export default i18n
-// const i18n = new VueI18n({
-//     locale: 'en',
-//     messages: {
-//         'ja': ja,
-//         'vi': vi,
-//         'en': en
-//     }
-// })
-// console.log(i18n)
-// export default i18n

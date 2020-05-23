@@ -1,7 +1,5 @@
 {
-  "vi": {
-    "message": {
-      "hello": "hello world VI"
-    }
+  "message": {
+    "hello": "hello world VI"
   }
 }

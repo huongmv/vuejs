@@ -1,7 +1,5 @@
 {
-  "ja": {
-    "message": {
-      "hello": "hello world JA"
-    }
+  "message": {
+    "hello": "hello world JA"
   }
 }

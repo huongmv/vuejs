@@ -1,6 +1,6 @@
 <template>
 <div class="app-country">
-    <el-select v-model="value1" placeholder="Select" @change="handleChang">
+    <el-select v-model="$i18n.locale" placeholder="Select" @change="handleChang">
         <el-option
             v-for="item in country"
             :key="item.id"
@@ -34,7 +34,11 @@ export default {
         handleChang () {
             this.$bus.$emit('refreshCountry', this.value1)
             console.log(this.value1)
+            this.$_lenguage = this.value1
         }
+    },
+    beforeCreate () {
+        this.$_lenguage = this.value1
     }
     // ,
     // watch: {
