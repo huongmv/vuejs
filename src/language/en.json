@@ -1,5 +1,32 @@
 {
   "message": {
-    "hello": "hello world EN"
+    "hello": "hello world EN",
+    "please_input_name": "Please input name.",
+    "please_input_content.": "Please input content.",
+    "length_should_30_50": "Length should be 3 to 50."
+  },
+  "btn": {
+    "export": "Export",
+    "import": "Import",
+    "add_item": "Add item",
+    "import_base64": "Import base64",
+    "edit": "Edit",
+    "delete": "Delete",
+    "delete_all": "Delete All",
+    "search": "Search",
+    "reset": "Reset"
+  },
+  "table": {
+    "stt": "STT",
+    "name": "Name",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "status": "Status"
+  },
+  "product": {
+    "product_name": "Product name",
+    "deadline": "Deadline",
+    "status": "status",
+    "place_holder_pick_date" : "Pick a date"
   }
 }

@@ -4,11 +4,13 @@ import axios from 'axios'
 import Constants from '../common/Constants'
 Vue.use(Vuex)
 
+const CHANGE_COUNTRY = 'countryChange'
 export default new Vuex.Store({
   state: {
       status: '',
       token: localStorage.getItem('token') || '',
-      user : {}
+      user : {},
+      countryChange: localStorage.getItem('countryChange') || ''
   },
   mutations: {
       auth_request(state){
@@ -25,6 +27,9 @@ export default new Vuex.Store({
       logout(state){
           state.status = ''
           state.token = ''
+      },
+      CHANGE_COUNTRY(state) {
+          state.countryChange = localStorage.getItem('countryChange') || ''
       }
   },
   actions: {
@@ -47,6 +52,9 @@ export default new Vuex.Store({
                       reject(err)
                   })
           })
+      },
+      changeCountry({commit}) {
+        commit(CHANGE_COUNTRY)
       },
       register({commit}, user){
           console.log('register')
@@ -83,5 +91,6 @@ export default new Vuex.Store({
     getters : {
         isLoggedIn: state => !!state.token,
         authStatus: state => state.status,
+        countryChange: state => state.countryChange
     }
 })

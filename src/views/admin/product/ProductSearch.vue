@@ -1,5 +1,6 @@
 <template>
     <div class="pr-search">
+        <el-row> <label>{{ countryChange }}  aa</label></el-row>
         <el-row>
             <el-col :span="1" align="left" style="font-size: 24px; font-weight: bold">
                 <i class="el-icon-remove-outline" v-if="isHiddenSearchPanel == false" @click="handleHideSearchPanel"></i>
@@ -8,41 +9,44 @@
             <el-col :span="10" align="left" style="font-size: 24px; font-weight: bold">{{ title }}</el-col>
         </el-row>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
-            <el-form-item label="Product name" prop="productName">
+            <el-form-item :label="$t('product.product_name')" prop="productName">
                 <el-input v-model="ruleForm.productName"></el-input>
             </el-form-item>
-            <el-form-item label="Deadline" required>
+            <el-form-item :label="$t('product.deadline')" required>
                 <el-col :span="6">
                     <el-form-item prop="startDate">
-                        <el-date-picker type="date" placeholder="Pick a date" v-model="ruleForm.startDate" style="width: 100%;"></el-date-picker>
+                        <el-date-picker type="date" :placeholder="$t('product.place_holder_pick_date')" v-model="ruleForm.startDate" style="width: 100%;"></el-date-picker>
                     </el-form-item>
                 </el-col>
                 <el-col class="line" :span="1">-</el-col>
                 <el-col :span="6">
                     <el-form-item prop="endDate">
-                        <el-date-picker placeholder="Pick a time" v-model="ruleForm.endDate" style="width: 100%;"></el-date-picker>
+                        <el-date-picker :placeholder="$t('product.place_holder_pick_date')" v-model="ruleForm.endDate" style="width: 100%;"></el-date-picker>
                     </el-form-item>
                 </el-col>
             </el-form-item>
-            <el-form-item label="Status" prop="delivery">
+            <el-form-item :label="$t('product.status')" prop="delivery">
                 <el-col :span="1">
                     <el-switch v-model="ruleForm.delivery"></el-switch>
                 </el-col>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')"><i class="el-icon-search"></i> Create</el-button>
-                <el-button @click="resetForm('ruleForm')"><i class="el-icon-delete"></i> Reset</el-button>
+                <el-button type="primary" @click="submitForm('ruleForm')"><i class="el-icon-search"></i> {{ $t('btn.search') }}</el-button>
+                <el-button @click="resetForm('ruleForm')"><i class="el-icon-delete"></i> {{ $t('btn.reset') }}</el-button>
+                <el-button @click="testForm"><i class="el-icon-delete"></i> Test</el-button>
             </el-form-item>
         </el-form>
     </div>
 </template>
 <script>
 import product from '@/api/product/index'
+import { mapGetters } from 'vuex'
 export default {
     data () {
         return {
             isHiddenSearchPanel: true,
             title: 'Product search',
+            locate: '',
             ruleForm: {
                 productName: '',
                 startDate: '',
@@ -97,13 +101,21 @@ export default {
             product.searchData(dataSearch).then(response => {
                 console.log(response)
             })
+        },
+        testForm () {
+            this.locate = this.$i18n.locale
+            console.log(this.$i18n.locale)
         }
+    },
+    computed: {
+        ...mapGetters(['countryChange'])
     },
     mounted(){
         console.log('App Mounted');
         if (localStorage.getItem('country'))
             // this.todo_items = JSON.parse(localStorage.getItem('todo_items'));
-            console.log(localStorage.getItem('country'))
+            // console.log(localStorage.getItem('countryChange'))
+            console.log(this.$i18n.locale)
     }
 }
 </script>

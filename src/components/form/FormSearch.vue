@@ -1,12 +1,5 @@
 <template>
     <div class="app-search">
-        <!--<el-row>-->
-            <!--<el-col :span="10">{{ title }}</el-col>-->
-            <!--<el-col :span="14" align="right">-->
-                <!--<i class="el-icon-remove-outline" v-if="isHiddenSearchPanel == false" @click="handleHideSearchPanel"></i>-->
-                <!--<i class="el-icon-circle-plus-outline" v-else @click="handleHideSearchPanel"></i>-->
-            <!--</el-col>-->
-        <!--</el-row>-->
         <el-row>
             <el-col :span="1" align="left" style="font-size: 24px; font-weight: bold">
                 <i class="el-icon-remove-outline" v-if="isHiddenSearchPanel == false" @click="handleHideSearchPanel"></i>
@@ -14,7 +7,7 @@
             </el-col>
             <el-col :span="10" align="left" style="font-size: 24px; font-weight: bold">{{ title }}</el-col>
         </el-row>
-        <div class="app-search-form" v-show="isHiddenSearchPanel == false">
+        <div class="app-search-form" v-show="isHiddenSearchPanel">
             <el-form label-width="130px" :model="ruleSearch" :rules="rulesSearch" ref="searchForm">
                 <slot></slot>
                 <el-form-item align="center">
@@ -22,6 +15,7 @@
                 </el-form-item>
             </el-form>
         </div>
+
     </div>
 </template>
 
@@ -35,7 +29,8 @@
         },
         data () {
             return {
-                isHiddenSearchPanel: false
+                isHiddenSearchPanel: true,
+                locate: localStorage.getItem('countryChange') || 'en'
             }
         },
         methods: {
@@ -44,6 +39,15 @@
             },
             handleSearch (formName) {
                 this.$emit('on-search', this.$refs['searchForm'])
+            }
+        },
+        mounted () {
+            console.log(localStorage.getItem('countryChange'))
+            // console.log(localStorage.countryChange)
+        },
+        watch: {
+            countryChange(countryChange) {
+                localStorage.countryChange = countryChange;
             }
         }
     }

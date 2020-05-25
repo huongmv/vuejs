@@ -1,5 +1,5 @@
 <template>
-    <el-button type="primary" v-on:click="downloadExcel">Export<i class="el-icon-download el-icon-right"></i></el-button>
+    <el-button type="primary" v-on:click="downloadExcel">{{ $t('btn.export') }}<i class="el-icon-download el-icon-right"></i></el-button>
 </template>
 <script>
 import XLSX from 'xlsx';

@@ -1,6 +1,6 @@
 <template>
 <div class="app-country">
-    <el-select v-model="$i18n.locale" placeholder="Select" @change="handleChang">
+    <el-select v-model="$i18n.locale" placeholder="Select" @change="handleChangeLocal">
         <el-option
             v-for="item in country"
             :key="item.id"
@@ -16,7 +16,8 @@ export default {
     data () {
         return {
             country: [],
-            value1: []
+            urlImages: '../../images/flag/16px/',
+            iconName: 'flag-vietnam-16.png'
         }
     },
     async mounted() {
@@ -31,20 +32,11 @@ export default {
         console.log(localStorage.getItem('country'))
     },
     methods: {
-        handleChang () {
-            this.$bus.$emit('refreshCountry', this.value1)
-            console.log(this.value1)
-            this.$_lenguage = this.value1
+        handleChangeLocal () {
+            this.$store.dispatch('countryChange', this.$i18n.locale)
+            // this.$emit('changeCountry', this.$i18n.locale)
+            localStorage.setItem('countryChange', this.$i18n.locale)
         }
-    },
-    beforeCreate () {
-        this.$_lenguage = this.value1
     }
-    // ,
-    // watch: {
-    //     country(newCountry) {
-    //         localStorage.setItem('country', JSON.stringify(newCountry))
-    //     }
-    // }
 }
 </script>

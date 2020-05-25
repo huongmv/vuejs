@@ -13,21 +13,21 @@
         @on-sort="handleSort">
         <el-col :span="23" class="el-col-btn" slot="button" align="right">
             <down-load-excel :data-export="tableData" :file-name="fileName"></down-load-excel>
-            <el-button type="primary" @click="handleImportBase64">Import base64 <i class="el-icon-upload el-icon-right"></i></el-button>
-            <el-button type="primary" @click="handleImport">Import <i class="el-icon-upload el-icon-right"></i></el-button>
-            <el-button type="primary" icon="el-icon-plus" @click="handleCallFormCreate">Add item</el-button>
-            <el-button type="danger" v-show="deleteAllItem" icon="el-icon-delete"  @click="deleteAllItems">Delete All</el-button>
+            <el-button type="primary" @click="handleImportBase64">{{ $t('btn.import_base64') }}<i class="el-icon-upload el-icon-right"></i></el-button>
+            <el-button type="primary" @click="handleImport">{{ $t('btn.import') }}<i class="el-icon-upload el-icon-right"></i></el-button>
+            <el-button type="primary" icon="el-icon-plus" @click="handleCallFormCreate">{{ $t('btn.add_item') }}</el-button>
+            <el-button type="danger" v-show="deleteAllItem" icon="el-icon-delete"  @click="deleteAllItems">{{$t('btn.delete_all')}}</el-button>
         </el-col>
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="STT" width="80"></el-table-column>
-        <el-table-column prop="name" label="Name" class="el-table-text"></el-table-column>
-        <el-table-column prop="startDate" label="Start Date"></el-table-column>
-        <el-table-column prop="endDate" label="End Date"></el-table-column>
-        <el-table-column prop="status" label="Status"></el-table-column>
+        <el-table-column prop="id" :label="$t('table.stt')" width="80"></el-table-column>
+        <el-table-column prop="name" :label="$t('table.name')" class="el-table-text"></el-table-column>
+        <el-table-column prop="startDate" :label="$t('table.start_date')"></el-table-column>
+        <el-table-column prop="endDate" :label="$t('table.end_date')"></el-table-column>
+        <el-table-column prop="status" :label="$t('table.status')"></el-table-column>
         <el-table-column>
             <template slot-scope="{row}">
-                <el-button type="warning" class="edit-item" @click="editItem(row)"><i class="el-icon-edit"></i><i class="icon-row-responsive">Edit</i></el-button>
-                <el-button slot="reference" type="danger" v-bind:disabled="deleteDisabled" @click="deleteItem([row])"><i class="el-icon-delete"></i><i class="icon-row-responsive">Delete</i></el-button>
+                <el-button type="warning" class="edit-item" @click="editItem(row)"><i class="el-icon-edit"></i><i class="icon-row-responsive">{{ $t('btn.edit') }}</i></el-button>
+                <el-button slot="reference" type="danger" v-bind:disabled="deleteDisabled" @click="deleteItem([row])"><i class="el-icon-delete"></i><i class="icon-row-responsive">{{ $t('btn.delete') }}</i></el-button>
             </template>
         </el-table-column>
     </table-data>
@@ -83,11 +83,11 @@ export default {
             },
             rules: {
                 name: [
-                    { required: true, message: 'Please input name.', trigger: 'blur' },
-                    { min: 3, max: 50, message: 'Length should be 3 to 50.', trigger: 'blur' }
+                    { required: true, message: this.$t('message.please_input_name'), trigger: 'blur' },
+                    { min: 3, max: 50, message: this.$t('message.length_should_30_50'), trigger: 'blur' }
                 ],
                 content: [
-                    { required: true, message: 'Please input content.', trigger: 'blur' }
+                    { required: true, message: this.$t('message.please_input_content'), trigger: 'blur' }
                 ]
             },
             multipleSelection: [],
