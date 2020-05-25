@@ -12,6 +12,7 @@
 </template>
 <script>
 import dataCountry from '@/api/cmn/index'
+import { mapState, mapMutations } from 'vuex'
 export default {
     data () {
         return {
@@ -31,9 +32,18 @@ export default {
         localStorage.setItem('country', JSON.stringify(this.country))
         console.log(localStorage.getItem('country'))
     },
+      computed: {
+    ...mapState([
+      'countryChange01'
+    ])
+    },
     methods: {
+        ...mapMutations([
+        'CHANGE_COUNTRY'
+        ]),
         handleChangeLocal () {
-            this.$store.dispatch('countryChange', this.$i18n.locale)
+            this.CHANGE_COUNTRY(this.$i18n.locale)
+            // this.$store.dispatch('countryChange', this.$i18n.locale)
             // this.$emit('changeCountry', this.$i18n.locale)
             localStorage.setItem('countryChange', this.$i18n.locale)
         }

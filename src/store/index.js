@@ -28,8 +28,9 @@ export default new Vuex.Store({
           state.status = ''
           state.token = ''
       },
-      CHANGE_COUNTRY(state) {
-          state.countryChange = localStorage.getItem('countryChange') || ''
+      CHANGE_COUNTRY(state, data) {
+          console.log('CHANGE_COUNTRY ' + data)
+          state.countryChange = data || ''
       }
   },
   actions: {
