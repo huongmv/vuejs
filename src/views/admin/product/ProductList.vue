@@ -52,6 +52,7 @@
     </pop-up>
     <import-excel ref="importExcel" @dataFileSelected="handleDataFileSelected" @importData="handleImportData"></import-excel>
     <import-base64 ref="importBase64" @importDataBase64="handleImportDataBase64"></import-base64>
+    <country @changeCountry="handleChangeCountry"></country>
     </div>
 </template>
 <script>
@@ -64,6 +65,7 @@ import DownLoadExcel from '@/components/excel/ExportExcel'
 import ImportExcel from '@/components/excel/ImportExcel'
 import ImportBase64 from '@/components/excel/ImportBase64'
 import XLSX from 'xlsx'
+import country from '@/components/localStorage/CountryListener'
 export default {
     components: {
         TableData,
@@ -72,7 +74,8 @@ export default {
         'down-load-excel': DownLoadExcel,
         'import-excel': ImportExcel,
         'form-search': FormSearch,
-        'import-base64': ImportBase64
+        'import-base64': ImportBase64,
+        'country': country
     },
     data () {
         return {
@@ -325,6 +328,9 @@ export default {
             this.updateEdit = true
             this.editUpdate = false
             this.title = 'Add item'
+        },
+        handleChangeCountry (val) {
+            console.log('vvvvvvvvvvvvvvvvvvvvvvv')
         }
     }
 }

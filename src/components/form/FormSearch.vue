@@ -20,35 +20,26 @@
 </template>
 
 <script>
-    export default {
-        name: 'FormSearch',
-        props: {
-            title: String,
-            ruleSearch: Object,
-            rulesSearch: Object
+export default {
+    name: 'FormSearch',
+    props: {
+        title: String,
+        ruleSearch: Object,
+        rulesSearch: Object
+    },
+    data () {
+        return {
+            isHiddenSearchPanel: true,
+            locate: localStorage.getItem('countryChange') || 'en'
+        }
+    },
+    methods: {
+        handleHideSearchPanel () {
+            this.isHiddenSearchPanel = !this.isHiddenSearchPanel
         },
-        data () {
-            return {
-                isHiddenSearchPanel: true,
-                locate: localStorage.getItem('countryChange') || 'en'
-            }
-        },
-        methods: {
-            handleHideSearchPanel () {
-                this.isHiddenSearchPanel = !this.isHiddenSearchPanel
-            },
-            handleSearch (formName) {
-                this.$emit('on-search', this.$refs['searchForm'])
-            }
-        },
-        mounted () {
-            console.log(localStorage.getItem('countryChange'))
-            // console.log(localStorage.countryChange)
-        },
-        watch: {
-            countryChange(countryChange) {
-                localStorage.countryChange = countryChange;
-            }
+        handleSearch (formName) {
+            this.$emit('on-search', this.$refs['searchForm'])
         }
     }
+}
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="pr-search">
-        <el-row> <label>{{ countryChange }}  aa</label></el-row>
+        <el-row> <label>{{ locate }}  aa</label></el-row>
         <el-row>
             <el-col :span="1" align="left" style="font-size: 24px; font-weight: bold">
                 <i class="el-icon-remove-outline" v-if="isHiddenSearchPanel == false" @click="handleHideSearchPanel"></i>
@@ -36,12 +36,16 @@
                 <el-button @click="testForm"><i class="el-icon-delete"></i> Test</el-button>
             </el-form-item>
         </el-form>
+        <country @changeCountry="handleChangeCountry"></country>
     </div>
 </template>
 <script>
 import product from '@/api/product/index'
-import { mapGetters } from 'vuex'
+import country from '@/components/localStorage/CountryListener'
 export default {
+    components: {
+      'country': country
+    },
     data () {
         return {
             isHiddenSearchPanel: true,
@@ -105,17 +109,11 @@ export default {
         testForm () {
             this.locate = this.$i18n.locale
             console.log(this.$i18n.locale)
+        },
+        handleChangeCountry (val) {
+            this.locate = val
+            console.log('cccccccccccccccc')
         }
-    },
-    computed: {
-        ...mapGetters(['countryChange'])
-    },
-    mounted(){
-        console.log('App Mounted');
-        if (localStorage.getItem('country'))
-            // this.todo_items = JSON.parse(localStorage.getItem('todo_items'));
-            // console.log(localStorage.getItem('countryChange'))
-            console.log(this.$i18n.locale)
     }
 }
 </script>
