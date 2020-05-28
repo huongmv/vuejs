@@ -36,6 +36,11 @@ const routesAdmin =
                     requiresAuth: false,
                     title: 'DemoLocal Storage'
                 }
+            },
+            {
+                path: '/admin/login',
+                name: 'login',
+                component: () => import('../views/login/LoginAdmin')
             }
         ]
     }

@@ -10,6 +10,7 @@ import ElementUI from 'element-ui'
 import JQuery from 'jquery'
 import Utils from './common/Utils'
 import i18n from './i18n'
+var VueCookie = require('vue-cookie')
 Vue.config.productionTip = false
 Vue.prototype._$ = JQuery
 Vue.prototype.Utils = Utils
@@ -23,6 +24,8 @@ Object.defineProperties(Vue.prototype, {
     }
 })
 Vue.use(ElementUI)
+Vue.use(VueCookie)
+
 new Vue({
   router,
   i18n,

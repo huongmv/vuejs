@@ -331,6 +331,8 @@ export default {
         },
         handleChangeCountry (val) {
             console.log('vvvvvvvvvvvvvvvvvvvvvvv')
+            let test = this.$cookie.get('test')
+            console.log(test + ' <= This í cookie')
         }
     }
 }

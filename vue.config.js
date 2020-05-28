@@ -1,5 +1,7 @@
 module.exports = {
     devServer: {
-        host: 'ketqua.domain'
+        host: 'client.ketqua',
+        disableHostCheck: true
     }
+
 }

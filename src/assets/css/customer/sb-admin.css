@@ -3308,7 +3308,6 @@ input[type="button"].btn-block {
 .input-group-prepend .btn,
 .input-group-append .btn {
   position: relative;
-  z-index: 2;
 }
 
 .input-group-prepend .btn:focus,
@@ -10208,7 +10207,6 @@ a:focus {
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.05rem;
-  z-index: 1;
 }
 
 .sidebar .sidebar-brand .sidebar-brand-icon i {
