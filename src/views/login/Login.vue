@@ -6,7 +6,8 @@
                 :before-close="destroyOnClose"
                 :close-on-click-modal="true"
                 width="20%">
-            <el-form
+            <!-- Login form -->
+            <el-form v-show="isLogin"
                     class="login-form"
                     :model="loginForm"
                     :rules="rules"
@@ -47,9 +48,64 @@
                     <el-button :loading="loading" @click="login">Login</el-button>
                 </el-row>
                 <el-row class="mt1">
-                    Are you new? <a>Sign Up</a>
+                    Are you new? <a @click="signUp">Sign Up</a>
                 </el-row>
             </el-form>
+            <!-- End login form -->
+            <!-- Register form -->
+            <el-form v-show="isRegister"
+                    class="register-form"
+                    :model="registerForm"
+                    :rules="registerRules"
+                    ref="registerForm"
+            >
+                <el-row>
+                    <el-col class="text-banner-login">{{this.messages}}</el-col>
+                </el-row>
+                <el-row>
+                    <el-col class="title-login">Email</el-col>
+                </el-row>
+                <el-row>
+                    <el-col>
+                        <el-form-item prop="loginId">
+                            <el-input v-model="registerForm.email" placeholder="Enter email"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col class="title-login">Password</el-col>
+                </el-row>
+                <el-row>
+                    <el-col>
+                        <el-form-item prop="loginId">
+                            <el-input v-model="registerForm.password" placeholder="Enter password" type="password"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col class="title-login">Re-Password</el-col>
+                </el-row>
+                <el-row>
+                    <el-col>
+                        <el-form-item prop="loginId">
+                            <el-input v-model="registerForm.rePassword" placeholder="Re-password" type="password"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="12" class="title-login"> </el-col>
+                    <el-col :span="12">
+                        <a>Forgot Password?</a>
+                    </el-col>
+                </el-row>
+                <el-row class="title-login mt1">
+                    <el-button :loading="loading" @click="login">Login</el-button>
+                </el-row>
+                <el-row class="mt1">
+                    Are you new? <a @click="signUp">Sign Up</a>
+                </el-row>
+            </el-form>
+            <!-- End register form -->
         </el-dialog>
     </div>
 </template>
@@ -61,12 +117,14 @@ export default {
         return {
             checkedRemember: false,
             isOpenLoginDialog: true,
+            loading: false,
+            isLogin: true,
+            isRegister: false,
+            messages: 'Sign In',
             loginForm: {
                 email: '',
                 password: ''
             },
-            loading: false,
-            messages: 'Sign In',
             rules: {
                 email: [
                     { required: true, message: 'Enter email', trigger: 'blur' }
@@ -75,6 +133,22 @@ export default {
                     { required: true, message: 'Enter password', trigger: 'blur' }
                 ]
             },
+            registerForm: {
+                email: '',
+                password: '',
+                rePassword: ''
+            },
+            registerRules: {
+                email: [
+                    { required: true, message: 'Enter email', trigger: 'blur' }
+                ],
+                password: [
+                    { required: true, message: 'Enter password', trigger: 'blur' }
+                ],
+                rePassword: [
+                    { required: true, message: 'Enter re-password', trigger: 'blur' }
+                ]
+            }
         }
     },
     methods: {
@@ -99,6 +173,9 @@ export default {
         },
         destroyOnClose () {
             this.$refs['loginForm'].resetFields()
+        },
+        signUp () {
+
         }
     }
 }
