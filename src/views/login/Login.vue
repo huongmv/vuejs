@@ -1,182 +1,152 @@
 <template>
     <div class="app-login">
         <el-dialog
-                :visible.sync="isOpenLoginDialog"
-                :show-close="true"
-                :before-close="destroyOnClose"
-                :close-on-click-modal="true"
-                width="20%">
+            :visible.sync="isOpenLoginDialog"
+            :show-close="true"
+            :before-close="destroyOnClose"
+            :close-on-click-modal="true"
+            width="20%">
             <!-- Login form -->
-            <el-form v-show="isLogin"
-                    class="login-form"
-                    :model="loginForm"
-                    :rules="rules"
-                    ref="loginForm"
-            >
-                <el-row>
-                    <el-col class="text-banner-login">{{this.messages}}</el-col>
-                </el-row>
-                <el-row>
-                    <el-col class="title-login">Email</el-col>
-                </el-row>
-                <el-row>
-                    <el-col>
-                        <el-form-item prop="loginId">
-                            <el-input v-model="loginForm.email" placeholder="Enter email"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col class="title-login">Password</el-col>
-                </el-row>
-                <el-row>
-                    <el-col>
-                        <el-form-item prop="loginId">
-                            <el-input v-model="loginForm.password" placeholder="Enter password" type="password"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="12" class="title-login">
-                        <el-checkbox v-model="checkedRemember">Remember me</el-checkbox>
-                    </el-col>
-                    <el-col :span="12">
-                        <a>Forgot Password?</a>
-                    </el-col>
-                </el-row>
-                <el-row class="title-login mt1">
-                    <el-button :loading="loading" @click="login">Login</el-button>
-                </el-row>
-                <el-row class="mt1">
-                    Are you new? <a @click="signUp">Sign Up</a>
-                </el-row>
-            </el-form>
+            <login-form v-show="isLogin" @registerForm="handleRegisterForm" @forgotForm="handleForgotForm" @closePopup="destroyOnClose"></login-form>
             <!-- End login form -->
             <!-- Register form -->
-            <el-form v-show="isRegister"
-                    class="register-form"
-                    :model="registerForm"
-                    :rules="registerRules"
-                    ref="registerForm"
-            >
-                <el-row>
-                    <el-col class="text-banner-login">{{this.messages}}</el-col>
-                </el-row>
-                <el-row>
-                    <el-col class="title-login">Email</el-col>
-                </el-row>
-                <el-row>
-                    <el-col>
-                        <el-form-item prop="loginId">
-                            <el-input v-model="registerForm.email" placeholder="Enter email"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col class="title-login">Password</el-col>
-                </el-row>
-                <el-row>
-                    <el-col>
-                        <el-form-item prop="loginId">
-                            <el-input v-model="registerForm.password" placeholder="Enter password" type="password"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col class="title-login">Re-Password</el-col>
-                </el-row>
-                <el-row>
-                    <el-col>
-                        <el-form-item prop="loginId">
-                            <el-input v-model="registerForm.rePassword" placeholder="Re-password" type="password"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="12" class="title-login"> </el-col>
-                    <el-col :span="12">
-                        <a>Forgot Password?</a>
-                    </el-col>
-                </el-row>
-                <el-row class="title-login mt1">
-                    <el-button :loading="loading" @click="login">Login</el-button>
-                </el-row>
-                <el-row class="mt1">
-                    Are you new? <a @click="signUp">Sign Up</a>
-                </el-row>
-            </el-form>
+            <register v-show="isRegister" @forgotForm="handleForgotForm" @loginForm="handleLoginForm" @closePopup="destroyOnClose"></register>
             <!-- End register form -->
+            <!-- Forgot Password form -->
+            <forgot-password v-show="isForgot" @loginForm="handleLoginForm" @registerForm="handleRegisterForm" @closePopup="destroyOnClose"></forgot-password>
+            <!-- End Forgot Password form -->
         </el-dialog>
     </div>
 </template>
 <script>
-import login from '@/api/login/index'
-import Contants from '@/common/Constants'
+// import login from '@/api/login/index'
+// import Contants from '@/common/Constants'
+import LoginForm from '@/components/login/Login'
+import Register from '@/components/login/Register'
+import ForgotPassword from '@/components/login/ForgotPassword'
+import { mapGetters } from 'vuex'
 export default {
+    components: {
+      'login-form': LoginForm,
+      'register': Register,
+      'forgot-password': ForgotPassword
+    },
     data(){
         return {
-            checkedRemember: false,
-            isOpenLoginDialog: true,
-            loading: false,
+            // checkedRemember: false,
+            // loading: false,
             isLogin: true,
             isRegister: false,
-            messages: 'Sign In',
-            loginForm: {
-                email: '',
-                password: ''
-            },
-            rules: {
-                email: [
-                    { required: true, message: 'Enter email', trigger: 'blur' }
-                ],
-                password: [
-                    { required: true, message: 'Enter password', trigger: 'blur' }
-                ]
-            },
-            registerForm: {
-                email: '',
-                password: '',
-                rePassword: ''
-            },
-            registerRules: {
-                email: [
-                    { required: true, message: 'Enter email', trigger: 'blur' }
-                ],
-                password: [
-                    { required: true, message: 'Enter password', trigger: 'blur' }
-                ],
-                rePassword: [
-                    { required: true, message: 'Enter re-password', trigger: 'blur' }
-                ]
-            }
+            isForgot: false,
+            // messages: 'Sign In',
+            // validateData: [
+            //     {
+            //         msg: 'Enter data 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+            //     },
+            //     {
+            //         msg: 'Enter data 2'
+            //     },
+            //     {
+            //         msg: 'Enter data 3'
+            //     }
+            // ],
+            // loginForm: {
+            //     email: '',
+            //     password: ''
+            // },
+            // rules: {
+            //     email: [
+            //         { required: true, message: 'Enter email', trigger: 'blur' },
+            //         { type: 'email', message: 'Please input correct email address', trigger: ['blur', 'change'] }
+            //     ],
+            //     password: [
+            //         { required: true, message: 'Enter password', trigger: 'blur' }
+            //     ],
+            //     rePassword: [
+            //         { required: true, message: 'Enter re-password', trigger: 'blur' }
+            //     ]
+            // },
+            // registerForm: {
+            //     email: '',
+            //     password: '',
+            //     rePassword: ''
+            // },
+            // forgotForm: {
+            //     email: ''
+            // }
         }
     },
+    computed: {
+        ...mapGetters(['isOpenLoginDialog'])
+    },
     methods: {
-        openLoginForm () {
-            this.$store.dispatch(Contants.LOGIN, true)
-        },
-        login: function () {
-            let email = this.loginForm.email
-            let password = this.loginForm.password
-            // this.$store.dispatch('login', { email, password })
-            //     .then(() => this.$router.push('/'))
-            //     .catch(err => console.log(err))
-            this.$store.dispatch('login', { email, password })
-                .then(response => {
-                    console.log('=======================')
-                    console.log(response)
-                })
-                .catch(err => console.log(err))
-        },
-        closeForm (formName) {
-            this.destroyOnClose()
-        },
+        // openLoginForm () {
+        //     this.$store.dispatch(Contants.LOGIN, true)
+        // },
+        // login: function () {
+        //     let email = this.loginForm.email
+        //     let password = this.loginForm.password
+        //     // this.$store.dispatch('login', { email, password })
+        //     //     .then(() => this.$router.push('/'))
+        //     //     .catch(err => console.log(err))
+        //     this.$store.dispatch('login', { email, password })
+        //         .then(response => {
+        //             console.log('=======================')
+        //             console.log(response)
+        //         })
+        //         .catch(err => console.log(err))
+        // },
+        // register (registerForm) {
+        //     console.log(registerForm)
+        //     this.$refs['registerForm'].validate((valid) => {
+        //         if (valid) {
+        //             alert('submit!');
+        //         } else {
+        //             console.log('error submit!!');
+        //             return false;
+        //         }
+        //     });
+        // },
         destroyOnClose () {
-            this.$refs['loginForm'].resetFields()
+            this.isLogin = true
+            this.isRegister = false
+            this.isForgot = false
+            this.$emit('closePopupLogin', false)
         },
-        signUp () {
-
+        handleRegisterForm (val) {
+            this.isLogin = !val
+            this.isRegister = val
+            this.isForgot = !val
+        },
+        handleLoginForm (val) {
+            this.isLogin = val
+            this.isRegister = !val
+            this.isForgot = !val
+        },
+        handleForgotForm (val) {
+            this.isLogin = !val
+            this.isRegister = !val
+            this.isForgot = val
         }
+        // ,
+        //  signUp () {
+        //     this.messages = 'Register'
+        //     this.isLogin = false
+        //     this.isRegister = true
+        //     this.isForgot = false
+        // },
+        // forgotPassword () {
+        //     this.messages = 'Forgot Password'
+        //     this.isLogin = false
+        //     this.isRegister = false
+        //     this.isForgot = true
+        // },
+        // loginUser () {
+        //     this.messages = 'Sign In'
+        //     this.isLogin = true
+        //     this.isRegister = false
+        //     this.isForgot = false
+        // }
     }
 }
 </script>
@@ -199,5 +169,33 @@ export default {
     font-size: 14px;
     font-weight: bold;
     background: #167BFF;
+}
+.app-login .title-login .el-checkbox__label,
+.app-login .bottom-login-form a {
+    color: #3b5998;
+    cursor: pointer;
+}
+.app-login .title-login .el-checkbox__label:hover,
+.app-login .bottom-login-form a:hover {
+    text-decoration: underline;
+}
+.app-login .bottom-login-form a.bottom-login-form-a {
+    font-weight: bold;
+}
+.app-login .bottom-login-form .bottom-login-a {
+    border-right: 2px solid #3b5998;
+}
+.app-login .bottom-login-form .bottom-login-a a {
+    padding-right: 5px;
+}
+.app-login .bottom-login-form .bottom-forgot-a a {
+    padding-left: 5px;
+}
+.app-login .msg-err {
+    text-align: left;
+}
+.app-login .msg-err label i {
+    padding-right: 5px;
+    color: #e6a23c;
 }
 </style>

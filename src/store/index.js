@@ -2,17 +2,22 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import Constants from '../common/Constants'
+import { SET_OPEN_LOGIN_DIALOG, OPEN_LOGIN_DIALOG } from './ActionStore'
 Vue.use(Vuex)
 
 const CHANGE_COUNTRY = 'countryChange'
 export default new Vuex.Store({
   state: {
+      isOpenLoginDialog: false,
       status: '',
       token: localStorage.getItem('token') || '',
       user : {},
       countryChange: localStorage.getItem('countryChange') || ''
   },
   mutations: {
+      [OPEN_LOGIN_DIALOG] (state, isOpenLoginDialog) {
+          state.isOpenLoginDialog = isOpenLoginDialog
+      },
       auth_request(state){
           state.status = 'loading'
       },
@@ -34,6 +39,9 @@ export default new Vuex.Store({
       }
   },
   actions: {
+      [SET_OPEN_LOGIN_DIALOG] (context, isOpenLoginDialog) {
+          context.commit(OPEN_LOGIN_DIALOG, isOpenLoginDialog)
+      },
       login({commit}, user){
           return new Promise((resolve, reject) => {
               commit('auth_request')
@@ -89,9 +97,12 @@ export default new Vuex.Store({
   },
   modules: {
   },
-    getters : {
-        isLoggedIn: state => !!state.token,
-        authStatus: state => state.status,
-        countryChange: state => state.countryChange
-    }
+  getters : {
+      isOpenLoginDialog (state) {
+          return state.isOpenLoginDialog
+      },
+      isLoggedIn: state => !!state.token,
+      authStatus: state => state.status,
+      countryChange: state => state.countryChange
+  }
 })

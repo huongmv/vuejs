@@ -9,6 +9,24 @@
             <div class="site-mobile-menu-body"></div>
         </div>
         <div class="header-top">
+            <div class="user-header">
+                <!--Login-->
+                <a @click="openLoginDialog" v-if="isLogin">Login</a>
+                <a v-else>{{ emailLogin }} |
+                    <el-popconfirm
+                            confirmButtonText='OK'
+                            cancelButtonText='No, Thanks'
+                            icon="el-icon-info"
+                            iconColor="red"
+                            title="Are you sure to Logout?"
+                            @onConfirm="logoutUser"
+                    >
+                        <a slot="reference">Logout</a>
+                        <!--<el-button slot="reference">Delete</el-button>-->
+                    </el-popconfirm>
+                </a>
+                <!--End Login-->
+            </div>
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-12 col-lg-6 d-flex">
@@ -25,6 +43,7 @@
                             <a href="#" class="d-inline-block p-3"><span class="icon-facebook"></span></a>
                             <a href="#" class="d-inline-block p-3"><span class="icon-twitter"></span></a>
                             <a href="#" class="d-inline-block p-3"><span class="icon-instagram"></span></a>
+                            <a href="#" class="d-inline-block p-3"><i class="fas fa-exclamation"></i></a>
                         </div>
                         <form action="#" class="search-form d-inline-block">
 
@@ -84,5 +103,54 @@
             </div>
 
         </div>
+        <login-form :dialogVisible="isOpenLoginDialog" @closePopupLogin="handleClosePopupLogin"></login-form>
     </div>
 </template>
+<script>
+import { mapGetters } from 'vuex'
+import { SET_OPEN_LOGIN_DIALOG } from '@/store/ActionStore'
+import LoginForm from '@/views/login/Login'
+
+export default {
+    data () {
+        return {
+            dialogVisible: false,
+            isLogin: true,
+            emailLogin: ''
+        }
+    },
+    components: {
+        'login-form': LoginForm
+    },
+    computed: {
+        ...mapGetters(['isOpenLoginDialog'])
+    },
+    methods: {
+        openLoginDialog () {
+            this.$store.dispatch(SET_OPEN_LOGIN_DIALOG, true)
+        },
+        handleClosePopupLogin () {
+            this.$store.dispatch(SET_OPEN_LOGIN_DIALOG, false)
+            this.checkCookie()
+        },
+        checkCookie () {
+            let user = this.$cookies.get('user')
+            console.log(user)
+            if (user !== null && user !== '' && user !== 'null'){
+                this.emailLogin = user.email
+                this.isLogin = false
+            } else {
+                this.emailLogin = ''
+                this.isLogin = true
+            }
+        },
+        logoutUser () {
+            this.$cookies.remove('user')
+            this.checkCookie()
+        }
+    },
+    created () {
+        this.checkCookie()
+    }
+}
+</script>

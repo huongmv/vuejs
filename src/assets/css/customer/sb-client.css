@@ -1319,3 +1319,6 @@ h1, h2, h3, h4, h5,
 .text-center{text-align: center;}
 .text-left{text-align: left;}
 .text-right{text-align: right;}
+.font-weight-bold {
+    font-weight: bold;
+}

@@ -558,27 +558,34 @@ pre code {
   margin-right: auto;
   margin-left: auto;
 }
-
+.user-header {
+  width: 100%;
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: right;
+}
 @media (min-width: 576px) {
-  .container {
+  .container, .user-header {
     max-width: 540px;
   }
 }
 
 @media (min-width: 768px) {
-  .container {
+  .container, .user-header {
     max-width: 720px;
   }
 }
 
 @media (min-width: 992px) {
-  .container {
+  .container, .user-header {
     max-width: 960px;
   }
 }
 
 @media (min-width: 1200px) {
-  .container {
+  .container, .user-header {
     max-width: 1140px;
   }
 }
