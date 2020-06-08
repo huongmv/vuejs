@@ -12,24 +12,22 @@
 </template>
 <script>
 import dataCountry from '@/api/cmn/index'
-import { mapState, mapMutations, mapGetters } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
     data () {
         return {
-            country: [],
-            urlImages: '../../images/flag/16px/',
-            iconName: 'flag-vietnam-16.png'
+            country: []
         }
     },
     async mounted() {
         await dataCountry.dataCountry().then(res => {
             let _this = this
             this.country = []
+            console.log(res)
             res.data.forEach(function (item) {
                 _this.country.push({ 'id': item.id,'countryName': item.countryName,'countryCode': item.countryCode })
             })
         })
-        localStorage.setItem('country', JSON.stringify(this.country))
     },
       computed: {
         ...mapState(['countryChange'])
@@ -40,9 +38,6 @@ export default {
         ]),
         handleChangeLocal () {
             this.CHANGE_COUNTRY(this.$i18n.locale)
-            // this.$store.dispatch('countryChange', this.$i18n.locale)
-            // this.$emit('changeCountry', this.$i18n.locale)
-            // localStorage.setItem('countryChange', this.$i18n.locale)
         }
     }
 }

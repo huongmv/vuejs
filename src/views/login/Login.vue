@@ -22,7 +22,7 @@
 import LoginForm from '@/components/login/Login'
 import Register from '@/components/login/Register'
 import ForgotPassword from '@/components/login/ForgotPassword'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
     components: {
       'login-form': LoginForm,
@@ -40,11 +40,13 @@ export default {
         ...mapGetters(['isOpenLoginDialog'])
     },
     methods: {
+        ...mapMutations(['setLogin']),
         destroyOnClose () {
             this.isLogin = true
             this.isRegister = false
             this.isForgot = false
             this.$emit('closePopupLogin', false)
+            this.setLogin(true)
         },
         handleRegisterForm (val) {
             this.isLogin = !val

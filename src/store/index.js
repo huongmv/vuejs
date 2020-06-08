@@ -1,23 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { SET_OPEN_LOGIN_DIALOG, OPEN_LOGIN_DIALOG } from './ActionStore'
+import { SET_OPEN_LOGIN_DIALOG, OPEN_LOGIN_DIALOG, CHANGE_COUNTRY } from './ActionStore'
 Vue.use(Vuex)
 
-const CHANGE_COUNTRY = 'countryChange'
 export default new Vuex.Store({
   state: {
       isOpenLoginDialog: false,
-      status: '',
-      token: localStorage.getItem('token') || '',
-      user : {},
-      countryChange: localStorage.getItem('countryChange') || ''
+      isLoggedIn: false,
+      token: '',
+      countryChange: 'en'
   },
   mutations: {
       [OPEN_LOGIN_DIALOG] (state, isOpenLoginDialog) {
           state.isOpenLoginDialog = isOpenLoginDialog
       },
       CHANGE_COUNTRY(state, data) {
-          state.countryChange = data || ''
+          state.countryChange = data || 'en'
+      },
+      setLogin (state, data) {
+          state.isLoggedIn = data || false
       }
   },
   actions: {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
       },
       changeCountry({commit}) {
         commit(CHANGE_COUNTRY)
+      },
+      setLogin({commit}) {
+          commit('isLoggedIn')
       }
   },
   modules: {
@@ -34,6 +38,7 @@ export default new Vuex.Store({
       isOpenLoginDialog (state) {
           return state.isOpenLoginDialog
       },
-      countryChange: state => state.countryChange
+      countryChange: state => state.countryChange,
+      isLoggedIn: state => !!state.isLoggedIn,
   }
 })

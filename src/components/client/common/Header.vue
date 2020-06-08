@@ -11,8 +11,9 @@
         <div class="header-top">
             <div class="user-header">
                 <!--Login-->
-                <a @click="openLoginDialog" v-if="isLogin">Login</a>
-                <a v-else>{{ emailLogin }} |
+                <div @click="openLoginDialog" v-if="isLogin">Login</div>
+                <div v-else>
+                    <router-link class="inform-user" tag="div" to="/member/inform">{{ emailLogin }} |</router-link>
                     <el-popconfirm
                             confirmButtonText='OK'
                             cancelButtonText='No, Thanks'
@@ -22,9 +23,8 @@
                             @onConfirm="logoutUser"
                     >
                         <a slot="reference">Logout</a>
-                        <!--<el-button slot="reference">Delete</el-button>-->
                     </el-popconfirm>
-                </a>
+                </div>
                 <!--End Login-->
             </div>
             <div class="container">
@@ -139,6 +139,7 @@ export default {
                 this.emailLogin = user.email
                 this.isLogin = false
             } else {
+                // this.$router.push({ name: 'home' })
                 this.emailLogin = ''
                 this.isLogin = true
             }
@@ -154,7 +155,18 @@ export default {
 }
 </script>
 <style>
+.user-header .inform-user,
 .user-header a:hover {
     cursor: pointer;
+}
+.user-header .inform-user{
+    width: 90%;
+    float: left;
+}
+.user-header div span {
+    width: 10%;
+    float: left;
+    text-align: left;
+    padding-left: 5px;
 }
 </style>

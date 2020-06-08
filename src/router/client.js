@@ -13,7 +13,7 @@ const routesClient =
             },
             {
                 path: '/',
-                name: 'Home',
+                name: 'home',
                 component: () => import('../views/client/home/Home')
             },
             {
@@ -35,6 +35,14 @@ const routesClient =
                 path: '/secure',
                 name: 'Secure',
                 component: () => import('../views/login/Secure'),
+                meta: {
+                    requiresAuth: true
+                }
+            },
+            {
+                path: '/member/inform',
+                name: 'memberInform',
+                component: () => import('../views/client/member/MemberInform'),
                 meta: {
                     requiresAuth: true
                 }

@@ -2,8 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routesClient from './client'
 import routesAdmin from './admin'
-import store from '@/store/index'
+import VueCookies from 'vue-cookies'
+import store from '@/store'
 Vue.use(VueRouter)
+Vue.use(VueCookies)
 
 let routes = []
 const host = window.location.hostname
@@ -25,14 +27,37 @@ const router = new VueRouter({
     routes
 })
 router.beforeEach((to, from, next) => {
+    // let accesslogin = window.$cookies.isKey('user')
+    // console.log(accesslogin)
+    // if (accesslogin == false) {
+    //     // user doesn't have access token, redirect to login
+    //     next({ name: 'login' })
+    // }
+    // else {
+    //     // user has access token, user can open the page
+    //     next()
+    // }
     if(to.matched.some(record => record.meta.requiresAuth)) {
+        console.log(store.getters.isLoggedIn)
         if (store.getters.isLoggedIn) {
             next()
             return
+        } else {
+            next('/login')
         }
-        next('/login')
     } else {
         next()
     }
+    // router.options.routes.forEach((route) => {
+    //     if (((to.matched[0].path === route.path || to.matched[0].path === '') && route.path === '/')) {
+    //         if (window.$cookies.isKey('user')) {
+    //             next()
+    //         } else {
+    //             next('/')
+    //         }
+    //     } else {
+    //         next('/')
+    //     }
+    // })
 })
 export default router
