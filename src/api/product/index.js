@@ -3,7 +3,7 @@ export default {
     getProductList () {
         return new Promise((resolve, reject) => {
             ApiService.get('/admin/productList').then(response => {
-                resolve(response)
+                resolve(response.data)
             }).catch(error => {
                 reject(error)
             })
@@ -12,7 +12,7 @@ export default {
     deleteProductItem (data) {
         return new Promise((resolve, reject) => {
             ApiService.post('/admin/deleteProduct', data).then(response => {
-                resolve(response)
+                resolve(response.data)
             }).catch(error => {
                 reject(error)
             })
@@ -40,7 +40,7 @@ export default {
     changeDisplayOrder (data) {
         return new Promise((resolve, reject) => {
             ApiService.post('/admin/changeDisplayOrder', data).then(response => {
-                resolve(response)
+                resolve(response.data)
             }).catch(error => {
                 reject(error)
             })
@@ -67,7 +67,7 @@ export default {
     searchData (dataSearch) {
         return new Promise((resolve, reject) => {
             ApiService.post('/admin/searchProduct', dataSearch).then(response => {
-                resolve(response)
+                resolve(response.data)
             }).catch(error => {
                 reject(error)
             })

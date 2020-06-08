@@ -1,6 +1,5 @@
 <template>
     <div class="pr-search">
-        <el-row> <label>{{ locate }}  aa</label></el-row>
         <el-row>
             <el-col :span="1" align="left" style="font-size: 24px; font-weight: bold">
                 <i class="el-icon-remove-outline" v-if="isHiddenSearchPanel == false" @click="handleHideSearchPanel"></i>
@@ -33,19 +32,19 @@
             <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm')"><i class="el-icon-search"></i> {{ $t('btn.search') }}</el-button>
                 <el-button @click="resetForm('ruleForm')"><i class="el-icon-delete"></i> {{ $t('btn.reset') }}</el-button>
-                <el-button @click="testForm"><i class="el-icon-delete"></i> Test</el-button>
+                <!--<el-button @click="testForm"><i class="el-icon-delete"></i> Test</el-button>-->
             </el-form-item>
         </el-form>
-        <country @changeCountry="handleChangeCountry"></country>
+        <!--<country @changeCountry="handleChangeCountry"></country>-->
     </div>
 </template>
 <script>
 import product from '@/api/product/index'
 import country from '@/components/localStorage/CountryListener'
 export default {
-    components: {
-      'country': country
-    },
+    // components: {
+    //   'country': country
+    // },
     data () {
         return {
             isHiddenSearchPanel: true,
@@ -90,10 +89,8 @@ export default {
                         'endDate': endDate,
                         'delivery': delivery
                     }
-                    console.log(dataSearch)
                     this.searchDataProduct(dataSearch)
                 } else {
-                    console.log('error submit!!');
                     return false;
                 }
             });
@@ -103,16 +100,8 @@ export default {
         },
         searchDataProduct (dataSearch) {
             product.searchData(dataSearch).then(response => {
-                console.log(response)
+                this.$emit('dataProductSearch', response.data)
             })
-        },
-        testForm () {
-            this.locate = this.$i18n.locale
-            console.log(this.$i18n.locale)
-        },
-        handleChangeCountry (val) {
-            this.locate = val
-            console.log('cccccccccccccccc')
         }
     }
 }

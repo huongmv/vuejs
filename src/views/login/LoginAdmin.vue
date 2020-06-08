@@ -81,15 +81,9 @@ export default {
         login: function () {
             let email = this.loginForm.email
             let password = this.loginForm.password
-            // this.$store.dispatch('login', { email, password })
-            //     .then(() => this.$router.push('/'))
-            //     .catch(err => console.log(err))
             this.$store.dispatch('login', { email, password })
                 .then(response => {
-                    console.log('=======================')
-                    console.log(response)
                 })
-                .catch(err => console.log(err))
         },
         closeForm (formName) {
             this.destroyOnClose()

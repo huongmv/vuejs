@@ -80,8 +80,6 @@ export default {
                         'password': this.loginForm.password
                     }
                     login.getInforUser(dataRequest).then(res => {
-                        console.log('response: ')
-                        console.log(res)
                         if (res.data.id === null) {
                             this.validateData = []
                             this.validateData.push({ 'msg': 'email and password is wrong.'})

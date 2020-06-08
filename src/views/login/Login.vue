@@ -19,8 +19,6 @@
     </div>
 </template>
 <script>
-// import login from '@/api/login/index'
-// import Contants from '@/common/Constants'
 import LoginForm from '@/components/login/Login'
 import Register from '@/components/login/Register'
 import ForgotPassword from '@/components/login/ForgotPassword'
@@ -33,80 +31,15 @@ export default {
     },
     data(){
         return {
-            // checkedRemember: false,
-            // loading: false,
             isLogin: true,
             isRegister: false,
             isForgot: false,
-            // messages: 'Sign In',
-            // validateData: [
-            //     {
-            //         msg: 'Enter data 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
-            //     },
-            //     {
-            //         msg: 'Enter data 2'
-            //     },
-            //     {
-            //         msg: 'Enter data 3'
-            //     }
-            // ],
-            // loginForm: {
-            //     email: '',
-            //     password: ''
-            // },
-            // rules: {
-            //     email: [
-            //         { required: true, message: 'Enter email', trigger: 'blur' },
-            //         { type: 'email', message: 'Please input correct email address', trigger: ['blur', 'change'] }
-            //     ],
-            //     password: [
-            //         { required: true, message: 'Enter password', trigger: 'blur' }
-            //     ],
-            //     rePassword: [
-            //         { required: true, message: 'Enter re-password', trigger: 'blur' }
-            //     ]
-            // },
-            // registerForm: {
-            //     email: '',
-            //     password: '',
-            //     rePassword: ''
-            // },
-            // forgotForm: {
-            //     email: ''
-            // }
         }
     },
     computed: {
         ...mapGetters(['isOpenLoginDialog'])
     },
     methods: {
-        // openLoginForm () {
-        //     this.$store.dispatch(Contants.LOGIN, true)
-        // },
-        // login: function () {
-        //     let email = this.loginForm.email
-        //     let password = this.loginForm.password
-        //     // this.$store.dispatch('login', { email, password })
-        //     //     .then(() => this.$router.push('/'))
-        //     //     .catch(err => console.log(err))
-        //     this.$store.dispatch('login', { email, password })
-        //         .then(response => {
-        //             console.log('=======================')
-        //             console.log(response)
-        //         })
-        //         .catch(err => console.log(err))
-        // },
-        // register (registerForm) {
-        //     console.log(registerForm)
-        //     this.$refs['registerForm'].validate((valid) => {
-        //         if (valid) {
-        //             alert('submit!');
-        //         } else {
-        //             console.log('error submit!!');
-        //             return false;
-        //         }
-        //     });
-        // },
         destroyOnClose () {
             this.isLogin = true
             this.isRegister = false
@@ -128,25 +61,6 @@ export default {
             this.isRegister = !val
             this.isForgot = val
         }
-        // ,
-        //  signUp () {
-        //     this.messages = 'Register'
-        //     this.isLogin = false
-        //     this.isRegister = true
-        //     this.isForgot = false
-        // },
-        // forgotPassword () {
-        //     this.messages = 'Forgot Password'
-        //     this.isLogin = false
-        //     this.isRegister = false
-        //     this.isForgot = true
-        // },
-        // loginUser () {
-        //     this.messages = 'Sign In'
-        //     this.isLogin = true
-        //     this.isRegister = false
-        //     this.isForgot = false
-        // }
     }
 }
 </script>

@@ -135,7 +135,6 @@ export default {
         },
         checkCookie () {
             let user = this.$cookies.get('user')
-            console.log(user)
             if (user !== null && user !== '' && user !== 'null'){
                 this.emailLogin = user.email
                 this.isLogin = false
@@ -154,3 +153,8 @@ export default {
     }
 }
 </script>
+<style>
+.user-header a:hover {
+    cursor: pointer;
+}
+</style>

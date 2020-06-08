@@ -2,7 +2,6 @@ import ApiService from '@/common/ApiService'
 export default {
     getInforUser (data) {
         return new Promise((resolve, reject) => {
-            console.log(data)
             ApiService.post('/login', data).then(response => {
                 resolve(response)
             }).catch(error => {

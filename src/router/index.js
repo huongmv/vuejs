@@ -30,10 +30,8 @@ router.beforeEach((to, from, next) => {
             next()
             return
         }
-        console.log('requiresAuth')
         next('/login')
     } else {
-        console.log('Not requiresAuth')
         next()
     }
 })
