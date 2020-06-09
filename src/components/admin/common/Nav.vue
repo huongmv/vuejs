@@ -187,7 +187,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{userName}}</span>
                     <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                 </a>
                 <!-- Dropdown - User Information -->
@@ -205,7 +205,7 @@
                         Activity Log
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <a class="dropdown-item" data-toggle="modal" @click="logoutUser">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         Logout
                     </a>
@@ -213,15 +213,51 @@
             </li>
 
         </ul>
-
+        <login-admin-form v-show="isOpenLoginAdminDialog" @loginAdmin="handleLoginAdmin"></login-admin-form>
     </nav>
     <!-- End of Topbar -->
 </template>
 <script>
-import Country from '../../localStorage/Country'
-export default {
-    components: {
-       'country-dropdown': Country
+    import { mapGetters } from 'vuex'
+    import Country from '../../localStorage/Country'
+    import LoginAdminForm from '@/views/login/LoginAdmin'
+    import { SET_OPEN_LOGIN_ADMIN_DIALOG } from '@/store/ActionStore'
+    export default {
+        data () {
+            return {
+                userName: ''
+            }
+        },
+        components: {
+            'login-admin-form': LoginAdminForm,
+            'country-dropdown': Country
+        },
+        computed: {
+            ...mapGetters(['isOpenLoginAdminDialog'])
+        },
+        methods: {
+            checkCookieAd () {
+                let user = this.$cookies.get('user2')
+                console.log(user)
+                if (user !== null && user !== '' && user !== 'null') {
+                    this.userName = user.email
+                    this.$store.dispatch(SET_OPEN_LOGIN_ADMIN_DIALOG, false)
+                } else {
+                    localStorage.setItem('alo123', 'false');
+                    this.$store.dispatch(SET_OPEN_LOGIN_ADMIN_DIALOG, true)
+                }
+            },
+            handleLoginAdmin () {
+                this.checkCookieAd()
+            },
+            logoutUser () {
+                this.$cookies.remove('user2')
+                localStorage.setItem('alo123', 'false');
+                this.checkCookieAd()
+            }
+        },
+        created () {
+            this.checkCookieAd()
+        }
     }
-}
 </script>

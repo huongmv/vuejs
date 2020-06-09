@@ -2,12 +2,12 @@ import Admin from '../views/admin/Index'
 
 const routesAdmin =
     {
-        path: '/',
+        path: '',
         name: 'Admin',
         component: Admin,
         children: [
             {
-                path: '/admin/home',
+                path: '/',
                 name: 'HomeAdmin',
                 component: () => import('../views/admin/home/Home'),
             },{

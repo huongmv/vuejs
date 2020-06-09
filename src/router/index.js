@@ -42,6 +42,7 @@ router.beforeEach((to, from, next) => {
     // }
     if(to.matched.some(record => record.meta.requiresAuth)) {
         console.log(localStorage.getItem('alo123'))
+        console.log(localStorage.getItem('alo123'))
         let data = localStorage.getItem('alo123')
         if (data === 'true') {
             next()

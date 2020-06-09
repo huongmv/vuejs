@@ -1,52 +1,60 @@
 <template>
     <div class="login-admin">
-        <el-form
-                class="login-form"
-                :model="loginForm"
-                :rules="rules"
-                ref="loginForm"
-                width="20%"
-        >
-            <el-row>
-                <el-col class="text-banner-login">{{this.messages}}</el-col>
-            </el-row>
-            <el-row>
-                <el-col class="title-login">Email</el-col>
-            </el-row>
-            <el-row>
-                <el-col>
-                    <el-form-item prop="email">
-                        <el-input v-model="loginForm.email" placeholder="Enter email"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col class="title-login">Password</el-col>
-            </el-row>
-            <el-row>
-                <el-col>
-                    <el-form-item prop="password">
-                        <el-input v-model="loginForm.password" placeholder="Enter password" type="password"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="12" class="title-login">
-                    <el-checkbox v-model="checkedRemember">Remember me</el-checkbox>
-                </el-col>
-                <el-col :span="12">
-                    <a>Forgot Password?</a>
-                </el-col>
-            </el-row>
-            <el-row class="title-login mt1">
-                <el-button :loading="loading" @click="login('loginForm')">Login</el-button>
-            </el-row>
-        </el-form>
+        <el-dialog
+                :visible.sync="isOpenLoginAdminDialog"
+                :show-close="false"
+                :before-close="destroyOnClose"
+                :close-on-click-modal="true"
+                width="20%">
+            <el-form
+                    class="login-form"
+                    :model="loginForm"
+                    :rules="rules"
+                    ref="loginForm"
+                    width="20%"
+            >
+                <el-row>
+                    <el-col class="text-banner-login">{{this.messages}}</el-col>
+                </el-row>
+                <el-row>
+                    <el-col class="title-login">Email</el-col>
+                </el-row>
+                <el-row>
+                    <el-col>
+                        <el-form-item prop="email">
+                            <el-input v-model="loginForm.email" placeholder="Enter email"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col class="title-login">Password</el-col>
+                </el-row>
+                <el-row>
+                    <el-col>
+                        <el-form-item prop="password">
+                            <el-input v-model="loginForm.password" placeholder="Enter password" type="password"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="12" class="title-login">
+                        <el-checkbox v-model="checkedRemember">Remember me</el-checkbox>
+                    </el-col>
+                    <el-col :span="12">
+                        <a>Forgot Password?</a>
+                    </el-col>
+                </el-row>
+                <el-row class="title-login mt1">
+                    <el-button :loading="loading" @click="login('loginForm')">Login</el-button>
+                </el-row>
+            </el-form>
+        </el-dialog>
     </div>
 </template>
 <script>
 import login from '@/api/login/index'
 import Contants from '@/common/Constants'
+import { mapGetters } from 'vuex'
 export default {
     data(){
         return {
@@ -67,6 +75,9 @@ export default {
             },
         }
     },
+    computed: {
+        ...mapGetters(['isOpenLoginAdminDialog'])
+    },
     methods: {
         login (formName) {
             this.$refs[formName].validate((valid) => {
@@ -79,11 +90,12 @@ export default {
                         if (res.data.id === null) {
                             this.validateData = []
                             this.validateData.push({ 'msg': 'email and password is wrong.'})
+                            localStorage.setItem('alo123', 'false')
                         } else {
-                            this.$cookies.set('user2', res.data, 300)
+                            this.$cookies.set('user2', res.data)
                             localStorage.setItem('alo123', 'true')
                             this.destroyOnClose()
-                            this.isOpenLoginDialog = false
+                            this.$emit('loginAdmin', true)
                         }
                     })
                 } else {
@@ -98,11 +110,14 @@ export default {
 }
 </script>
 <style>
-    .login-admin .login-form{
-        width: 20%;
-        margin: 8% auto;
-        background: #ffffff;
-        padding: 50px 20px;
+    /*.login-admin .login-form{*/
+        /*width: 20%;*/
+        /*margin: 8% auto;*/
+        /*background: #ffffff;*/
+        /*padding: 50px 20px;*/
+    /*}*/
+    .login-admin .el-dialog__wrapper{
+        background: #cccccc;
     }
     .login-admin .el-dialog {
         max-width: 450px;
