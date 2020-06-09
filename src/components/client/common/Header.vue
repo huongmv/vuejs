@@ -135,17 +135,20 @@ export default {
         },
         checkCookie () {
             let user = this.$cookies.get('user')
+            console.log(user)
             if (user !== null && user !== '' && user !== 'null'){
                 this.emailLogin = user.email
                 this.isLogin = false
             } else {
-                // this.$router.push({ name: 'home' })
                 this.emailLogin = ''
                 this.isLogin = true
             }
         },
         logoutUser () {
+            // this.$router.push({ name: 'home' })
+            window.location = '/'
             this.$cookies.remove('user')
+            localStorage.setItem('alo123', 'false');
             this.checkCookie()
         }
     },

@@ -4,6 +4,9 @@ import routesClient from './client'
 import routesAdmin from './admin'
 import VueCookies from 'vue-cookies'
 import store from '@/store'
+
+import { SET_OPEN_LOGIN_DIALOG } from '@/store/ActionStore'
+
 Vue.use(VueRouter)
 Vue.use(VueCookies)
 
@@ -38,12 +41,13 @@ router.beforeEach((to, from, next) => {
     //     next()
     // }
     if(to.matched.some(record => record.meta.requiresAuth)) {
-        console.log(store.getters.isLoggedIn)
-        if (store.getters.isLoggedIn) {
+        console.log(localStorage.getItem('alo123'))
+        let data = localStorage.getItem('alo123')
+        if (data === 'true') {
             next()
             return
         } else {
-            next('/login')
+            next('/')
         }
     } else {
         next()

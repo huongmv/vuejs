@@ -1,17 +1,12 @@
 <template>
     <div class="login-admin">
-        <el-dialog
-            :visible.sync="isOpenLoginDialog"
-            :show-close="false"
-            :before-close="destroyOnClose"
-            :close-on-click-modal="true"
-            width="20%">
-            <el-form
+        <el-form
                 class="login-form"
                 :model="loginForm"
                 :rules="rules"
                 ref="loginForm"
-            >
+                width="20%"
+        >
             <el-row>
                 <el-col class="text-banner-login">{{this.messages}}</el-col>
             </el-row>
@@ -20,7 +15,7 @@
             </el-row>
             <el-row>
                 <el-col>
-                    <el-form-item prop="loginId">
+                    <el-form-item prop="email">
                         <el-input v-model="loginForm.email" placeholder="Enter email"></el-input>
                     </el-form-item>
                 </el-col>
@@ -30,7 +25,7 @@
             </el-row>
             <el-row>
                 <el-col>
-                    <el-form-item prop="loginId">
+                    <el-form-item prop="password">
                         <el-input v-model="loginForm.password" placeholder="Enter password" type="password"></el-input>
                     </el-form-item>
                 </el-col>
@@ -44,10 +39,9 @@
                 </el-col>
             </el-row>
             <el-row class="title-login mt1">
-                <el-button :loading="loading" @click="login">Login</el-button>
+                <el-button :loading="loading" @click="login('loginForm')">Login</el-button>
             </el-row>
-            </el-form>
-        </el-dialog>
+        </el-form>
     </div>
 </template>
 <script>
@@ -57,7 +51,6 @@ export default {
     data(){
         return {
             checkedRemember: false,
-            isOpenLoginDialog: true,
             loginForm: {
                 email: '',
                 password: ''
@@ -75,18 +68,28 @@ export default {
         }
     },
     methods: {
-        openLoginForm () {
-            this.$store.dispatch(Contants.LOGIN, true)
-        },
-        login: function () {
-            let email = this.loginForm.email
-            let password = this.loginForm.password
-            this.$store.dispatch('login', { email, password })
-                .then(response => {
-                })
-        },
-        closeForm (formName) {
-            this.destroyOnClose()
+        login (formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    let dataRequest = {
+                        'email': this.loginForm.email,
+                        'password': this.loginForm.password
+                    }
+                    login.getInforUser(dataRequest).then(res => {
+                        if (res.data.id === null) {
+                            this.validateData = []
+                            this.validateData.push({ 'msg': 'email and password is wrong.'})
+                        } else {
+                            this.$cookies.set('user2', res.data, 300)
+                            localStorage.setItem('alo123', 'true')
+                            this.destroyOnClose()
+                            this.isOpenLoginDialog = false
+                        }
+                    })
+                } else {
+                    return false;
+                }
+            });
         },
         destroyOnClose () {
             this.$refs['loginForm'].resetFields()
@@ -95,6 +98,12 @@ export default {
 }
 </script>
 <style>
+    .login-admin .login-form{
+        width: 20%;
+        margin: 8% auto;
+        background: #ffffff;
+        padding: 50px 20px;
+    }
     .login-admin .el-dialog {
         max-width: 450px;
     }

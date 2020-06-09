@@ -2,7 +2,7 @@ import Admin from '../views/admin/Index'
 
 const routesAdmin =
     {
-        path: '/9999',
+        path: '/',
         name: 'Admin',
         component: Admin,
         children: [

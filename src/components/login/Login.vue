@@ -85,7 +85,11 @@ export default {
                             this.validateData.push({ 'msg': 'email and password is wrong.'})
                         } else {
                             // this.$cookies.set('user', res.data).config('7d','','',true)
-                            this.$cookies.set('user', res.data)
+                            this.$cookies.set('user', res.data, 300)
+                            // console.log(process.env.VUE_APP_DOMAIN_CLIENT)
+                            // this.$cookies.set('user', res.data, '7d', '/', 'ketqua.test')   //return this
+                            // this.$cookies.set('user', res.data, '7d', '/', 'admin.ketqua')
+                            localStorage.setItem('alo123', 'true')
                             this.$emit('closePopup')
                         }
                     })

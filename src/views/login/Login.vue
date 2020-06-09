@@ -46,7 +46,6 @@ export default {
             this.isRegister = false
             this.isForgot = false
             this.$emit('closePopupLogin', false)
-            this.setLogin(true)
         },
         handleRegisterForm (val) {
             this.isLogin = !val
