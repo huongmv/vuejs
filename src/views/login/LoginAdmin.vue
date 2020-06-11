@@ -44,6 +44,9 @@
                         <a>Forgot Password?</a>
                     </el-col>
                 </el-row>
+                <el-row>
+                    <el-col v-for="item in validateData" :key="item.msg" class="msg-err"><label><i class="fas fa-exclamation-triangle"></i>{{item.msg}}</label></el-col>
+                </el-row>
                 <el-row class="title-login mt1">
                     <el-button :loading="loading" @click="login('loginForm')">Login</el-button>
                 </el-row>
@@ -59,6 +62,7 @@ export default {
     data(){
         return {
             checkedRemember: false,
+            validateData: [],
             loginForm: {
                 email: '',
                 password: ''
@@ -110,12 +114,13 @@ export default {
 }
 </script>
 <style>
-    /*.login-admin .login-form{*/
-        /*width: 20%;*/
-        /*margin: 8% auto;*/
-        /*background: #ffffff;*/
-        /*padding: 50px 20px;*/
-    /*}*/
+    .login-admin  .msg-err {
+        text-align: left;
+        color: #e6a23c;
+    }
+    .login-admin .msg-err label i {
+        padding-right: 5px;
+    }
     .login-admin .el-dialog__wrapper{
         background: #cccccc;
     }
