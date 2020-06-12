@@ -241,10 +241,11 @@
                 console.log(user)
                 if (user !== null && user !== '' && user !== 'null') {
                     this.userName = user.email
-                    this.$store.dispatch(SET_OPEN_LOGIN_ADMIN_DIALOG, false)
+                    // this.$store.dispatch(SET_OPEN_LOGIN_ADMIN_DIALOG, false)
+                    this.$router.push({ name: 'HomeAdmin' })
                 } else {
                     localStorage.setItem('alo123', 'false');
-                    this.$store.dispatch(SET_OPEN_LOGIN_ADMIN_DIALOG, true)
+                    this.$router.push({ name: 'login' })
                 }
             },
             handleLoginAdmin () {
@@ -253,6 +254,7 @@
             logoutUser () {
                 this.$cookies.remove('user2')
                 localStorage.setItem('alo123', 'false');
+                localStorage.setItem('id_token', '')
                 this.checkCookieAd()
             }
         },

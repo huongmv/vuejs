@@ -1,9 +1,21 @@
 import axios from 'axios'
+import Vue from 'vue'
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
+
+// let user = this.$cookies.get('user2')
+let value = window.localStorage.getItem('id_token')
+console.log(value)
+// let token = ''
+// if (user !== null) {
+//     token = user.token
+// }
 // create an axios instance
 const service = axios.create({
     baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
-    timeout: 5000 // request timeout
+    timeout: 5000, // request timeout
+    headers: {'Authorization': value }
 })
 
 // request interceptor

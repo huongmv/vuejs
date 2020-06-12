@@ -1,11 +1,5 @@
 <template>
     <div class="login-admin">
-        <el-dialog
-                :visible.sync="isOpenLoginAdminDialog"
-                :show-close="false"
-                :before-close="destroyOnClose"
-                :close-on-click-modal="true"
-                width="20%">
             <el-form
                     class="login-form"
                     :model="loginForm"
@@ -51,7 +45,6 @@
                     <el-button :loading="loading" @click="login('loginForm')">Login</el-button>
                 </el-row>
             </el-form>
-        </el-dialog>
     </div>
 </template>
 <script>
@@ -93,11 +86,14 @@ export default {
                     login.getInforUser(dataRequest).then(res => {
                         if (res.data.id === null) {
                             this.validateData = []
-                            this.validateData.push({ 'msg': 'email and password is wrong.'})
+                            this.validateData.push({ 'msg': 'email and password is  wrong.'})
                             localStorage.setItem('alo123', 'false')
+                            this.setToken(null)
                         } else {
+                            this.setToken(res.data.token)
                             this.$cookies.set('user2', res.data)
                             localStorage.setItem('alo123', 'true')
+                            this.$router.push({ name: 'HomeAdmin' })
                             this.destroyOnClose()
                             this.$emit('loginAdmin', true)
                         }
@@ -105,7 +101,10 @@ export default {
                 } else {
                     return false;
                 }
-            });
+            })
+        },
+        setToken (token) {
+            localStorage.setItem('id_token', token)
         },
         destroyOnClose () {
             this.$refs['loginForm'].resetFields()
@@ -150,5 +149,11 @@ export default {
         left: 0;
         right: 0;
         bottom: 0;
+    }
+    .login-admin .login-form {
+        width: 20%;
+        margin: 5% auto;
+        background: #ffffff;
+        padding: 50px 20px;
     }
 </style>
