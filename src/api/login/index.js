@@ -17,5 +17,14 @@ export default {
                 reject(error)
             })
         })
+    },
+    logout () {
+        return new Promise((resolve, reject) => {
+            ApiService.post('/logout').then(response => {
+                resolve(response)
+            }).catch(error => {
+                reject(error)
+            })
+        })
     }
 }

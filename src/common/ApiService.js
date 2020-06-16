@@ -1,11 +1,7 @@
 import axios from 'axios'
-import Vue from 'vue'
-import VueCookies from 'vue-cookies'
-Vue.use(VueCookies)
 
 // let user = this.$cookies.get('user2')
 let value = window.localStorage.getItem('id_token')
-console.log(value)
 // let token = ''
 // if (user !== null) {
 //     token = user.token

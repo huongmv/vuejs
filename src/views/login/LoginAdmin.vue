@@ -49,7 +49,6 @@
 </template>
 <script>
 import login from '@/api/login/index'
-import Contants from '@/common/Constants'
 import { mapGetters } from 'vuex'
 export default {
     data(){
@@ -83,21 +82,7 @@ export default {
                         'email': this.loginForm.email,
                         'password': this.loginForm.password
                     }
-                    login.getInforUser(dataRequest).then(res => {
-                        if (res.data.id === null) {
-                            this.validateData = []
-                            this.validateData.push({ 'msg': 'email and password is  wrong.'})
-                            localStorage.setItem('alo123', 'false')
-                            this.setToken(null)
-                        } else {
-                            this.setToken(res.data.token)
-                            this.$cookies.set('user2', res.data)
-                            localStorage.setItem('alo123', 'true')
-                            this.$router.push({ name: 'HomeAdmin' })
-                            this.destroyOnClose()
-                            this.$emit('loginAdmin', true)
-                        }
-                    })
+                    this.checkLogin(dataRequest)
                 } else {
                     return false;
                 }
@@ -105,6 +90,31 @@ export default {
         },
         setToken (token) {
             localStorage.setItem('id_token', token)
+        },
+        async checkLogin (dataRequest) {
+            await this.removeLogin()
+            await login.getInforUser(dataRequest).then(res => {
+                if (res.data.id === null || res.data.id === '' || res.data.id === 'null') {
+                    this.validateData = []
+                    this.validateData.push({ 'msg': 'email and password is  wrong.'})
+                    localStorage.setItem('alo123', 'false')
+                    this.setToken(null)
+                } else {
+                    this.setToken(res.data.token)
+                    //60 + 30 1 minute 30 second after, expire
+                    //60 * 60 * 12 - 12 hour after, expire
+                    //60 * 60 * 24 * 30 1 month
+                    this.$cookies.set('user2', res.data, 600)
+                    localStorage.setItem('alo123', 'true')
+                    this.$router.push({ name: 'HomeAdmin' })
+                    this.destroyOnClose()
+                }
+            })
+        },
+        removeLogin () {
+            this.$cookies.remove('user2')
+            localStorage.removeItem('alo123')
+            localStorage.setItem('id_token', '')
         },
         destroyOnClose () {
             this.$refs['loginForm'].resetFields()
