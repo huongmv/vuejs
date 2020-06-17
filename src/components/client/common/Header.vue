@@ -146,9 +146,11 @@ export default {
         },
         logoutUser () {
             // this.$router.push({ name: 'home' })
+            this.removeLocalStorageToken('id_token')
             window.location = '/'
             this.$cookies.remove('user')
             localStorage.setItem('alo123', 'false');
+            // localStorage.setItem('id_token', '')
             this.checkCookie()
         }
     },

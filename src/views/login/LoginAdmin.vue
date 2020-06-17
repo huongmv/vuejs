@@ -91,27 +91,27 @@ export default {
         setToken (token) {
             localStorage.setItem('id_token', token)
         },
-        async checkLogin (dataRequest) {
-            await this.removeLogin()
-            await login.getInforUser(dataRequest).then(res => {
+        checkLogin (dataRequest) {
+            login.getInforUser(dataRequest).then(res => {
                 if (res.data.id === null || res.data.id === '' || res.data.id === 'null') {
                     this.validateData = []
                     this.validateData.push({ 'msg': 'email and password is  wrong.'})
                     localStorage.setItem('alo123', 'false')
-                    this.setToken(null)
                 } else {
-                    this.setToken(res.data.token)
+                    this.Utils.setLocalStorageToken('id_token', res.data.token, 600000)
                     //60 + 30 1 minute 30 second after, expire
                     //60 * 60 * 12 - 12 hour after, expire
                     //60 * 60 * 24 * 30 1 month
                     this.$cookies.set('user2', res.data, 600)
                     localStorage.setItem('alo123', 'true')
                     this.$router.push({ name: 'HomeAdmin' })
+                    this.$emit('loginAdmin')
                     this.destroyOnClose()
                 }
             })
         },
         removeLogin () {
+            console.log('aaaaaaa')
             this.$cookies.remove('user2')
             localStorage.removeItem('alo123')
             localStorage.setItem('id_token', '')

@@ -242,6 +242,8 @@
                 if (user !== null && user !== '' && user !== 'null') {
                     this.userName = user.email
                     // this.$store.dispatch(SET_OPEN_LOGIN_ADMIN_DIALOG, false)
+                    // tạo biến state lưu đã login.
+                    // các page watch state, nếu login mới search data
                     this.$router.push({ name: 'HomeAdmin' })
                 } else {
                     localStorage.setItem('alo123', 'false');

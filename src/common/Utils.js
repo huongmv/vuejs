@@ -34,6 +34,35 @@ const Utils =  {
     },
     parseDateYYYYMMDDHHmmss (date) {
         return moment.parseZone(date).format('YYYY-MM-DD HH:mm:ss')
+    },
+    setLocalStorageToken(key, value, ttl) {
+        // ttl = (1000 * 60 * 20) would be 20 mins
+        // `item` is an object which contains the original value
+        // as well as the time when it's supposed to expire
+        const item = {
+            value: value,
+            expiry: ttl <= 0 ? -1 : new Date().getTime() + ttl
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+    },
+    getLocalStorageToken(key) {
+        const itemStr = localStorage.getItem(key)
+        // if the item doesn't exist, return null
+        if (!itemStr) {
+            return null
+        }
+        const item = JSON.parse(itemStr)
+        // compare the expiry time of the item with the current time
+        if (item.expiry > 0 && new Date().getTime() > item.expiry) {
+            // If the item is expired, delete the item from storage
+            // and return null
+            localStorage.removeItem(key)
+            return null
+        }
+        return item.value
+    },
+    removeLocalStorageToken(key) {
+        localStorage.removeItem(key)
     }
 }
 export default Utils
