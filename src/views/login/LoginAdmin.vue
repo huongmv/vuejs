@@ -50,6 +50,7 @@
 <script>
 import login from '@/api/login/index'
 import { mapGetters } from 'vuex'
+import { SET_LOGGED_IN } from '@/store/ActionStore'
 export default {
     data(){
         return {
@@ -103,9 +104,11 @@ export default {
                     //60 * 60 * 12 - 12 hour after, expire
                     //60 * 60 * 24 * 30 1 month
                     this.$cookies.set('user2', res.data, 600)
-                    localStorage.setItem('alo123', 'true')
-                    this.$router.push({ name: 'HomeAdmin' })
+                    localStorage.setItem('adminLogin', 'true')
+                    console.log('loginAdmin ========')
+                    this.$store.dispatch(SET_LOGGED_IN, true)
                     this.$emit('loginAdmin')
+                    this.$router.push({ name: 'HomeAdmin' })
                     this.destroyOnClose()
                 }
             })

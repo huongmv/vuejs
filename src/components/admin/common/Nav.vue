@@ -221,7 +221,7 @@
     import { mapGetters } from 'vuex'
     import Country from '../../localStorage/Country'
     import LoginAdminForm from '@/views/login/LoginAdmin'
-    import { SET_OPEN_LOGIN_ADMIN_DIALOG } from '@/store/ActionStore'
+    import { SET_LOGGED_IN } from '@/store/ActionStore'
     export default {
         data () {
             return {
@@ -233,12 +233,11 @@
             'country-dropdown': Country
         },
         computed: {
-            ...mapGetters(['isOpenLoginAdminDialog'])
+            ...mapGetters(['isOpenLoginAdminDialog', 'isLoggedIn'])
         },
         methods: {
             checkCookieAd () {
                 let user = this.$cookies.get('user2')
-                console.log(user)
                 if (user !== null && user !== '' && user !== 'null') {
                     this.userName = user.email
                     // this.$store.dispatch(SET_OPEN_LOGIN_ADMIN_DIALOG, false)
@@ -246,7 +245,7 @@
                     // các page watch state, nếu login mới search data
                     this.$router.push({ name: 'HomeAdmin' })
                 } else {
-                    localStorage.setItem('alo123', 'false');
+                    localStorage.setItem('adminLogin', 'false');
                     this.$router.push({ name: 'login' })
                 }
             },
@@ -254,14 +253,22 @@
                 this.checkCookieAd()
             },
             logoutUser () {
+                this.$store.dispatch(SET_LOGGED_IN, false)
                 this.$cookies.remove('user2')
-                localStorage.setItem('alo123', 'false');
+                localStorage.setItem('adminLogin', 'false');
                 localStorage.setItem('id_token', '')
                 this.checkCookieAd()
             }
         },
         created () {
             this.checkCookieAd()
+        },
+        watch: {
+            isLoggedIn (isLoggedIn) {
+                if (isLoggedIn) {
+                    this.checkCookieAd()
+                }
+            }
         }
     }
 </script>
