@@ -3,6 +3,7 @@ import utils from '../common/Utils'
 // let user = this.$cookies.get('user2')
 // let value = window.localStorage.getItem('id_token')
 let value = utils.getLocalStorageToken('id_token')
+console.log(value)
 // let token = ''
 // if (user !== null) {
 //     token = user.token
@@ -14,7 +15,6 @@ const service = axios.create({
     timeout: 5000, // request timeout
     headers: {'Authorization': value }
 })
-console.log(value)
 if (value === '' || value === null || value === undefined) {
     console.log('delete')
     delete service.defaults.headers.common['Authorization']

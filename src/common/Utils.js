@@ -47,6 +47,7 @@ const Utils =  {
     },
     getLocalStorageToken(key) {
         const itemStr = localStorage.getItem(key)
+        console.log(itemStr)
         // if the item doesn't exist, return null
         if (!itemStr) {
             return null

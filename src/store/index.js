@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { SET_OPEN_LOGIN_DIALOG, OPEN_LOGIN_DIALOG, CHANGE_COUNTRY, SET_OPEN_LOGIN_ADMIN_DIALOG, OPEN_LOGIN_ADMIN_DIALOG, SET_LOGGED_IN, LOGGED_IN } from './ActionStore'
+import { SET_OPEN_LOGIN_DIALOG, OPEN_LOGIN_DIALOG, CHANGE_COUNTRY, SET_OPEN_LOGIN_ADMIN_DIALOG, OPEN_LOGIN_ADMIN_DIALOG, SET_LOGGED_IN, LOGGED_IN, SET_TOKEN, TOKEN } from './ActionStore'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -23,6 +23,9 @@ export default new Vuex.Store({
       },
       [LOGGED_IN] (state, isLoggedIn) {
           state.isLoggedIn = isLoggedIn
+      },
+      [TOKEN] (state, token) {
+          state.token = token
       }
   },
   actions: {
@@ -37,6 +40,9 @@ export default new Vuex.Store({
       },
       [SET_LOGGED_IN] (context, isLoggedIn) {
           context.commit(LOGGED_IN, isLoggedIn)
+      },
+      [SET_TOKEN] (context, token) {
+          context.commit(LOGGED_IN, token)
       }
   },
   modules: {
@@ -52,5 +58,8 @@ export default new Vuex.Store({
       isLoggedIn (state) {
           return state.isLoggedIn
       },
+      token (state) {
+          return state.token
+      }
   }
 })

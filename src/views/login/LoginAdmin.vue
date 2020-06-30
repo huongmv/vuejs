@@ -83,41 +83,34 @@ export default {
                         'email': this.loginForm.email,
                         'password': this.loginForm.password
                     }
+                    this.$cookies.remove('user2')
+                    localStorage.removeItem('id_token')
                     this.checkLogin(dataRequest)
                 } else {
                     return false;
                 }
             })
         },
-        setToken (token) {
-            localStorage.setItem('id_token', token)
-        },
         checkLogin (dataRequest) {
             login.getInforUser(dataRequest).then(res => {
-                if (res.data.id === null || res.data.id === '' || res.data.id === 'null') {
-                    this.validateData = []
-                    this.validateData.push({ 'msg': 'email and password is  wrong.'})
-                    localStorage.setItem('alo123', 'false')
-                } else {
-                    this.Utils.setLocalStorageToken('id_token', res.data.token, 600000)
+                if (res.data.id > 0) {
+                    this.Utils.setLocalStorageToken('id_token', res.data.token, 60 * 60 * 12 * 10000)
                     //60 + 30 1 minute 30 second after, expire
                     //60 * 60 * 12 - 12 hour after, expire
                     //60 * 60 * 24 * 30 1 month
-                    this.$cookies.set('user2', res.data, 600)
+                    this.$cookies.set('user2', res.data, 60 * 60 * 12)
                     localStorage.setItem('adminLogin', 'true')
                     console.log('loginAdmin ========')
                     this.$store.dispatch(SET_LOGGED_IN, true)
                     this.$emit('loginAdmin')
                     this.$router.push({ name: 'HomeAdmin' })
                     this.destroyOnClose()
+                } else {
+                    this.validateData = []
+                    this.validateData.push({ 'msg': 'email and password is  wrong.'})
+                    localStorage.setItem('adminLogin', 'false')
                 }
             })
-        },
-        removeLogin () {
-            console.log('aaaaaaa')
-            this.$cookies.remove('user2')
-            localStorage.removeItem('alo123')
-            localStorage.setItem('id_token', '')
         },
         destroyOnClose () {
             this.$refs['loginForm'].resetFields()

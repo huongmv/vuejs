@@ -185,7 +185,7 @@ export default {
         },
         createDataProduct (data) {
             product.createProductItem(data).then(response => {
-                this.showMsgDialog(response.data, 'Create')
+                this.showMsgDialog(response.data.data, 'Create')
             })
         },
         deleteItem (val) {
@@ -196,7 +196,7 @@ export default {
         },
         updateDataProduct (data) {
             product.updateProductItem(data).then(response => {
-                this.showMsgDialog(response.data, 'Update')
+                this.showMsgDialog(response.data.data, 'Update')
             })
         },
         deleteAllItems () {

@@ -213,14 +213,12 @@
             </li>
 
         </ul>
-        <login-admin-form v-show="isOpenLoginAdminDialog" @loginAdmin="handleLoginAdmin"></login-admin-form>
     </nav>
     <!-- End of Topbar -->
 </template>
 <script>
     import { mapGetters } from 'vuex'
     import Country from '../../localStorage/Country'
-    import LoginAdminForm from '@/views/login/LoginAdmin'
     import { SET_LOGGED_IN } from '@/store/ActionStore'
     export default {
         data () {
@@ -229,7 +227,6 @@
             }
         },
         components: {
-            'login-admin-form': LoginAdminForm,
             'country-dropdown': Country
         },
         computed: {
@@ -240,7 +237,10 @@
                 let user = this.$cookies.get('user2')
                 if (user !== null && user !== '' && user !== 'null') {
                     this.userName = user.email
-                    // this.$store.dispatch(SET_OPEN_LOGIN_ADMIN_DIALOG, false)
+                    console.log('===============')
+                    // localStorage.setItem('id_token', 'true')
+                    this.Utils.setLocalStorageToken('id_token', user.token, 60 * 60 * 12 * 10000)
+                    localStorage.setItem('adminLogin', 'true')
                     // tạo biến state lưu đã login.
                     // các page watch state, nếu login mới search data
                     this.$router.push({ name: 'HomeAdmin' })
@@ -249,14 +249,11 @@
                     this.$router.push({ name: 'login' })
                 }
             },
-            handleLoginAdmin () {
-                this.checkCookieAd()
-            },
             logoutUser () {
                 this.$store.dispatch(SET_LOGGED_IN, false)
                 this.$cookies.remove('user2')
-                localStorage.setItem('adminLogin', 'false');
-                localStorage.setItem('id_token', '')
+                localStorage.setItem('adminLogin', 'false')
+                localStorage.removeItem('id_token')
                 this.checkCookieAd()
             }
         },
@@ -267,6 +264,8 @@
             isLoggedIn (isLoggedIn) {
                 if (isLoggedIn) {
                     this.checkCookieAd()
+                } else {
+                    this.logoutUser()
                 }
             }
         }
