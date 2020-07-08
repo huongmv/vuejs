@@ -92,6 +92,7 @@ export default {
             })
         },
         checkLogin (dataRequest) {
+            console.log(dataRequest)
             login.getInforUser(dataRequest).then(res => {
                 if (res.data.id > 0) {
                     this.Utils.setLocalStorageToken('id_token', res.data.token, 60 * 60 * 12 * 10000)

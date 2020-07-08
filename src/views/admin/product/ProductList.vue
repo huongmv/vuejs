@@ -39,8 +39,11 @@
                     <el-input ref="txtName" v-model="ruleForm.name" tabindex="1"></el-input>
                 </el-col>
             </el-form-item>
-            <el-form-item label="" prop="content">
+            <el-form-item label="Product content" prop="content">
                 <el-input type="textarea" v-model="ruleForm.content" tabindex="2"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <ck-editor @inputDataCkEditor="handleDataCkEditor"></ck-editor>
             </el-form-item>
             <el-form-item>
                 <el-button tabindex="3" type="primary" :loading="loading" @click="submitForm('ruleForm')" v-show="updateEdit"><i class="el-icon-plus" v-show="iconPlus"></i> Create</el-button>
@@ -64,6 +67,7 @@ import DownLoadExcel from '@/components/excel/ExportExcel'
 import ImportExcel from '@/components/excel/ImportExcel'
 import ImportBase64 from '@/components/excel/ImportBase64'
 import XLSX from 'xlsx'
+import ckEditor from '@/components/ckEditor/CkEditor'
 // import country from '@/components/localStorage/CountryListener'
 export default {
     components: {
@@ -73,14 +77,16 @@ export default {
         'down-load-excel': DownLoadExcel,
         'import-excel': ImportExcel,
         'form-search': FormSearch,
-        'import-base64': ImportBase64
+        'import-base64': ImportBase64,
+        'ck-editor': ckEditor
     },
     data () {
         return {
             tableData: [],
             ruleForm: {
                 name: '',
-                content: ''
+                content: '',
+                contentCkEditor: ''
             },
             rules: {
                 name: [
@@ -311,6 +317,9 @@ export default {
                 this.$refs.importExcelBase64.togglePopup()
                 this.showMsgDialog(response.data, 'Import')
             })
+        },
+        handleDataCkEditor (val) {
+            console.log(val)
         },
         handleImportData (val) {
             product.importDataExcel({ data: val }).then(response => {

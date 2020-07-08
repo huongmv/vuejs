@@ -13,7 +13,7 @@
                 <!--Login-->
                 <div @click="openLoginDialog" v-if="isLogin">Login</div>
                 <div v-else>
-                    <router-link class="inform-user" tag="div" to="/member/inform">{{ emailLogin }} |</router-link>
+                    <router-link class="inform-user" tag="div" to="/member/inform" >{{ emailLogin }} |</router-link>
                     <el-popconfirm
                             confirmButtonText='OK'
                             cancelButtonText='No, Thanks'
@@ -60,10 +60,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
             <div class="site-navbar py-2 js-sticky-header site-navbar-target d-none pl-0 d-lg-block" role="banner">
 
                 <div class="container">
@@ -149,7 +145,7 @@ export default {
             this.removeLocalStorageToken('id_token')
             window.location = '/'
             this.$cookies.remove('user')
-            localStorage.setItem('alo123', 'false');
+            localStorage.setItem('adminLogin', 'false')
             // localStorage.setItem('id_token', '')
             this.checkCookie()
         }

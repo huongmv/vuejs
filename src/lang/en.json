@@ -2,7 +2,7 @@
   "message": {
     "hello": "hello world EN",
     "please_input_name": "Please input name.",
-    "please_input_content.": "Please input content.",
+    "please_input_content": "Please input content.",
     "length_should_30_50": "Length should be 3 to 50."
   },
   "btn": {
