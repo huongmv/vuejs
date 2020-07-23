@@ -116,6 +116,12 @@ export default {
         destroyOnClose () {
             this.$refs['loginForm'].resetFields()
         }
+    }, 
+    created () {
+        this.$store.dispatch(SET_LOGGED_IN, false)
+        this.$cookies.remove('user2')
+        localStorage.setItem('adminLogin', 'false')
+        localStorage.removeItem('id_token')
     }
 }
 </script>

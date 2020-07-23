@@ -47,7 +47,6 @@ const Utils =  {
     },
     getLocalStorageToken(key) {
         const itemStr = localStorage.getItem(key)
-        console.log(itemStr)
         // if the item doesn't exist, return null
         if (!itemStr) {
             return null
@@ -64,6 +63,10 @@ const Utils =  {
     },
     removeLocalStorageToken(key) {
         localStorage.removeItem(key)
+    },
+    apiError(){
+        // window.location.href = 'login';
+        this.$router.push({ name: 'login' })
     }
 }
 export default Utils

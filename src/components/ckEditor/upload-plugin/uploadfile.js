@@ -8,8 +8,9 @@ import { toBase64 } from './fileToBase64'
 export default class UploadFile extends Plugin {
   init () {
     const editor = this.editor
-
+    console.log('upload file 1')
     editor.ui.componentFactory.add('uploadFile', locale => {
+      console.log('upload file 2')
       const view = new FileDialogButtonView(locale)
 
       view.set({

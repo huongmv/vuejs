@@ -10,12 +10,18 @@ const routesAdmin =
                 path: '/',
                 name: 'HomeAdmin',
                 component: () => import('../views/admin/home/Home'),
-            },{
+            },
+            {
+                path: '/login',
+                name: 'login',
+                component: () => import('../views/login/LoginAdmin')
+            },
+            {
                 path: '/admin/tableData',
                 name: 'tableData',
                 component: () => import('../views/admin/table/TableData'),
                 meta: {
-                    requiresAuth: false,
+                    requiresAuth: true,
                     title: 'Table Data'
                 }
             },
@@ -24,7 +30,7 @@ const routesAdmin =
                 name: 'productAdmin',
                 component: () => import('../views/admin/product/ProductList'),
                 meta: {
-                    requiresAuth: false,
+                    requiresAuth: true,
                     title: 'Product Admin'
                 }
             },
@@ -38,9 +44,13 @@ const routesAdmin =
                 }
             },
             {
-                path: '/login',
-                name: 'login',
-                component: () => import('../views/login/LoginAdmin')
+                path: '/admin/wysiwyg',
+                name: 'wysiwyg',
+                component: () => import('../views/admin/demo_Froala_WYSIWYG/wysiwyg'),
+                meta: {
+                    requiresAuth: true,
+                    title: 'Product Admin'
+                }
             }
         ]
     }

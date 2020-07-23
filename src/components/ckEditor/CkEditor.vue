@@ -23,8 +23,8 @@ import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
 import Table from '@ckeditor/ckeditor5-table/src/table'
 import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter'
 import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
-
-import UploadFile from './upload-plugin/uploadfile'
+import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
+// import UploadFile from './upload-plugin/uploadfile'
 // import DocumentApi from '@/api/document/document'
 // import { API_URL } from '@/common/config'
 // import JwtService from '@/common/jwt.service'
@@ -53,7 +53,7 @@ export default {
           ImageStyle,
           ImageToolbar,
           ImageUpload,
-          UploadFile,
+          Base64UploadAdapter,
           CKFinder,
           Link,
           List,
@@ -108,12 +108,13 @@ export default {
           ]
         },
         simpleUpload: {
-          uploadUrl: 'http://client.ketqua:8082/ckfinder/image/'
+          // uploadUrl: 'http://client.ketqua:8082/ckfinder/image/'
 
         //   headers: {
         //     Authorization: JwtService.getToken()
         //   }
         }
+        // ,
         // uploadFile: {
         // //   uploadFnc: file => DocumentApi.s3upload(file, this.functionId)
         // }

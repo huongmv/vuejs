@@ -15,6 +15,9 @@ import i18n from './i18n'
 import elementLang from './i18n-element-ui'
 import VueCookies from 'vue-cookies'
 import CKEditor from '@ckeditor/ckeditor5-vue'
+import VueFroala from 'vue-froala-wysiwyg'
+import wysiwyg from "vue-wysiwyg"
+
 Vue.config.productionTip = false
 Vue.prototype._$ = JQuery
 Vue.prototype.Utils = Utils
@@ -30,6 +33,9 @@ Object.defineProperties(Vue.prototype, {
 Vue.use(ElementUI)
 Vue.use(VueCookies)
 Vue.use(CKEditor)
+Vue.use(VueFroala)
+Vue.use(wysiwyg, {})
+
 new Vue({
   router,
   i18n,

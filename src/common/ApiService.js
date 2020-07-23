@@ -3,7 +3,7 @@ import utils from '../common/Utils'
 // let user = this.$cookies.get('user2')
 // let value = window.localStorage.getItem('id_token')
 let value = utils.getLocalStorageToken('id_token')
-console.log(value)
+// console.log(value)
 // let token = ''
 // if (user !== null) {
 //     token = user.token
@@ -34,10 +34,10 @@ service.interceptors.request.use(
         return config
     },
     error => {
+        console.log('error API')
         // do something with request error
         return Promise.reject(error)
     }
 )
-
 // response interceptor
 export default service

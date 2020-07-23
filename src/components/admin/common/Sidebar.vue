@@ -91,9 +91,10 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Charts</span></a>
+            <router-link to="/admin/wysiwyg" class="nav-link">
+                 <i class="fas fa-fw fa-chart-area"></i>
+                <span>wysiwyg</span>
+            </router-link>
         </li>
 
         <!-- Nav Item - Tables -->
