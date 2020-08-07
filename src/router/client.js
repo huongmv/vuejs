@@ -46,6 +46,14 @@ const routesClient =
                 meta: {
                     requiresAuth: true
                 }
+            },
+            {
+                path: '/changePassword',
+                name: 'changePassword',
+                component: () => import('../views/client/member/ChangePassword'),
+                meta: {
+                    requiresAuth: false
+                }
             }
         ]
     }

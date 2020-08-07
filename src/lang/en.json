@@ -28,5 +28,18 @@
     "deadline": "Deadline",
     "status": "status",
     "place_holder_pick_date" : "Pick a date"
+  },
+  "user": {
+    "stt": "STT",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "password": "password",
+    "rolesId": "Roles",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "tokenStart": "Token start",
+    "tokenEnd": "Token end",
+    "status": "status"
   }
 }

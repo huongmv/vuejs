@@ -81,19 +81,15 @@ export default {
                         'password': this.loginForm.password
                     }
                     login.getInforUser(dataRequest).then(res => {
-                        if (res.data.id === null) {
-                            this.validateData = []
-                            this.validateData.push({ 'msg': 'email and password is wrong.'})
-                        } else {
-                            // this.$cookies.set('user', res.data).config('7d','','',true)
-                            this.$cookies.set('user', res.data, 60 * 60 * 12)
-                            this.$cookies.set('token', res.data.token)
-                            // axios.defaults.headers.common['Authorization'] = res.data.token
-                            // console.log(process.env.VUE_APP_DOMAIN_CLIENT)
-                            // this.$cookies.set('user', res.data, '7d', '/', 'ketqua.test')   //return this
-                            // this.$cookies.set('user', res.data, '7d', '/', 'admin.ketqua')
+                        let dataRes = res.data.data
+                        console.log(dataRes)
+                        if (dataRes.id > 0) {
+                            this.$cookies.set('user', dataRes, 60 * 60 * 12)
                             localStorage.setItem('adminLogin', 'true')
                             this.$emit('closePopup')
+                        } else {
+                            this.validateData = []
+                            this.validateData.push({ 'msg': 'email and password is wrong.'})
                         }
                     })
                 } else {

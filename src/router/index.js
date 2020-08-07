@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routesClient from './client'
 import routesAdmin from './admin'
-import { SET_LOGGED_IN } from '@/store/ActionStore'
 
 Vue.use(VueRouter)
 
@@ -11,9 +10,7 @@ const host = window.location.hostname
 const DOMAIN_ADMIN = process.env.VUE_APP_DOMAIN_ADMIN
 const DOMAIN_CLIENT = process.env.VUE_APP_DOMAIN_CLIENT
 if (host === DOMAIN_ADMIN) {
-    routes = [
-        routesAdmin
-    ]
+    routes = routesAdmin
 } else if (host === DOMAIN_CLIENT) {
     routes = [
         routesClient

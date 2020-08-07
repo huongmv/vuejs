@@ -220,6 +220,7 @@
     import { mapGetters } from 'vuex'
     import Country from '../../localStorage/Country'
     import { SET_LOGGED_IN } from '@/store/ActionStore'
+    import userAPI from '@/api/admin/user/index'
     export default {
         data () {
             return {
@@ -235,26 +236,30 @@
         methods: {
             checkCookieAd () {
                 let user = this.$cookies.get('user2')
+                console.log(user)
                 if (user !== null && user !== '' && user !== 'null') {
                     this.userName = user.email
                     console.log('===============')
                     // localStorage.setItem('id_token', 'true')
-                    this.Utils.setLocalStorageToken('id_token', user.token, 60 * 60 * 12 * 10000)
+                    // this.Utils.setLocalStorageToken('id_token', user.token, 60 * 60 * 12 * 10000)
                     localStorage.setItem('adminLogin', 'true')
                     // tạo biến state lưu đã login.
                     // các page watch state, nếu login mới search data
-                    this.$router.push({ name: 'HomeAdmin' })
+                    // this.$router.push('/HomeAdmin', () => {})
                 } else {
+                    console.log('aaaaaaaaaaaaaaaaaa')
                     localStorage.setItem('adminLogin', 'false');
-                    this.$router.push({ name: 'login' })
+                    this.$router.push('/login', () => {})
                 }
             },
             logoutUser () {
                 this.$store.dispatch(SET_LOGGED_IN, false)
+                let data = this.$cookies.get('user2').id
+                console.log(data)
+                userAPI.logOut(data)
                 this.$cookies.remove('user2')
                 localStorage.setItem('adminLogin', 'false')
-                localStorage.removeItem('id_token')
-                this.checkCookieAd()
+                this.$router.push('/login', () => {})
             }
         },
         created () {

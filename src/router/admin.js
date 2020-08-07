@@ -1,7 +1,7 @@
 import Admin from '../views/admin/Index'
 
 const routesAdmin =
-    {
+    [{
         path: '',
         name: 'Admin',
         component: Admin,
@@ -10,11 +10,6 @@ const routesAdmin =
                 path: '/',
                 name: 'HomeAdmin',
                 component: () => import('../views/admin/home/Home'),
-            },
-            {
-                path: '/login',
-                name: 'login',
-                component: () => import('../views/login/LoginAdmin')
             },
             {
                 path: '/admin/tableData',
@@ -52,6 +47,21 @@ const routesAdmin =
                     title: 'Product Admin'
                 }
             }
+            ,
+            {
+                path: '/admin/userList',
+                name: 'userList',
+                component: () => import('../views/admin/user/UserList'),
+                meta: {
+                    requiresAuth: true,
+                    title: 'Admin List'
+                }
+            }
         ]
-    }
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('../views/login/LoginAdmin')
+    }]
 export default routesAdmin

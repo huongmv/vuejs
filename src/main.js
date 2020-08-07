@@ -6,6 +6,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 /** Global Components */
 import './global.js'
+import service from './common/ApiService'
 /** import element ui */
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
@@ -35,6 +36,7 @@ Vue.use(VueCookies)
 Vue.use(CKEditor)
 Vue.use(VueFroala)
 Vue.use(wysiwyg, {})
+service.init()
 
 new Vue({
   router,

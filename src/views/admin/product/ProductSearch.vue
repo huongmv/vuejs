@@ -39,7 +39,7 @@
     </div>
 </template>
 <script>
-import product from '@/api/product/index'
+import product from '@/api/admin/product/index'
 import country from '@/components/localStorage/CountryListener'
 export default {
     // components: {

@@ -11,7 +11,7 @@
         <div class="header-top">
             <div class="user-header">
                 <!--Login-->
-                <div @click="openLoginDialog" v-if="isLogin">Login</div>
+                <div @click="openLoginDialog" v-if="isLogin" class="login-user">Login</div>
                 <div v-else>
                     <router-link class="inform-user" tag="div" to="/member/inform" >{{ emailLogin }} |</router-link>
                     <el-popconfirm
@@ -131,7 +131,6 @@ export default {
         },
         checkCookie () {
             let user = this.$cookies.get('user')
-            console.log(user)
             if (user !== null && user !== '' && user !== 'null'){
                 this.emailLogin = user.email
                 this.isLogin = false
@@ -141,12 +140,9 @@ export default {
             }
         },
         logoutUser () {
-            // this.$router.push({ name: 'home' })
-            this.removeLocalStorageToken('id_token')
-            window.location = '/'
             this.$cookies.remove('user')
             localStorage.setItem('adminLogin', 'false')
-            // localStorage.setItem('id_token', '')
+            window.location = '/'
             this.checkCookie()
         }
     },
@@ -169,5 +165,8 @@ export default {
     float: left;
     text-align: left;
     padding-left: 5px;
+}
+.user-header .login-user:hover {
+    cursor: pointer;
 }
 </style>

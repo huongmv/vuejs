@@ -51,6 +51,7 @@
 import login from '@/api/login/index'
 import { mapGetters } from 'vuex'
 import { SET_LOGGED_IN } from '@/store/ActionStore'
+import axios from 'axios'
 export default {
     data(){
         return {
@@ -92,14 +93,19 @@ export default {
             })
         },
         checkLogin (dataRequest) {
-            console.log(dataRequest)
             login.getInforUser(dataRequest).then(res => {
-                if (res.data.id > 0) {
-                    this.Utils.setLocalStorageToken('id_token', res.data.token, 60 * 60 * 12 * 10000)
+                let data = res.data.data
+                if (data.id > 0) {
                     //60 + 30 1 minute 30 second after, expire
                     //60 * 60 * 12 - 12 hour after, expire
                     //60 * 60 * 24 * 30 1 month
-                    this.$cookies.set('user2', res.data, 60 * 60 * 12)
+                    
+                    this.$cookies.set('user2', data, {httpOnly: true})
+                    let user111 = this.$cookies.get('user2')
+                    console.log('=============')
+                    console.log(user111.id)
+                    console.log(user111.name)
+                    this.Utils.setHeader()
                     localStorage.setItem('adminLogin', 'true')
                     console.log('loginAdmin ========')
                     this.$store.dispatch(SET_LOGGED_IN, true)
@@ -121,7 +127,6 @@ export default {
         this.$store.dispatch(SET_LOGGED_IN, false)
         this.$cookies.remove('user2')
         localStorage.setItem('adminLogin', 'false')
-        localStorage.removeItem('id_token')
     }
 }
 </script>

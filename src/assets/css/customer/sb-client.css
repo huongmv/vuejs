@@ -1322,3 +1322,263 @@ h1, h2, h3, h4, h5,
 .font-weight-bold {
     font-weight: bold;
 }
+/**captcha*/
+#captcha {
+    min-height: 135px;
+    padding: 5px;
+    background-color: rgb(57, 60, 68);
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 2px 2px 0px, rgba(0, 0, 0, 0.07) 0px 0px 0px 1px;
+    border: 1px solid rgb(48, 51, 60);
+}
+.captcha {
+    font-size: 35px;
+}
+.captcha div{
+    min-height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.font-style-normal{
+    font-style: normal
+}
+.font-style-italic{
+    font-style: italic
+}
+.font-style-oblique{
+    font-style: oblique
+}
+.font-weight-100 {
+    font-weight: 100
+}
+.font-weight-200 {
+    font-weight: 200
+}
+.font-weight-300 {
+    font-weight: 300
+}
+.font-weight-400 {
+    font-weight: 400
+}
+.font-weight-500 {
+    font-weight: 500
+}
+.font-weight-600 {
+    font-weight: 600
+}
+.font-weight-800 {
+    font-weight: 800
+}
+.font-weight-900 {
+    font-weight: 900
+}
+.font-weight-bold {
+    font-weight: bold
+}
+
+
+.impact {
+    font-family: Impact, Charcoal, sans-serif;
+}
+.serif {
+    font-family: Times, Times New Roman, Georgia, serif;
+}
+
+.sansserif {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.monospace {
+    font-family: Lucida Console, Courier, monospace;
+}
+
+.cursive {
+    font-family: cursive;
+}
+
+.fantasy {
+    font-family: fantasy;
+}
+.courier {
+    font-family: courier,arial,helvetica;
+}
+.verdana {
+    font-family: Verdana;
+}
+.candara {
+    font-family: Candara;
+}
+.garamond {
+    font-family: Garamond;
+}
+.brush-script-mt {
+    font-family: Brush Script MT;
+}
+.lucida-bright {
+    font-family: Lucida Bright;
+}
+.captcha-bg-001 {
+    background-image: url(../../../images/captcha/bg-captcha-001.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-002 {
+    background-image: url(../../../images/captcha/bg-captcha-002.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-003 {
+    background-image: url(../../../images/captcha/bg-captcha-003.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-004 {
+    background-image: url(../../../images/captcha/bg-captcha-004.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-005 {
+    background-image: url(../../../images/captcha/bg-captcha-005.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-006 {
+    background-image: url(../../../images/captcha/bg-captcha-006.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-007 {
+    background-image: url(../../../images/captcha/bg-captcha-007.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-008 {
+    background-image: url(../../../images/captcha/bg-captcha-008.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-009 {
+    background-image: url(../../../images/captcha/bg-captcha-009.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-010 {
+    background-image: url(../../../images/captcha/bg-captcha-010.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-011 {
+    background-image: url(../../../images/captcha/bg-captcha-011.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-012 {
+    background-image: url(../../../images/captcha/bg-captcha-012.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-013 {
+    background-image: url(../../../images/captcha/bg-captcha-013.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-014 {
+    background-image: url(../../../images/captcha/bg-captcha-014.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.captcha-bg-015 {
+    background-image: url(../../../images/captcha/bg-captcha-015.png);
+    background-repeat: no-repeat;
+    background-size: 100% 80px;
+}
+.aliceBlue{
+    color: #F0F8FF;
+}
+.antiqueWhite{
+    color: #FAEBD7;
+}
+.aqua{
+    color: #00FFFF;
+}
+.aquamarine{
+    color: #7FFFD4;
+}
+.azure{
+    color: #F0FFFF;
+}
+.beige{
+    color: #F5F5DC;
+}
+.bisque{
+    color: #FFE4C4;
+}
+.black{
+    color: #000000;
+}
+.blanchedAlmond{
+    color: #FFEBCD;
+}
+.blue{
+    color: #0000FF;
+}
+.blueViolet{
+    color: #8A2BE2;
+}
+.brown{
+    color: #A52A2A;
+}
+.burlyWood{
+    color: #DEB887;
+}
+.cadetBlue{
+    color: #5F9EA0;
+}
+.cornflowerBlue{
+    color: #6495ED;
+}
+.coral{
+    color: #FF7F50;
+}
+.chocolate{
+    color: #D2691E;
+}
+.cornsilk{
+    color: #D2691E;
+}
+.darkCyan{
+    color: #008B8B;
+}
+.darkGoldenRod{
+    color: #B8860B;
+}
+.darkMagenta{
+    color: #8B008B;
+}
+.darkOliveGreen{
+    color: #556B2F;
+}
+.darkKhaki{
+    color: #BDB76B;
+}
+.darkTurquoise{
+    color: #00CED1;
+}
+.hotPink{
+    color: #FF69B4;
+}
+.lightPink{
+    color: #FFB6C1;
+}
+.input-captcha .el-input input,
+.input-captcha button {
+    background: rgb(57, 60, 68);
+    color: #ffffff;
+}
+.input-captcha button:hover {
+    background: rgb(57, 60, 68);
+    color: #ffffff;
+    -webkit-box-shadow: inset 1px 1px 21px -7px rgba(255,255,255,0.76);
+    -moz-box-shadow: inset 1px 1px 21px -7px rgba(255,255,255,0.76);
+    box-shadow: inset 1px 1px 21px -7px rgba(255,255,255,0.76);
+}
