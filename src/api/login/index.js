@@ -27,5 +27,24 @@ export default {
                 reject(error)
             })
         })
+    },
+    forgot (data) {
+        return new Promise((resolve, reject) => {
+            ApiService.post('/forgotPassword', data).then(response => {
+                resolve(response)
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+    changePassByEmail (data) {
+        console.log(data)
+        return new Promise((resolve, reject) => {
+            ApiService.post('/changePassByEmail', data).then(response => {
+                resolve(response)
+            }).catch(error => {
+                reject(error)
+            })
+        })
     }
 }

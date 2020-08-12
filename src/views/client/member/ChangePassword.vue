@@ -1,55 +1,136 @@
 <template>
     <div>
-        <h4>Change Password</h4>
-        <form @submit.prevent="changePassword">
-            <label for="name">Name</label>
-            <div>
-                <input id="name" type="text" v-model="name" required autofocus>
+        <div class="change-password">
+            <div class="container">
+                <!-- <el-row class="text-left">
+                    <el-col :span="12">Changde password</el-col>
+                </el-row> -->
+                <div class="row">
+                    <!-- Left -->
+                    <div class="col-lg-8 single-content">
+                        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px">
+                            <el-form-item label="Email" prop="email" class="col-lg-8">
+                                <el-col>
+                                    <el-input id="email" v-model="ruleForm.email" disabled></el-input>
+                                </el-col>
+                            </el-form-item>
+                            <el-form-item label="Password" prop="password" class="col-lg-8">
+                                <el-col :span="14">
+                                    <el-input id="password" max="30" :type="passwordType" v-model="ruleForm.password"></el-input>
+                                </el-col>
+                            <el-col :span="2"><i class="el-icon-view show-password" @click="showPassword"></i></el-col>
+                            </el-form-item>
+                            <el-form-item label="Re-password" prop="rePassword" class="col-lg-8">
+                                <el-col :span="14">
+                                    <el-input id="rePassword" max="30" :type="rePasswordType" v-model="ruleForm.rePassword" @input="comparePassword"></el-input>
+                                </el-col>
+                                <el-col :span="2"><i class="el-icon-view show-password" @click="showRepassword"></i></el-col>
+                            </el-form-item>
+                            <el-row v-show="compare">
+                                <el-col style="padding-left: 130px; text-align: left;">aaaaa</el-col>
+                            </el-row>
+                            <el-form-item label="Code" prop="code" class="col-lg-5">
+                                <el-input v-model="ruleForm.code"></el-input>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" @click="submitForm('ruleForm')">Changde password</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+                </div>
             </div>
-
-            <label for="email" >E-Mail Address</label>
-            <div>
-                <input id="email" type="email" v-model="email" required>
-            </div>
-
-            <label for="password">Password</label>
-            <div>
-                <input id="password" type="password" v-model="password" required>
-            </div>
-
-            <label for="password-confirm">Confirm Password</label>
-            <div>
-                <input id="password-confirm" type="password" v-model="password_confirmation" required>
-            </div>
-
-            <div>
-                <button type="submit">Register</button>
-            </div>
-        </form>
+        </div>
+        
     </div>
 </template>
 <script>
+import api from '@/api/login/index'
 export default {
     data(){
         return {
-            name : "",
-            email : "",
-            password : "",
-            password_confirmation : "",
-            is_admin : null
+            passwordType: 'password',
+            rePasswordType: 'password',
+            compare: false,
+            ruleForm: {
+                email: '',
+                password: '',
+                rePassword: '',
+                code: ''
+            },
+            rules: {
+                password: [
+                    { required: true, message: 'Please input Password', trigger: 'blur' },
+                    { min: 6, max: 30, message: 'Length should be 3 to 5', trigger: 'blur' }
+                ],
+                rePassword: [
+                    { required: true, message: 'Please input Re-password', trigger: 'blur' },
+                    { min: 6, max: 30, message: 'Length should be 3 to 5', trigger: 'blur' }
+                ],
+                code: [
+                    { required: true, message: 'Please input Code', trigger: 'blur' }
+                ],
+            }
+           
         }
     },
     methods: {
-        register: function () {
-            let data = {
-                name: this.name,
-                email: this.email,
-                password: this.password,
-                is_admin: this.is_admin
+         submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+            if (valid) {
+                if(this.compare === false) {
+                    let data = {
+                        'email': this.ruleForm.email,
+                        'password': this.ruleForm.password,
+                        'rePassword': this.ruleForm.rePassword,
+                        'code': this.ruleForm.code
+                    }
+                    api.changePassByEmail(data).then(res => {
+                        console.log(res)
+                    })
+                }
+            } else {
+                return false;
             }
-            this.$store.dispatch('changePassword', data)
-                .then(() => this.$router.push('/'))
+        })
+      },
+      showPassword () {
+        //   this.passwordType = this.passwordType === 'password' ? 'text' : 'passowrd'
+        let password = document.querySelector('#password')
+        this.showAndHide(password)
+      },
+      showRepassword () {
+        let password = document.querySelector('#rePassword')
+        this.showAndHide(password)
+      },
+      showAndHide(password) {
+        if (password.getAttribute('type') === 'password') {
+            password.setAttribute('type', 'text')
+        } else {
+            password.setAttribute('type', 'password')
         }
+      },
+      comparePassword (val) {
+        if (val === this.ruleForm.password) {
+            this.compare = false
+        } else {
+            this.compare = true
+        }
+
+      }
+    },
+    created () {
+        this.ruleForm.email = this.$route.query.email
     }
 }
 </script>
+<style>
+    .change-password {
+        padding-top: 2%;
+    }
+    .show-password {
+        font-size: 20px;
+        cursor: pointer;
+        padding-left: 5px;
+        color: cornflowerblue;
+    }
+</style>
