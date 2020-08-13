@@ -45,6 +45,7 @@
 </template>
 <script>
 import api from '@/api/login/index'
+import base64 from '@/common/Base64'
 export default {
     data(){
         return {
@@ -119,7 +120,10 @@ export default {
       }
     },
     created () {
-        this.ruleForm.email = this.$route.query.email
+        let token = this.$route.query.token
+        this.ruleForm.email = base64.decode(token)
+        console.log(token)
+        console.log(this.ruleForm.email)
     }
 }
 </script>
