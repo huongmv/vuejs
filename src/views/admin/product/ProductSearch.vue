@@ -100,7 +100,7 @@ export default {
         },
         searchDataProduct (dataSearch) {
             product.searchData(dataSearch).then(response => {
-                this.$emit('dataProductSearch', response.data)
+                this.$emit('dataProductSearch', response.data.data)
             })
         }
     }

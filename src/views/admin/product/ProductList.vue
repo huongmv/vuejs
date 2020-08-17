@@ -147,7 +147,7 @@ export default {
             let Utils = this.Utils
             let _this = this
             product.getProductList().then(response => {
-                response.data.forEach(function (item, index) {
+                response.data.data.forEach(function (item, index) {
                     let startDate = Utils.parseDateYYYYMMDD(item.startDate)
                     let endDate = Utils.parseDateYYYYMMDD(item.endDate)
                     _this.tableData.push({
@@ -174,7 +174,7 @@ export default {
         },
         handleSort (data) {
             product.changeDisplayOrder({ data: data }).then(response => {
-                this.showMsgDialog(response.data, 'Change row')
+                this.showMsgDialog(response.data.data, 'Change row')
             })
         },
         handleProductSearch (val) {
@@ -197,7 +197,7 @@ export default {
         deleteItem (val) {
             let dataRequest = { data: val }
             product.deleteProductItem(dataRequest).then(response => {
-                this.showMsgDialog(response.data, 'Delete')
+                this.showMsgDialog(response.data.data, 'Delete')
             })
         },
         updateDataProduct (data) {
@@ -323,8 +323,9 @@ export default {
         },
         handleImportData (val) {
             product.importDataExcel({ data: val }).then(response => {
+                console.log(response)
                 this.$refs.importExcel.togglePopup()
-                this.showMsgDialog(response.data, 'Import')
+                this.showMsgDialog(response.data.data, 'Import')
             })
         },
         handleClosePopup (val) {

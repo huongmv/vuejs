@@ -14,16 +14,16 @@ const service = {
         Vue.axios.interceptors.response.use((response) => {
             return response
         }, (error) => {
-            if (error.response.status >= 400) {
-                delete axios.defaults.headers.common['Authorization']   
-            }
-            const host = window.location.hostname
-            const DOMAIN_ADMIN = process.env.VUE_APP_DOMAIN_ADMIN
-            if (host === DOMAIN_ADMIN) {
-                route.push({ name: 'login' })
-            } else {
-                route.push({ name: 'home' })
-            }
+            // if (error.response.status >= 400) {
+            //     delete axios.defaults.headers.common['Authorization']   
+            // }
+            // const host = window.location.hostname
+            // const DOMAIN_ADMIN = process.env.VUE_APP_DOMAIN_ADMIN
+            // if (host === DOMAIN_ADMIN) {
+            //     route.push({ name: 'login' })
+            // } else {
+            //     route.push({ name: 'home' })
+            // }
             // remove expired Authorization token from request header
             // delete axios.defaults.headers.common['Authorization']   
             console.log('error API' + error) 

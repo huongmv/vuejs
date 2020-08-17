@@ -3,7 +3,7 @@ export default {
     getUserList () {
         return new Promise((resolve, reject) => {
             ApiService.get('/admin/userList').then(response => {
-                resolve(response.data)
+                resolve(response)
             }).catch(error => {
                 reject(error)
             })
@@ -12,7 +12,7 @@ export default {
     logOut (data) {
         return new Promise((resolve, reject) => {
             ApiService.get('/logOut/' + data).then(response => {
-                resolve(response.data)
+                resolve(response)
             }).catch(error => {
                 reject(error)
             })

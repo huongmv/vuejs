@@ -41,10 +41,11 @@ export default {
         showUserList () {
             userApi.getUserList().then(res => {
                 // this.tableData = res.data
+                console.log(res)
                 this.tableData = []
                 let Utils = this.Utils
                 let _this = this
-                res.data.forEach(element => {
+                res.data.data.forEach(element => {
                     let startDate = Utils.parseDateYYYYMMDD(element.startDate)
                     let endDate = Utils.parseDateYYYYMMDD(element.endDate)
                     let tokenStart = Utils.parseDateYYYYMMDD(element.tokenStart)
