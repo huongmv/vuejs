@@ -6,7 +6,6 @@ export default {
             ApiService.get('/cmn/countryList').then(response => {
                 resolve(response)
             }).catch(error => {
-                console.log('aaaaaaa')
                 utils.apiError()
                 reject(error)
             })

@@ -41,7 +41,6 @@ export default {
         showUserList () {
             userApi.getUserList().then(res => {
                 // this.tableData = res.data
-                console.log(res)
                 this.tableData = []
                 let Utils = this.Utils
                 let _this = this
@@ -64,7 +63,6 @@ export default {
                         'status': element.status
                     })
                 });
-                console.log(res)
             })
         }
     }

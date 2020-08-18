@@ -21,7 +21,6 @@ const messages = {
 }
 
 storeIndex.watch(() => storeIndex.getters['countryChange'], (value) => {
-    console.log(value)
     Vue.prototype.$elmLand.locale = value
 })
 const elementLang = new VueI18n({

@@ -62,7 +62,6 @@ import TableData from '@/components/table/TableData'
 import FormData from '@/components/form/FormData'
 import FormSearch from './ProductSearch'
 import Popup from '@/components/popup/Popup'
-import product from '@/api/admin/product/index'
 import DownLoadExcel from '@/components/excel/ExportExcel'
 import ImportExcel from '@/components/excel/ImportExcel'
 import ImportBase64 from '@/components/excel/ImportBase64'
@@ -146,7 +145,8 @@ export default {
             this.tableData = []
             let Utils = this.Utils
             let _this = this
-            product.getProductList().then(response => {
+            let api = this.constApi.admin.ADMIN_PRODUCT_LIST
+            this.callApi.apiNotParamGet(api).then(response => {
                 response.data.data.forEach(function (item, index) {
                     let startDate = Utils.parseDateYYYYMMDD(item.startDate)
                     let endDate = Utils.parseDateYYYYMMDD(item.endDate)
@@ -173,7 +173,8 @@ export default {
             }
         },
         handleSort (data) {
-            product.changeDisplayOrder({ data: data }).then(response => {
+            let api = this.constApi.admin.ADMIN_CHANGE_DISPLAY_ORDER
+            this.callApi.apiParamPost(api, { data: data }).then(response => {
                 this.showMsgDialog(response.data.data, 'Change row')
             })
         },
@@ -190,18 +191,21 @@ export default {
             this.title = 'Edit item'
         },
         createDataProduct (data) {
-            product.createProductItem(data).then(response => {
+            let api = this.constApi.admin.ADMIN_CREATE_PRODUCT
+            this.callApi.apiParamPost(api, data).then(response => {
                 this.showMsgDialog(response.data.data, 'Create')
             })
         },
         deleteItem (val) {
             let dataRequest = { data: val }
-            product.deleteProductItem(dataRequest).then(response => {
+            let api = this.constApi.admin.ADMIN_DELETE_PRODUCT
+            this.callApi.apiParamPost(api, dataRequest).then(response => {
                 this.showMsgDialog(response.data.data, 'Delete')
             })
         },
         updateDataProduct (data) {
-            product.updateProductItem(data).then(response => {
+            let api = this.constApi.admin.ADMIN_EDIT_PRODUCT
+            this.callApi.apiParamPost(api, data).then(response => {
                 this.showMsgDialog(response.data.data, 'Update')
             })
         },
@@ -313,17 +317,17 @@ export default {
             }
         },
         handleImportDataBase64 (val) {
-            product.importDataExcelBase64(val).then(response => {
+            let api = this.constApi.admin.ADMIN_PRODUCT_IMPORT_EXCEL_BASE64
+            this.callApi.apiParamPost(api, val).then(response => {
                 this.$refs.importExcelBase64.togglePopup()
                 this.showMsgDialog(response.data, 'Import')
             })
         },
         handleDataCkEditor (val) {
-            console.log(val)
         },
         handleImportData (val) {
-            product.importDataExcel({ data: val }).then(response => {
-                console.log(response)
+            let api = this.constApi.admin.ADMIN_PRODUCT_IMPORT_EXCEL
+            this.callApi.apiParamPost(api, { data: val }).then(response => {
                 this.$refs.importExcel.togglePopup()
                 this.showMsgDialog(response.data.data, 'Import')
             })
@@ -339,10 +343,6 @@ export default {
             this.editUpdate = false
             this.title = 'Add item'
         }
-        // ,
-        // handleChangeCountry (val) {
-        //     let test = this.$cookie.get('test')
-        // }
     }
 }
 </script>

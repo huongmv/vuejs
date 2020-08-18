@@ -48,7 +48,6 @@
     </el-form>
 </template>
 <script>
-import login from '@/api/login/index'
 import axios from 'axios'
 export default {
     data () {
@@ -80,9 +79,9 @@ export default {
                         'email': this.loginForm.email,
                         'password': this.loginForm.password
                     }
-                    login.getInforUser(dataRequest).then(res => {
+                    let api = this.constApi.all.ALL_LOGIN
+                    this.callApi.apiParamPost(api, dataRequest).then(res => {
                         let dataRes = res.data.data
-                        console.log(dataRes)
                         if (dataRes.id > 0) {
                             this.$cookies.set('user', dataRes, 60 * 60 * 12)
                             localStorage.setItem('adminLogin', 'true')

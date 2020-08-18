@@ -32,7 +32,6 @@
     </el-form>
 </template>
 <script>
-    import api from '@/api/admin/user/index'
     export default {
         data () {
             return {
@@ -54,8 +53,8 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         let data = this.forgotForm.email
-                        api.forgot(data).then(res => {
-                            console.log(res)
+                        let api = this.constApi.all.ALL_FORGOT_PASSWORD
+                        this.callApi.apiParamPost(api, data).then(res => {
                         })
                     } else {
                         return false;

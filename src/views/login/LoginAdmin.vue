@@ -48,7 +48,6 @@
     </div>
 </template>
 <script>
-import login from '@/api/login/index'
 import { mapGetters } from 'vuex'
 import { SET_LOGGED_IN } from '@/store/ActionStore'
 import axios from 'axios'
@@ -93,21 +92,17 @@ export default {
             })
         },
         checkLogin (dataRequest) {
-            login.getInforUser(dataRequest).then(res => {
+            let api = this.constApi.all.ALL_LOGIN
+            this.callApi.apiParamPost(api, dataRequest).then(res => {
                 let data = res.data.data
                 if (data.id > 0) {
                     //60 + 30 1 minute 30 second after, expire
                     //60 * 60 * 12 - 12 hour after, expire
                     //60 * 60 * 24 * 30 1 month
-                    
                     this.$cookies.set('user2', data, {httpOnly: true})
                     let user111 = this.$cookies.get('user2')
-                    console.log('=============')
-                    console.log(user111.id)
-                    console.log(user111.name)
                     this.Utils.setHeader()
                     localStorage.setItem('adminLogin', 'true')
-                    console.log('loginAdmin ========')
                     this.$store.dispatch(SET_LOGGED_IN, true)
                     this.$emit('loginAdmin')
                     this.$router.push({ name: 'HomeAdmin' })

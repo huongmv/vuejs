@@ -17,7 +17,6 @@ export default {
   },
   methods: {
     handleDataCkEditor (val) {
-        console.log(val)
     }
   }
 }

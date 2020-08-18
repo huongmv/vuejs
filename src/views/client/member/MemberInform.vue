@@ -265,7 +265,6 @@
                     if (valid) {
                         alert('submit!');
                     } else {
-                        console.log('error submit!!');
                         return false;
                     }
                 });
@@ -279,10 +278,8 @@
             handlePictureCardPreview(file) {
                 this.dialogImageUrl = file.url;
                 this.dialogVisible = true;
-                console.log(this.dialogImageUrl)
             },
             handleDownload(file) {
-                console.log(file);
             },
             handleChangeUploafFile (file) {
                 this.filename = file.name

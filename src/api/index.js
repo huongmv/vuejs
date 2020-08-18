@@ -1,46 +1,41 @@
 import ApiService from '@/common/ApiService'
 export default {
-    getInforUser (data) {
+    apiParamPost (url, data) {
         return new Promise((resolve, reject) => {
-            ApiService.post('/login', data).then(response => {
+            ApiService.post(url, data).then(response => {
                 resolve(response)
             }).catch(error => {
+                utils.apiError()
                 reject(error)
             })
         })
     },
-    register (data) {
+    apiParamGet (url, data) {
         return new Promise((resolve, reject) => {
-            ApiService.post('/register', data).then(response => {
+            ApiService.get(url, data).then(response => {
                 resolve(response)
             }).catch(error => {
+                utils.apiError()
                 reject(error)
             })
         })
     },
-    logout () {
+    apiNotParamGet (url) {
         return new Promise((resolve, reject) => {
-            ApiService.post('/logout').then(response => {
+            ApiService.get(url).then(response => {
                 resolve(response)
             }).catch(error => {
+                utils.apiError()
                 reject(error)
             })
         })
     },
-    forgot (data) {
+    apiNotParamPost (url) {
         return new Promise((resolve, reject) => {
-            ApiService.post('/forgotPassword', data).then(response => {
+            ApiService.post(url).then(response => {
                 resolve(response)
             }).catch(error => {
-                reject(error)
-            })
-        })
-    },
-    changePassByEmail (data) {
-        return new Promise((resolve, reject) => {
-            ApiService.post('/changePassByEmail', data).then(response => {
-                resolve(response)
-            }).catch(error => {
+                utils.apiError()
                 reject(error)
             })
         })

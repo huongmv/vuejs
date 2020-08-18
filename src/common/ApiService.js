@@ -26,7 +26,6 @@ const service = {
             // }
             // remove expired Authorization token from request header
             // delete axios.defaults.headers.common['Authorization']   
-            console.log('error API' + error) 
             // this.$route.push({ name: 'login' })
             // route.push({ name: 'login' })
             // utils.apiError()
@@ -51,13 +50,10 @@ import axios from 'axios'
 import utils from '../common/Utils'
 import VueCookies from 'vue-cookies'
 let user = VueCookies.get('user2')
-console.log('111111111111111111')
-// console.log(user.token)
 let value = null
 if (user !== null) {
     value = user.token
 }
-console.log(value)
 // create an axios instance
 const service = axios.create({
     baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -68,7 +64,6 @@ const service = axios.create({
     }
 })
 if (value === '' || value === null || value === undefined) {
-    console.log('delete')
     delete service.defaults.headers.common['Authorization']
 }
 
@@ -86,7 +81,6 @@ service.interceptors.request.use(
         return config
     },
     error => {
-        console.log('error API')
         // do something with request error
         return Promise.reject(error)
     }

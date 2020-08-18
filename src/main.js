@@ -17,11 +17,18 @@ import elementLang from './i18n-element-ui'
 import VueCookies from 'vue-cookies'
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import VueFroala from 'vue-froala-wysiwyg'
-import wysiwyg from "vue-wysiwyg"
+import wysiwyg from 'vue-wysiwyg'
+/** import file common API */
+import callApi from './api/index'
+/** import file constant API */
+import constApi from './common/ConstApi'
 
 Vue.config.productionTip = false
 Vue.prototype._$ = JQuery
 Vue.prototype.Utils = Utils
+Vue.prototype.callApi = callApi
+Vue.prototype.constApi = constApi
+
 Vue.use(VueAxios, axios)
 const EventBus = new Vue()
 Object.defineProperties(Vue.prototype, {

@@ -86,7 +86,6 @@ export default {
                         'code': this.ruleForm.code
                     }
                     api.changePassByEmail(data).then(res => {
-                        console.log(res)
                     })
                 }
             } else {
@@ -122,8 +121,6 @@ export default {
     created () {
         let token = this.$route.query.token
         this.ruleForm.email = base64.decode(token)
-        console.log(token)
-        console.log(this.ruleForm.email)
     }
 }
 </script>

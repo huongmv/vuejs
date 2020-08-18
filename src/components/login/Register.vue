@@ -143,7 +143,8 @@ export default {
                 'password': this.registerForm.password,
                 'rePassword': this.registerForm.rePassword
             }
-            register.register(dataRequest).then(res => {
+            let api = this.constApi.all.ALL_REGISTER
+            this.callApi.apiParamPost(api, dataRequest).then(res => {
                 let dataRes = res.data.data
                 if (dataRes.isExist === false) {
                     this.$cookies.set('user', dataRes, 60 * 60 * 12)

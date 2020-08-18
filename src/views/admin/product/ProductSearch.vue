@@ -99,7 +99,8 @@ export default {
             this.$refs[ruleSearch].resetFields();
         },
         searchDataProduct (dataSearch) {
-            product.searchData(dataSearch).then(response => {
+            let api = this.constApi.admin.ADMIN_SEARCH_PRODUCT
+            this.callApi.apiParamPost(api, dataSearch).then(response => {
                 this.$emit('dataProductSearch', response.data.data)
             })
         }

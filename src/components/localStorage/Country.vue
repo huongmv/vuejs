@@ -20,10 +20,10 @@ export default {
         }
     },
     async mounted() {
-        await dataCountry.dataCountry().then(res => {
+        let api = this.constApi.all.ALL_CMN_COUNTRY_LIST
+        await this.callApi.apiNotParamGet(api).then(res => {
             let _this = this
             this.country = []
-            console.log(res)
             res.data.forEach(function (item) {
                 _this.country.push({ 'id': item.id,'countryName': item.countryName,'countryCode': item.countryCode })
             })
