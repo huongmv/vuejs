@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import route from '../router/index'
 import VueCookies from 'vue-cookies'
 // create service
 const service = {
@@ -41,6 +40,9 @@ const service = {
     },
     post (resource, params) {
       return Vue.axios.post(`${resource}`, params)
+    },
+    setTokenToHeader() {
+        Vue.axios.defaults.headers.common['Authorization'] = VueCookies.get('user2').token
     }
 }
 // response interceptor

@@ -22,14 +22,13 @@ import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph'
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
 import Table from '@ckeditor/ckeditor5-table/src/table'
 import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter'
-import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
+import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder'
 import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
 // import UploadFile from './upload-plugin/uploadfile'
-// import DocumentApi from '@/api/document/document'
-// import { API_URL } from '@/common/config'
-// import JwtService from '@/common/jwt.service'
-
-// const SIMPLE_UPLOAD_PATH = '/document/public/s3upload-multipart'
+// import ApiService from '@/common/ApiService'
+// import api from '../../api/index'
+// const API_URL = process.env.VUE_APP_BASE_API
+// const SIMPLE_UPLOAD_PATH = '/upload/images'
 
 export default {
   props: ['value', 'functionId'],
@@ -63,16 +62,6 @@ export default {
           SimpleUploadAdapter
         ],
         toolbar: {
-          ckfinder: {
-            // Upload the images to the server using the CKFinder QuickUpload command.
-            uploadUrl: 'http://client.ketqua:8082/ckfinder/image/',
-            // Define the CKFinder configuration (if necessary).
-            options: {
-                resourceType: 'Images'
-            },
-            // Open the file manager in the pop-up window.
-            openerMethod: 'popup'
-          },
           items: [
             'heading',
             '|',
@@ -105,18 +94,21 @@ export default {
             'alignLeft',
             // This represents an image aligned to the right.
             'alignRight'
-          ]
-        },
-        simpleUpload: {
-          // uploadUrl: 'http://client.ketqua:8082/ckfinder/image/'
-
-        //   headers: {
-        //     Authorization: JwtService.getToken()
-        //   }
+          ],
+          upload: {
+            types: ['jpeg', 'png', 'gif']
+          }
         }
-        // ,
+        // simpleUpload: {
+        //   //  uploadUrl: `${API_URL}${SIMPLE_UPLOAD_PATH}`,
+        //   uploadUrl: this.uploadImages(),
+        //   headers: {
+        //     Authorization: ApiService.setTokenToHeader()
+        //   }
+        // },
         // uploadFile: {
-        // //   uploadFnc: file => DocumentApi.s3upload(file, this.functionId)
+        //   // uploadFnc: file => api.apiNotParamGet('/upload/images')
+        //   uploadFnc: file => api.apiNotParamGet('/upload/images')
         // }
       }
     }
@@ -131,7 +123,7 @@ export default {
       inputEditor () {
         this.$emit('inputDataCkEditor', this.data)
       }
-      },
+    },
     watch: {
       value: function () {
           this.initData()

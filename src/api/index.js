@@ -22,6 +22,7 @@ export default {
     },
     apiNotParamGet (url) {
         return new Promise((resolve, reject) => {
+            console.log('apiNotParamGet')
             ApiService.get(url).then(response => {
                 resolve(response)
             }).catch(error => {
@@ -31,6 +32,7 @@ export default {
         })
     },
     apiNotParamPost (url) {
+        console.log('apiNotParamPost')
         return new Promise((resolve, reject) => {
             ApiService.post(url).then(response => {
                 resolve(response)

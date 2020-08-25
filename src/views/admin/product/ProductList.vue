@@ -1,5 +1,6 @@
 <template>
     <div id="product-list" class="product-list">
+        <img src="http://localhost:8080/src/main/resources/images/2020-08-25/8HMyhx.jpeg" />
     <form-search @dataProductSearch="handleProductSearch"></form-search>
     <table-data
         :table-data="tableData"
@@ -67,7 +68,7 @@ import ImportExcel from '@/components/excel/ImportExcel'
 import ImportBase64 from '@/components/excel/ImportBase64'
 import XLSX from 'xlsx'
 import ckEditor from '@/components/ckEditor/CkEditor'
-// import country from '@/components/localStorage/CountryListener'
+import ckeditorImage from '@/components/ckEditor/uploadImages/ckeditorImage'
 export default {
     components: {
         TableData,
@@ -91,9 +92,6 @@ export default {
                 name: [
                     { required: true, message: this.$t('message.please_input_name'), trigger: 'blur' },
                     { min: 3, max: 50, message: this.$t('message.length_should_30_50'), trigger: 'blur' }
-                ],
-                content: [
-                    { required: true, message: this.$t('message.please_input_content'), trigger: 'blur' }
                 ]
             },
             multipleSelection: [],
@@ -123,8 +121,10 @@ export default {
             if (this.ruleForm.name.length > 3 && this.ruleForm.content.length > 1){
                 let utils = this.Utils
                 let dateNow = utils.getDateYYYYMMDDHHmmss()
-                let dataRequest = { 'name': this.ruleForm.name, 'content': this.ruleForm.content, 'startDate': dateNow, 'endDate': dateNow  }
-                this.createDataProduct(dataRequest)
+                ckeditorImage.uploadImgToDB(this.ruleForm.content).then(res => {
+                    let dataRequest = { 'name': this.ruleForm.name, 'content': res, 'startDate': dateNow, 'endDate': dateNow  }
+                    this.createDataProduct(dataRequest)
+                })
             } else if (this.ruleForm.name.length < 3) {
                 this.$message.error('Please input name.');
             }else if (this.ruleForm.content.length < 1) {
@@ -324,6 +324,7 @@ export default {
             })
         },
         handleDataCkEditor (val) {
+            this.ruleForm.content = val
         },
         handleImportData (val) {
             let api = this.constApi.admin.ADMIN_PRODUCT_IMPORT_EXCEL

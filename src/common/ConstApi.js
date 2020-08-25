@@ -21,7 +21,8 @@ const api = {
         ALL_LOGOUT: '/logout',
         ALL_FORGOT_PASSWORD: '/forgotPassword',
         ALL_CHANGE_PASS_BY_EMAIL: '/changePassByEmail',
-        ALL_CMN_COUNTRY_LIST: '/cmn/countryList'
+        ALL_CMN_COUNTRY_LIST: '/cmn/countryList',
+        ALL_UPLOAD_IMAGES: '/upload/images'
     }
 }
 export default api
