@@ -1,32 +1,45 @@
 {
-  "message": {
-    "hello": "Xin chào Việt Nam",
-    "please_input_name": "Ban chưa nhập tên.",
-    "please_input_content.": "Bạn chưa nhập nội dung.",
-    "length_should_30_50": "Độ dài ký tự chỉ từ 3 đến 50 ký tự."
-  },
-  "btn": {
-    "export": "Xuất tệp tin",
-    "import": "Nhập tệp tin",
-    "add_item": "Thêm bản ghi",
-    "import_base64": "Nhập tệp tin base64",
-    "edit": "Chỉnh sửa",
-    "delete": "Xóa",
-    "delete_all": "Xóa tất cả",
-    "search": "Tìm kiếm",
-    "reset": "Nhập lại"
-  },
-  "table": {
-    "stt": "STT",
-    "name": "Tên",
-    "start_date": "Ngày bắt đầu",
-    "end_date": "Ngày kết thúc",
-    "status": "Trạng thái"
-  },
-  "product": {
-    "product_name": "Tên sản phẩm",
-    "deadline": "Hạn chót",
-    "status": "Trạng thái",
-    "place_holder_pick_date" : "Chọn ngày"
-  }
+    "message": {
+        "hello": "Xin chào Việt Nam",
+        "please_input_name": "Ban chưa nhập tên.",
+        "please_input_content.": "Bạn chưa nhập nội dung.",
+        "length_should_30_50": "Độ dài ký tự chỉ từ 3 đến 50 ký tự."
+    },
+    "btn": {
+        "export": "Xuất tệp tin",
+        "import": "Nhập tệp tin",
+        "add_item": "Thêm bản ghi",
+        "import_base64": "Nhập tệp tin base64",
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa",
+        "delete_all": "Xóa tất cả",
+        "search": "Tìm kiếm",
+        "reset": "Nhập lại"
+    },
+    "table": {
+        "stt": "STT",
+        "name": "Tên",
+        "start_date": "Ngày bắt đầu",
+        "end_date": "Ngày kết thúc",
+        "status": "Trạng thái"
+    },
+    "product": {
+        "product_name": "Tên sản phẩm",
+        "deadline": "Hạn chót",
+        "status": "Trạng thái",
+        "place_holder_pick_date": "Chọn ngày",
+        "start_date": "Ngày bắt đầu",
+        "end_date": "Ngày kết thúc"
+    },
+    "user": {
+        "user_name": "Người sử dụng",
+        "deadline": "Hạn chót",
+        "status": "Trạng thái",
+        "place_holder_pick_date": "Chọn ngày",
+        "start_date": "Ngày bắt đầu",
+        "end_date": "Ngày kết thúc"
+    },
+    "select": {
+        "all": "Tất cả"
+    }
 }

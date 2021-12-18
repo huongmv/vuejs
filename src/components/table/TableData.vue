@@ -1,29 +1,32 @@
 <template>
-    <div class="app-list-data">
-        <el-row>
+    <div class="app-list-data ">
+        <!-- <el-row>
             <el-col :span="1" align="left" style="font-size: 24px; font-weight: bold">
                 <i class="el-icon-remove-outline" v-if="isHiddenSearchPanel == false" @click="handleHideSearchPanel"></i>
                 <i class="el-icon-circle-plus-outline" v-else @click="handleHideSearchPanel"></i>
             </el-col>
             <el-col :span="12" align="left" style="font-size: 24px; font-weight: bold" v-show="hasTitle">{{ title }}</el-col>
-        </el-row>
+        </el-row> -->
         <el-row v-show="isHiddenSearchPanel == false">
-            <slot name="button"></slot>
-        </el-row>
+            <slot name="search"></slot>
+        </el-row> 
+        <el-row v-show="isHiddenSearchPanel == false">
+            <slot name="top"></slot>
+        </el-row> 
         <div class="app-list-table" v-show="isHiddenSearchPanel == false">
             <el-table :data="showTable"
-                      border
-                      fit
-                      :cellClassName="cellClassName"
-                      v-bind="tableProps"
-                      highlight-current-row
-                      :empty-text="emptyText"
-                      @current-change="rowClickCurrent"
-                      @selection-change="handleSelectionChange"
-                      style="width: 100%">
+                border
+                fit
+                :cellClassName="cellClassName"
+                v-bind="tableProps"
+                highlight-current-row
+                :empty-text="emptyText"
+                @current-change="rowClickCurrent"
+                @selection-change="handleSelectionChange"
+                style="width: 100%">
                 <slot></slot>
             </el-table>
-            <el-row align="right" v-show="hasPagination">
+            <el-row align="left" v-show="hasPagination">
                 <div class="block">
                 <el-pagination type="local"
                                @size-change="handleSizeChange"
@@ -37,7 +40,11 @@
                 </div>
             </el-row>
         </div>
+        <el-row v-show="isHiddenSearchPanel == false">
+            <slot name="bottom"></slot>
+        </el-row> 
     </div>
+    
 </template>
 
 <script>
@@ -53,9 +60,12 @@ export default {
         tableProps: Object,
         title: {
             type: String,
-            default: () => '検索結果'
+            default: () => 'Không có dữ liệu'
         },
         emptyText: String
+    },
+    create(){
+        this.isSortable = false
     },
     data () {
         return {
@@ -131,5 +141,13 @@ export default {
 <style scoped>
     .app-list-table {
         margin-top: 4px;
+    }
+    .app-list-table .has-gutter {
+        background: #757575 !important;
+        background-color: #757575 !important;
+        color: #616161 !important;
+    }
+    .app-list-table .el-table td {
+        padding: unset
     }
 </style>

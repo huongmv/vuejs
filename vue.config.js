@@ -12,14 +12,14 @@ module.exports = {
 
     configureWebpack: {
         plugins: [
-        // CKEditor needs its own plugin to be built using webpack.
-        new CKEditorWebpackPlugin({
-            // The UI language. Language codes follow the https://en.wikipedia.org/wiki/ISO_639-1 format.
-            language: 'ja',
+            // CKEditor needs its own plugin to be built using webpack.
+            new CKEditorWebpackPlugin({
+                // The UI language. Language codes follow the https://en.wikipedia.org/wiki/ISO_639-1 format.
+                language: 'ja',
 
-            // Append translations to the file matching the `app` name.
-            translationsOutputFile: /app/
-        })
+                // Append translations to the file matching the `app` name.
+                translationsOutputFile: /app/
+            })
         ]
     },
 
@@ -47,29 +47,29 @@ module.exports = {
         //
         // * or add a new one:
         config.module
-        .rule('cke-svg')
-        .test(/ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/)
-        .use('raw-loader')
-        .loader('raw-loader')
+            .rule('cke-svg')
+            .test(/ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/)
+            .use('raw-loader')
+            .loader('raw-loader')
 
         // (2.) Transpile the .css files imported by the editor using PostCSS.
         // Make sure only the CSS belonging to ckeditor5-* packages is processed this way.
         config.module
-        .rule('cke-css')
-        .test(/ckeditor5-[^/\\]+[/\\].+\.css$/)
-        .use('postcss-loader')
-        .loader('postcss-loader')
-        .tap(() => {
-            return styles.getPostCssConfig({
-            themeImporter: {
-                themePath: require.resolve('@ckeditor/ckeditor5-theme-lark')
-            },
-            minify: true
+            .rule('cke-css')
+            .test(/ckeditor5-[^/\\]+[/\\].+\.css$/)
+            .use('postcss-loader')
+            .loader('postcss-loader')
+            .tap(() => {
+                return styles.getPostCssConfig({
+                    themeImporter: {
+                        themePath: require.resolve('@ckeditor/ckeditor5-theme-lark')
+                    },
+                    minify: true
+                })
             })
-        })
     },
     devServer: {
-        host: 'client.ketqua',
+        host: 'client.web',
         disableHostCheck: true
     }
 

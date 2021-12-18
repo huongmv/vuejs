@@ -348,14 +348,15 @@ export default {
 }
 </script>
 <style>
-.product-list .popup-add-edit .el-dialog{
-    width: 80%;
-}
+
 .popup-import .el-dialog{
     width: 40%;
 }
 .app-list-data .el-table .el-table__body tbody tr td.el-table_1_column_3 {
     text-align: left;
+}
+/* .product-list .popup-add-edit .el-dialog{
+    width: 80%;
 }
 .product-list .popup-import .form-data .row-import{
     position: relative;
@@ -366,5 +367,5 @@ export default {
 .product-list .popup-import .form-data .btn-submit {
     position: absolute;
     top: 0;
-}
+} */
 </style>

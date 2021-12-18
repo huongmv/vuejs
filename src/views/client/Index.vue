@@ -20,5 +20,5 @@ export default {
 </script>
 <style>
 @import "../../assets/css/customer/sb-client.css";
-@import "../../assets/font/icomoon/style.css";
+/* @import "../../assets/font/icomoon/style.css"; */
 </style>

@@ -4,48 +4,55 @@ import VueAxios from 'vue-axios'
 import VueCookies from 'vue-cookies'
 // create service
 const service = {
-    init () {
-        Vue.use(VueAxios, axios)
-        Vue.axios.defaults.baseURL = process.env.VUE_APP_BASE_API
-        if (VueCookies.get('user2') !== null) {
+
+        init() {
+            Vue.use(VueAxios, axios)
+            Vue.axios.defaults.baseURL = process.env.VUE_APP_BASE_API
+            Vue.axios.defaults.headers.common['Content-Type'] = 'application/json'
+            Vue.axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
+            Vue.axios.defaults.headers.common['Access-Control-Allow-Methods'] = '*'
+            Vue.axios.defaults.headers.common['Access-Control-Max-Age'] = '3600'
+            Vue.axios.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true'
+            Vue.axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type'
+            if (VueCookies.get('user2') !== null) {
+                Vue.axios.defaults.headers.common['Authorization'] = VueCookies.get('user2').token
+            }
+            Vue.axios.interceptors.response.use((response) => {
+                return response
+            }, (error) => {
+                // if (error.response.status >= 400) {
+                //     delete axios.defaults.headers.common['Authorization']   
+                // }
+                // const host = window.location.hostname
+                // const DOMAIN_ADMIN = process.env.VUE_APP_DOMAIN_ADMIN
+                // if (host === DOMAIN_ADMIN) {
+                //     route.push({ name: 'login' })
+                // } else {
+                //     route.push({ name: 'home' })
+                // }
+                // remove expired Authorization token from request header
+                // delete axios.defaults.headers.common['Authorization']   
+                // this.$route.push({ name: 'login' })
+                // route.push({ name: 'login' })
+                // utils.apiError()
+            })
+        },
+        setHeader(token) {
+            Vue.axios.defaults.headers.common['Authorization'] = token
+        },
+        get(resource, params) {
+            return Vue.axios.get(resource, params).catch(error => {
+                throw error
+            })
+        },
+        post(resource, params) {
+            return Vue.axios.post(`${resource}`, params)
+        },
+        setTokenToHeader() {
             Vue.axios.defaults.headers.common['Authorization'] = VueCookies.get('user2').token
         }
-        Vue.axios.interceptors.response.use((response) => {
-            return response
-        }, (error) => {
-            // if (error.response.status >= 400) {
-            //     delete axios.defaults.headers.common['Authorization']   
-            // }
-            // const host = window.location.hostname
-            // const DOMAIN_ADMIN = process.env.VUE_APP_DOMAIN_ADMIN
-            // if (host === DOMAIN_ADMIN) {
-            //     route.push({ name: 'login' })
-            // } else {
-            //     route.push({ name: 'home' })
-            // }
-            // remove expired Authorization token from request header
-            // delete axios.defaults.headers.common['Authorization']   
-            // this.$route.push({ name: 'login' })
-            // route.push({ name: 'login' })
-            // utils.apiError()
-        })
-    },
-    setHeader (token) {
-        Vue.axios.defaults.headers.common['Authorization'] = token
-    },
-    get (resource, params) {
-      return Vue.axios.get(resource, params).catch(error => {
-        throw error
-      })
-    },
-    post (resource, params) {
-      return Vue.axios.post(`${resource}`, params)
-    },
-    setTokenToHeader() {
-        Vue.axios.defaults.headers.common['Authorization'] = VueCookies.get('user2').token
     }
-}
-// response interceptor
+    // response interceptor
 export default service
 /**
 import axios from 'axios'

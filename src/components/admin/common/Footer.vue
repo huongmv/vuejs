@@ -1,11 +1,7 @@
 <template>
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Your Website 2019</span>
-            </div>
-        </div>
-    </footer>
-    <!-- End of Footer -->
+    <!-- /.card-body -->
+    <div class="card-footer text-center">
+    <a href="javascript:void(0)" class="uppercase">View All Products</a>
+    </div>
+    <!-- /.card-footer -->
 </template>

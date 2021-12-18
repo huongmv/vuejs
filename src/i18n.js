@@ -2,8 +2,9 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 
 Vue.use(VueI18n)
-Vue.prototype.$_lenguage = 'en'
-function loadLocaleMessages () {
+Vue.prototype.$_lenguage = 'vi'
+
+function loadLocaleMessages() {
     const locales = require.context('./lang', true, /[A-Za-z0-9-_,\s]+\.json$/i)
     const messages = {}
     locales.keys().forEach(key => {
@@ -16,8 +17,8 @@ function loadLocaleMessages () {
     return messages
 }
 const i18n = new VueI18n({
-    locale: Vue.prototype.$_lenguage || 'en',
-    fallbackLocale: Vue.prototype.$_lenguage || 'en',
+    locale: Vue.prototype.$_lenguage || 'vi',
+    fallbackLocale: Vue.prototype.$_lenguage || 'vi',
     messages: loadLocaleMessages()
 })
 

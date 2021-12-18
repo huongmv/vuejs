@@ -1,73 +1,99 @@
 .w20 {
     width: 20%;
 }
+
 .w38 {
     width: 38%;
 }
+
 .w62 {
     width: 62%;
 }
+
 .w32 {
     width: 32%;
 }
+
 .w68 {
     width: 68%;
 }
+
 .w50 {
     width: 50%;
 }
+
 .w30 {
     width: 30%;
 }
+
 .w70 {
     width: 70%;
 }
+
 .w40 {
     width: 40%;
 }
+
 .w60 {
     width: 60%;
 }
+
 .lf {
     float: left;
 }
-.d-none {
+
+.sidebar,
+.control-sidebar {
+    text-align: left;
+}
+
+
+/* .d-none {
     display: none;
 }
+
 .app-list-data .el-table__header-wrapper table tr,
-.app-list-data .el-table__header-wrapper table th{
+.app-list-data .el-table__header-wrapper table th {
     background-color: #4e73df;
     color: #ffffff;
 }
+
 .app-list-data .el-table tr,
 .app-list-data .el-table th,
-.app-list-data .el-table td{
-  text-align: center;
+.app-list-data .el-table td {
+    text-align: center;
 }
+
 .icon-row-responsive {
     padding-left: 5px;
 }
-.form-data .el-row i{
+
+.form-data .el-row i {
     cursor: pointer;
-}
+} */
+
+
 /*@media screen*/
-@media screen and (max-width:1500px){
+
+@media screen and (max-width:1500px) {
     .el-button {
         padding: 10px 15px !important;
     }
 }
-@media screen and (max-width:1450px){
+
+@media screen and (max-width:1450px) {
     .el-button {
         padding: 6px 10px !important;
     }
 }
 
-@media screen and (max-width:1450px){
+@media screen and (max-width:1450px) {
     .icon-row-responsive {
         display: none;
     }
 }
-@media screen and (max-width:930px){
+
+@media screen and (max-width:930px) {
     .icon-row-responsive {
         display: none;
     }
@@ -77,7 +103,7 @@
     }
 }
 
-@media screen and (max-width:840px){
+@media screen and (max-width:840px) {
     .icon-row-responsive {
         display: none;
     }
@@ -86,7 +112,8 @@
         padding: 4px 6px !important;
     }
 }
-@media screen and (max-width:630px){
+
+@media screen and (max-width:630px) {
     .icon-row-responsive {
         display: none;
     }
@@ -95,15 +122,85 @@
         padding: 2px 3px !important;
     }
 }
+
 .upload-excel {
     max-width: 500px;
 }
-/*.el-col-btn .el-button,*/
-/*.el-col-btn .upload-excel .el-upload,*/
-/*.el-col-btn .upload-excel .el-upload__tipf,*/
-/*.el-col-btn .upload-excel .el-upload-list{*/
-    /*float: right;*/
-/*}*/
+
 .el-col-btn {
     white-space: nowrap;
+}
+
+
+/**Css animation*/
+
+div.wrapper .txt-anima {
+    position: relative;
+    margin: 40px 0;
+}
+
+.txt-anima label {
+    background: #ffffff;
+    position: absolute;
+    font-weight: 400 !important;
+    top: 0;
+    margin: 10px;
+    padding: 0 10px;
+    -webkit-transition: top .2s ease-in-out, font-size .2s ease-in-out;
+    transition: top .2s ease-in-out, font-size .2s ease-in-out;
+}
+
+.txt-anima .active {
+    top: -25px;
+    font-weight: 400;
+    /* letter-spacing: 6px; */
+    /* text-transform: uppercase; */
+}
+
+.txt-anima input[type=text],
+.txt-anima textarea {
+    /* width: 100%;
+    padding: 10px;
+    border: 1px solid black; */
+    -webkit-appearance: none;
+    background-color: #FFF;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #DCDFE6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+    width: 100%;
+}
+
+.txt-anima input[type=text]:focus,
+.txt-anima textarea:focus {
+    outline: none;
+}
+
+
+/***Css table*/
+
+.app-list-table table tr th {
+    background: rgb(247, 249, 250);
+    color: #616161 !important;
+    /* border-bottom: 2px solid #e0e0e0 !important; */
+    -webkit-box-shadow: 0 4px 6px -6px #e0e0e0;
+    -moz-box-shadow: 0 4px 6px -6px #e0e0e0;
+    box-shadow: 0 4px 6px -6px #e0e0e0;
+}
+
+.app-list-table .el-table td {
+    padding: 5px 0;
+}
+
+.app-list-table .el-button.is-circle {
+    border-radius: 50%;
+    padding: 5px;
 }

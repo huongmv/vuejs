@@ -1,15 +1,16 @@
 import ApiService from '@/common/ApiService'
 export default {
-    getInforUser (data) {
+    getInforUser(data) {
         return new Promise((resolve, reject) => {
             ApiService.post('/login', data).then(response => {
+                console.log(response);
                 resolve(response)
             }).catch(error => {
                 reject(error)
             })
         })
     },
-    register (data) {
+    register(data) {
         return new Promise((resolve, reject) => {
             ApiService.post('/register', data).then(response => {
                 resolve(response)
@@ -18,7 +19,7 @@ export default {
             })
         })
     },
-    logout () {
+    logout() {
         return new Promise((resolve, reject) => {
             ApiService.post('/logout').then(response => {
                 resolve(response)
@@ -27,7 +28,7 @@ export default {
             })
         })
     },
-    forgot (data) {
+    forgot(data) {
         return new Promise((resolve, reject) => {
             ApiService.post('/forgotPassword', data).then(response => {
                 resolve(response)
@@ -36,7 +37,7 @@ export default {
             })
         })
     },
-    changePassByEmail (data) {
+    changePassByEmail(data) {
         return new Promise((resolve, reject) => {
             ApiService.post('/changePassByEmail', data).then(response => {
                 resolve(response)

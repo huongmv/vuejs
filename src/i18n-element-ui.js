@@ -24,7 +24,7 @@ storeIndex.watch(() => storeIndex.getters['countryChange'], (value) => {
     Vue.prototype.$elmLand.locale = value
 })
 const elementLang = new VueI18n({
-    locale: 'en', // set locale
+    locale: 'vi', // set locale
     messages // set locale messages
 })
 

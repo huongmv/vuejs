@@ -50,7 +50,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { SET_LOGGED_IN } from '@/store/ActionStore'
-import axios from 'axios'
+import api from '../../api/login/index'
 export default {
     data(){
         return {
@@ -93,7 +93,10 @@ export default {
         },
         checkLogin (dataRequest) {
             let api = this.constApi.all.ALL_LOGIN
+            // console.log(api);
             this.callApi.apiParamPost(api, dataRequest).then(res => {
+                // api.getInforUser(dataRequest).then( res => {
+                console.log(res);
                 let data = res.data.data
                 if (data.id > 0) {
                     //60 + 30 1 minute 30 second after, expire

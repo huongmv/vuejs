@@ -10,6 +10,7 @@ import service from './common/ApiService'
 /** import element ui */
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
+import Vuetify from 'vuetify'
 import JQuery from 'jquery'
 import Utils from './common/Utils'
 import i18n from './i18n'
@@ -33,12 +34,13 @@ Vue.use(VueAxios, axios)
 const EventBus = new Vue()
 Object.defineProperties(Vue.prototype, {
     $bus: {
-        get: function () {
+        get: function() {
             return EventBus
         }
     }
 })
 Vue.use(ElementUI)
+Vue.use(Vuetify)
 Vue.use(VueCookies)
 Vue.use(CKEditor)
 Vue.use(VueFroala)
@@ -46,10 +48,10 @@ Vue.use(wysiwyg, {})
 service.init()
 
 new Vue({
-  router,
-  i18n,
-  elementLang,
-  EventBus,
-  store,
-  render: h => h(App)
+    router,
+    i18n,
+    elementLang,
+    EventBus,
+    store,
+    render: h => h(App)
 }).$mount('#app')
