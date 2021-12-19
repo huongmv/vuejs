@@ -6,9 +6,9 @@ const routesAdmin = [{
         component: Admin,
         children: [{
                 path: '/',
-                name: 'HomeAdmin',
+                name: 'Home',
                 component: () =>
-                    import ('../views/admin/home/Home'),
+                    import ('../views/admin/home/Home.vue'),
             },
             {
                 path: '/admin/tableData',
@@ -61,10 +61,10 @@ const routesAdmin = [{
                 }
             },
             {
-                path: '/admin/keycloak/userList',
-                name: 'userList',
+                path: '/admin/product/list',
+                name: 'productList',
                 component: () =>
-                    import ('../views/admin/user/keycloak/ProductList'),
+                    import ('../views/admin/user/pro/ProductList'),
                 meta: {
                     requiresAuth: true,
                     title: 'Admin List'

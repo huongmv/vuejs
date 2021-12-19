@@ -52,7 +52,7 @@
                             <el-col :span="4"><el-input :placeholder="$t('user.user_name')" v-model="ruleForm.productName" ></el-input></el-col>
                             <el-col :span="4">
                                     <!-- <el-switch v-model="ruleForm.delivery"></el-switch> -->
-                                    <t-select></t-select>
+                                    <!-- <t-select></t-select> -->
                             </el-col>
                             <el-col :span="2">
                                 <el-button type="primary" @click="searchForm('ruleFormSearch')"><i class="el-icon-search"></i> {{ $t('btn.search') }}</el-button>
@@ -151,7 +151,6 @@
 <script>
 import TableData from '@/components/table/TableData'
 import FormData from '@/components/form/FormData'
-import FormSearch from './ProductSearch'
 import Popup from '@/components/popup/Popup'
 import DownLoadExcel from '@/components/excel/ExportExcel'
 import ImportExcel from '@/components/excel/ImportExcel'
@@ -159,8 +158,7 @@ import ImportBase64 from '@/components/excel/ImportBase64'
 import XLSX from 'xlsx'
 import ckEditor from '@/components/ckEditor/CkEditor'
 import ckeditorImage from '@/components/ckEditor/uploadImages/ckeditorImage'
-// import input from '../../../../components/input/Input.vue'
-import selectMuntiple from '@/components/select/MuntipleSelect.vue'
+// import selectMuntiple from '@/components/select/MuntipleSelect.vue'
 export default {
     components: {
         TableData,
@@ -168,11 +166,9 @@ export default {
         'pop-up': Popup,
         'down-load-excel': DownLoadExcel,
         'import-excel': ImportExcel,
-        // 'form-search': FormSearch,
         'import-base64': ImportBase64,
-        'ck-editor': ckEditor,
-        't-select': selectMuntiple
-        // 't-input': input
+        'ck-editor': ckEditor
+        // 't-select': selectMuntiple
     },
     data () {
         return {
