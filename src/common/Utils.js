@@ -175,6 +175,15 @@ const Utils =  {
         }
         let text = fontText + ' ' + fontFamily + ' ' + bgColor + ' ' + textColor
         return text
+    },
+    getTextRoles (b_roles) {
+        if(b_roles == 1) {
+            return 'Bệnh nhân'
+        } else if (b_roles == 4) {
+            return 'Bác sĩ';
+        } else {
+            return 'Quản trị viên';
+        } 
     }
 
 }
